@@ -1,0 +1,1039 @@
+{
+  "@context": {
+    "sro":         "http://engagement-ready-ai.ibm.com/sro#",
+    "schema":      "http://schema.org/",
+    "id":          "@id",
+    "type":        "@type",
+    "name":        "schema:name",
+    "description": "schema:description",
+    "attributes":  "sro:attributes",
+    "identityKey": "sro:identityKey",
+    "humanRef":    "sro:humanRef",
+    "invariant":   "sro:invariant",
+    "hasState": {
+      "@id":   "sro:hasState",
+      "@type": "@id"
+    },
+    "initialState": {
+      "@id":   "sro:initialState",
+      "@type": "@id"
+    },
+    "terminalStates": {
+      "@id":   "sro:terminalStates",
+      "@type": "@id"
+    },
+    "relatesTo": {
+      "@id":   "sro:relatesTo",
+      "@type": "@id"
+    },
+    "emitsEvent": {
+      "@id":   "sro:emitsEvent",
+      "@type": "@id"
+    },
+    "from": {
+      "@id":   "sro:from",
+      "@type": "@id"
+    },
+    "to": {
+      "@id":   "sro:to",
+      "@type": "@id"
+    },
+    "precondition":  "sro:precondition",
+    "postcondition": "sro:postcondition",
+    "Entity":    "sro:Entity",
+    "Operation": "sro:Operation",
+    "State":     "sro:State"
+  },
+
+  "@graph": [
+
+    {
+      "id":          "sro:EngagementKnowledgeAgent",
+      "type":        "Entity",
+      "name":        "EngagementKnowledgeAgent",
+      "description": "The Context Studio agent responsible for understanding ALL uploaded engagement evidence. It is the single source of truth for the engagement. It does NOT calculate readiness scores — its sole responsibility is to structure and understand engagement knowledge.",
+      "identityKey": "agentId: string",
+      "humanRef":    "agentName",
+      "attributes": {
+        "agentId":       "string",
+        "agentName":     "Engagement Knowledge Agent",
+        "platform":      "IBM Context Studio",
+        "contextId":     "string",
+        "version":       "string",
+        "retrievalMode": "vector | graph | hybrid"
+      },
+      "capabilities": [
+        "Retrieve ontology, governance rules, and requirement definitions",
+        "Structure evidence from: workshop notes, meeting minutes, meeting transcripts, architecture notes, BRDs, FSDs, user stories, proposals, emails, solution documents, decision logs, process flows, video transcripts",
+        "Classify requirements by type: functional, non-functional, security, performance, compliance, integration, data, UX, operational, business",
+        "Identify stakeholder roles and classify as: confirmed, identified, missing",
+        "Surface governance blockers and scoring thresholds",
+        "Called ONCE per assessment — result injected as shared context_snapshot into the readiness advisor"
+      ],
+      "inputs": [
+        "Raw engagement evidence (any document type)",
+        "Evidence type label (e.g. workshop-notes, brd, email)",
+        "Query: 'requirement types stakeholder roles readiness scoring thresholds governance blocking conditions'"
+      ],
+      "outputs": {
+        "businessObjectives":        "string[]",
+        "functionalRequirements":    "string[]",
+        "nonFunctionalRequirements": "string[]",
+        "identifiedRisks":           "string[]",
+        "missingInformation":        "string[]",
+        "conflictingSignals":        "string[]",
+        "stakeholdersIdentified":    "string[]",
+        "projectContext":            "string"
+      },
+      "constraints": [
+        "Does NOT calculate readiness scores",
+        "Does NOT make delivery recommendations",
+        "Does NOT call watsonx.ai",
+        "Context retrieved exactly once per assessment",
+        "Workers receive context_snapshot — they do not call MCP tools independently"
+      ],
+      "invariant": [
+        "Must retrieve context ONCE per assessment request",
+        "Must not duplicate knowledge from other sources",
+        "Must not make readiness judgements"
+      ],
+      "relatesTo": [
+        "sro:DeliveryReadinessAdvisor",
+        "sro:EngagementPackage"
+      ]
+    },
+
+    {
+      "id":          "sro:DeliveryReadinessAdvisor",
+      "type":        "Entity",
+      "name":        "DeliveryReadinessAdvisor",
+      "description": "The watsonx.ai agent responsible for ALL readiness reasoning. Consumes ONLY the structured output from the EngagementKnowledgeAgent. It is the ONLY component that calculates scores, identifies risks, and explains decisions.",
+      "identityKey": "agentId: string",
+      "humanRef":    "agentName",
+      "attributes": {
+        "agentId":   "string",
+        "agentName": "Delivery Readiness Advisor",
+        "platform":  "IBM watsonx.ai",
+        "modelId":   "ibm/granite-3-8b-instruct"
+      },
+      "capabilities": [
+        "Determine delivery readiness decision: ready | ready-with-conditions | not-ready",
+        "Calculate readiness score: 0-100 (>=80=ready, 60-79=conditions, <60=not-ready)",
+        "Calculate confidence score: 0-100",
+        "Produce explainable reasoning trace: one item per dimension, status: present|missing|blocking",
+        "Identify critical issues that block delivery",
+        "Identify missing stakeholders with delivery impact",
+        "Identify missing workshops to schedule",
+        "Identify missing requirement categories",
+        "Generate recommendations and open questions",
+        "Estimate time saved by resolving gaps",
+        "Produce executive summary (one C-suite sentence)"
+      ],
+      "inputs": [
+        "Structured discovery JSON from EngagementKnowledgeAgent",
+        "context_snapshot (ontology rules, scoring thresholds from Context Studio)"
+      ],
+      "outputs": {
+        "executiveSummary":         "string",
+        "readinessDecision":        "ready | ready-with-conditions | not-ready",
+        "readinessScore":           "integer 0-100",
+        "confidenceScore":          "integer 0-100",
+        "riskExplanation":          "string",
+        "criticalIssues":           "string[]",
+        "recommendations":          "string[]",
+        "openQuestions":            "string[]",
+        "businessImpact":           "string",
+        "estimatedTimeSavedHours":  "integer",
+        "reasoningTrace":           "ReasoningTraceItem[]",
+        "missingStakeholders":      "MissingStakeholder[]",
+        "missingWorkshops":         "MissingWorkshop[]",
+        "missingRequirements":      "MissingRequirement[]"
+      },
+      "constraints": [
+        "Does NOT call MCP or Context Studio directly",
+        "Does NOT generate consulting artefacts (that is ICA's responsibility)",
+        "Does NOT make the final engagement decision (consultant HITL is mandatory)",
+        "Must use context_snapshot for scoring thresholds — never fabricate ontology rules",
+        "Advisory only — consultant must explicitly accept or override"
+      ],
+      "hardBlocks": [
+        "Security/compliance ownership undefined → cannot return 'ready'",
+        "Critical business goal with no validated requirement → cannot return 'ready'",
+        "Governance blockers unresolved → cannot return 'ready'",
+        "context_snapshot is null → cap score at 65, reduce confidence by 20"
+      ],
+      "invariant": [
+        "Every criticalIssue must describe exactly ONE specific blocker",
+        "reasoningTrace must cover all 10 readiness dimensions",
+        "executiveSummary must be one C-suite-suitable sentence"
+      ],
+      "relatesTo": [
+        "sro:EngagementKnowledgeAgent",
+        "sro:ReadinessResult",
+        "sro:HITLRecord"
+      ]
+    },
+
+    {
+      "id":          "sro:ICAConsultingLayer",
+      "type":        "Entity",
+      "name":        "ICAConsultingLayer",
+      "description": "The IBM Consulting Advantage productivity layer. Invoked AFTER the readiness assessment is complete. Generates consulting artefacts on demand using focused watsonx.ai calls. Does NOT perform readiness reasoning.",
+      "identityKey": "layerId: string",
+      "humanRef":    "layerName",
+      "attributes": {
+        "layerId":       "string",
+        "layerName":     "ICA Consulting Productivity Layer",
+        "platform":      "IBM Consulting Advantage",
+        "integrationModel": "JSON export → IBM Bob → ICA MCP Gateway"
+      },
+      "capabilities": [
+        "Generate executive summary",
+        "Generate client status report",
+        "Generate proposal inputs",
+        "Generate business requirements table",
+        "Generate functional requirements table",
+        "Generate user stories (As a/I want/So that)",
+        "Generate epics",
+        "Generate acceptance criteria",
+        "Generate RAID log",
+        "Generate assumptions and constraints",
+        "Generate decision log",
+        "Draft consultant follow-up email",
+        "Draft client communication email",
+        "Draft internal team update",
+        "Generate steering committee summary",
+        "Generate next workshop agenda",
+        "Generate workshop minutes template",
+        "Generate action tracker"
+      ],
+      "inputs": [
+        "Completed AIAnalysisResult from DeliveryReadinessAdvisor",
+        "assetType: ICAAssetType",
+        "Consultant has completed HITL decision (required before ICA delivery)"
+      ],
+      "constraints": [
+        "Does NOT re-run the readiness pipeline",
+        "Does NOT duplicate watsonx.ai reasoning",
+        "Does NOT call Context Studio directly",
+        "Each artefact is a focused single Granite call",
+        "Artefacts generated AFTER assessment completion only",
+        "Delivery via: JSON export → IBM Bob → ICA Context Studio"
+      ],
+      "invariant": [
+        "HITL consultant decision must be recorded before ICA delivery package can be exported",
+        "Only approved assets delivered to ICA"
+      ],
+      "relatesTo": [
+        "sro:DeliveryReadinessAdvisor",
+        "sro:EngagementPackage",
+        "sro:HITLRecord"
+      ]
+    },
+
+    {
+      "id":          "sro:EngagementPackage",
+      "type":        "Entity",
+      "name":        "EngagementPackage",
+      "description": "Root delivery object exported by Engagement Ready AI after a completed assessment. Contains the engagement identity, AI readiness result, analysis findings, HITL decision, and all generated consulting assets.",
+      "identityKey": "packageId: UUID",
+      "humanRef":    "engagementName",
+      "attributes": {
+        "packageId":      "string",
+        "schema":         "string",
+        "exportedAt":     "dateTime",
+        "source":         "string",
+        "sourceVersion":  "string",
+        "notifyEmails":   "string[]"
+      },
+      "invariant": [
+        "schema must equal 'engagement-ready-ai/ica-delivery/v1'",
+        "source must equal 'engagement-ready-ai'",
+        "exportedAt must be a valid ISO 8601 UTC timestamp",
+        "humanInTheLoop must be null until the consultant records a decision"
+      ],
+      "relatesTo": [
+        "sro:Engagement",
+        "sro:ReadinessResult",
+        "sro:AnalysisResult",
+        "sro:HITLRecord",
+        "sro:ConsultingAsset"
+      ]
+    },
+
+    {
+      "id":          "sro:Engagement",
+      "type":        "Entity",
+      "name":        "Engagement",
+      "description": "An IBM Consulting engagement — a time-bounded project for a client with a lead consultant, defined scope, and a delivery readiness lifecycle.",
+      "identityKey": "engagementId: string",
+      "humanRef":    "name",
+      "attributes": {
+        "engagementId":   "string",
+        "name":           "string",
+        "client":         "string",
+        "leadConsultant": "string",
+        "assessedAt":     "dateTime"
+      },
+      "invariant": [
+        "engagementId must follow pattern 'eng-{unix-timestamp}'",
+        "name must be non-empty",
+        "client must be non-empty",
+        "leadConsultant must be identified before assessment"
+      ],
+      "relatesTo": [
+        "sro:EngagementPackage",
+        "sro:Stakeholder"
+      ]
+    },
+
+    {
+      "id":          "sro:Stakeholder",
+      "type":        "Entity",
+      "name":        "Stakeholder",
+      "description": "A person or role with an interest in or influence over the engagement outcome. Must be identified during discovery and validated before delivery readiness can be confirmed.",
+      "identityKey": "stakeholderId: UUID",
+      "humanRef":    "stakeholderName",
+      "attributes": {
+        "stakeholderId":   "string",
+        "stakeholderName": "string",
+        "role":            "executive-sponsor|product-owner|lead-consultant|solution-architect|security-lead|ciso|project-manager|client-it-lead|business-analyst|end-user-representative",
+        "status":          "confirmed|identified|missing",
+        "blocksDelivery":  "boolean|null"
+      },
+      "invariant": [
+        "stakeholderName must be non-empty",
+        "role must be one of the defined stakeholder role values",
+        "A missing critical stakeholder sets blocksDelivery to true"
+      ],
+      "relatesTo": [
+        "sro:Engagement",
+        "sro:EngagementRisk"
+      ]
+    },
+
+    {
+      "id":          "sro:Requirement",
+      "type":        "Entity",
+      "name":        "Requirement",
+      "description": "A documented need or constraint that the delivery must satisfy. Extracted from discovery notes by Agent 1 (Engagement Knowledge Agent) and validated by Agent 2 (Delivery Readiness Advisor).",
+      "identityKey": "requirementId: string",
+      "humanRef":    "requirementLabel",
+      "attributes": {
+        "requirementId":    "string",
+        "requirementLabel": "string",
+        "type":             "functional|non-functional|security|performance|compliance|integration|data|user-experience|operational|business",
+        "status":           "identified|clarified|validated|conflicted|out-of-scope|deferred",
+        "blocksDelivery":   "boolean|null"
+      },
+      "invariant": [
+        "requirementId must be unique within the engagement",
+        "type must be one of the defined requirement type values",
+        "A conflicted requirement must be resolved before the engagement can be marked ready",
+        "A requirement that blocksDelivery cannot be deferred without consultant justification"
+      ],
+      "hasState": [
+        "sro:RequirementIdentified",
+        "sro:RequirementClarified",
+        "sro:RequirementValidated",
+        "sro:RequirementConflicted",
+        "sro:RequirementOutOfScope",
+        "sro:RequirementDeferred"
+      ],
+      "initialState": "sro:RequirementIdentified",
+      "terminalStates": [
+        "sro:RequirementValidated",
+        "sro:RequirementOutOfScope",
+        "sro:RequirementDeferred"
+      ],
+      "relatesTo": [
+        "sro:Engagement",
+        "sro:Goal",
+        "sro:EngagementRisk",
+        "sro:ConsultingAsset"
+      ],
+      "emitsEvent": [
+        "sro:RequirementClarified",
+        "sro:RequirementValidated",
+        "sro:RequirementConflicted"
+      ]
+    },
+
+    {
+      "id":          "sro:Goal",
+      "type":        "Entity",
+      "name":        "Goal",
+      "description": "A high-level business objective that drives the engagement. An engagement is not delivery-ready until every critical goal has at least one validated requirement supporting it.",
+      "identityKey": "goalId: UUID",
+      "humanRef":    "goalName",
+      "attributes": {
+        "goalId":   "string",
+        "goalName": "string",
+        "type":     "strategic|operational|compliance|competitive|cost|revenue",
+        "priority": "critical|high|medium|low"
+      },
+      "invariant": [
+        "goalName must be unique within the engagement",
+        "A critical goal must have at least one validated requirement before delivery is marked ready"
+      ],
+      "relatesTo": [
+        "sro:Requirement",
+        "sro:Engagement"
+      ]
+    },
+
+    {
+      "id":          "sro:ReadinessResult",
+      "type":        "Entity",
+      "name":        "ReadinessResult",
+      "description": "Output of Agent 2 (Delivery Readiness Advisor). Scores engagement readiness against the knowledge retrieved by Agent 1 and produces a machine-readable verdict.",
+      "identityKey": "readinessId: UUID",
+      "humanRef":    "label",
+      "attributes": {
+        "readinessId": "string",
+        "decision":    "ready|ready-with-conditions|not-ready",
+        "label":       "Ready for Delivery|Ready with Conditions|Not Ready",
+        "score":       "integer(0-100)",
+        "confidence":  "integer(0-100)"
+      },
+      "invariant": [
+        "decision must be 'ready' when score >= 80",
+        "decision must be 'ready-with-conditions' when score is 60–79",
+        "decision must be 'not-ready' when score < 60",
+        "confidence below 60 requires consultant to weight their own judgement more heavily"
+      ],
+      "hasState": [
+        "sro:ReadinessPending",
+        "sro:ReadinessScored",
+        "sro:ReadinessDelivered"
+      ],
+      "initialState": "sro:ReadinessPending",
+      "terminalStates": [
+        "sro:ReadinessDelivered"
+      ],
+      "relatesTo": [
+        "sro:EngagementPackage",
+        "sro:HITLRecord"
+      ],
+      "emitsEvent": [
+        "sro:ReadinessScored"
+      ]
+    },
+
+    {
+      "id":          "sro:AnalysisResult",
+      "type":        "Entity",
+      "name":        "AnalysisResult",
+      "description": "Core AI findings produced by Agent 2 (Delivery Readiness Advisor). Contains the executive summary, blockers, recommendations, and open questions derived from the structured context returned by Agent 1.",
+      "identityKey": "analysisId: UUID",
+      "humanRef":    "executiveSummary",
+      "attributes": {
+        "analysisId":       "string",
+        "executiveSummary": "string",
+        "criticalIssues":   "string[]",
+        "recommendations":  "string[]",
+        "openQuestions":    "string[]"
+      },
+      "invariant": [
+        "executiveSummary must be 3–5 sentences in plain English suitable for C-suite audience",
+        "criticalIssues must be non-empty when decision is 'ready-with-conditions' or 'not-ready'",
+        "Each criticalIssue must describe exactly one specific gap or risk",
+        "ICA creates one task per criticalIssue entry"
+      ],
+      "relatesTo": [
+        "sro:EngagementPackage",
+        "sro:EngagementRisk"
+      ]
+    },
+
+    {
+      "id":          "sro:HITLRecord",
+      "type":        "Entity",
+      "name":        "HITLRecord",
+      "description": "Human-in-the-loop decision record. Agent 2 provides a recommendation — the consultant must explicitly Accept or Override. Both sides are stored for governance and audit. The AI NEVER makes the final delivery decision.",
+      "identityKey": "hitlId: UUID",
+      "humanRef":    "consultantDecision",
+      "attributes": {
+        "hitlId":             "string",
+        "aiRecommendation":   "ready|ready-with-conditions|not-ready",
+        "aiScore":            "integer(0-100)",
+        "consultantDecision": "accepted|overridden",
+        "consultantChoice":   "ready|ready-with-conditions|not-ready",
+        "justification":      "string|null",
+        "decidedAt":          "dateTime"
+      },
+      "invariant": [
+        "justification is REQUIRED when consultantDecision is 'overridden'",
+        "justification must be null when consultantDecision is 'accepted'",
+        "consultantChoice must match aiRecommendation when consultantDecision is 'accepted'",
+        "decidedAt must be after the ReadinessResult was scored",
+        "The AI recommendation is advisory only — the consultant is always accountable for the final decision"
+      ],
+      "hasState": [
+        "sro:HITLPending",
+        "sro:HITLAccepted",
+        "sro:HITLOverridden"
+      ],
+      "initialState": "sro:HITLPending",
+      "terminalStates": [
+        "sro:HITLAccepted",
+        "sro:HITLOverridden"
+      ],
+      "relatesTo": [
+        "sro:EngagementPackage",
+        "sro:ReadinessResult"
+      ],
+      "emitsEvent": [
+        "sro:HITLDecisionRecorded"
+      ]
+    },
+
+    {
+      "id":          "sro:ConsultingAsset",
+      "type":        "Entity",
+      "name":        "ConsultingAsset",
+      "description": "An IBM Consulting Advantage deliverable generated by the Delivery Readiness Advisor pipeline. Editable by the consultant before delivery to ICA.",
+      "identityKey": "assetId: string",
+      "humanRef":    "title",
+      "attributes": {
+        "assetId": "string",
+        "type":    "executive-summary|business-requirements|functional-requirements|non-functional-requirements|user-stories|risks|assumptions|open-questions|proposal-inputs|next-agenda",
+        "title":   "string",
+        "content": "string",
+        "status":  "draft|reviewed|approved"
+      },
+      "invariant": [
+        "assetId must be unique within the package",
+        "type must be one of the defined asset type values",
+        "content must be non-empty",
+        "status starts as 'draft' when AI-generated"
+      ],
+      "hasState": [
+        "sro:AssetDraft",
+        "sro:AssetReviewed",
+        "sro:AssetApproved"
+      ],
+      "initialState": "sro:AssetDraft",
+      "terminalStates": [
+        "sro:AssetApproved"
+      ],
+      "relatesTo": [
+        "sro:EngagementPackage"
+      ],
+      "emitsEvent": [
+        "sro:AssetApproved"
+      ]
+    },
+
+    {
+      "id":          "sro:EngagementRisk",
+      "type":        "Entity",
+      "name":        "EngagementRisk",
+      "description": "A specific risk identified during AI analysis of discovery notes. Risks are categorised, severity-rated, and assigned to a consultant role for mitigation.",
+      "identityKey": "riskId: string",
+      "humanRef":    "title",
+      "attributes": {
+        "riskId":            "string",
+        "title":             "string",
+        "summary":           "string",
+        "severity":          "critical|high|medium|low",
+        "category":          "technical|business|scope|stakeholder",
+        "ownerRole":         "consultant|architect|partner|client",
+        "status":            "open|monitoring|resolved",
+        "impact":            "string",
+        "recommendedAction": "string",
+        "blocksDelivery":    "boolean|null"
+      },
+      "invariant": [
+        "riskId must be unique within the engagement",
+        "severity 'critical' automatically sets blocksDelivery to true",
+        "A resolved risk must have a documented resolution action",
+        "ownerRole must be one of the defined consultant role values"
+      ],
+      "hasState": [
+        "sro:RiskOpen",
+        "sro:RiskMonitoring",
+        "sro:RiskResolved"
+      ],
+      "initialState": "sro:RiskOpen",
+      "terminalStates": [
+        "sro:RiskResolved"
+      ],
+      "relatesTo": [
+        "sro:Engagement",
+        "sro:Stakeholder",
+        "sro:ReadinessResult"
+      ],
+      "emitsEvent": [
+        "sro:RiskResolved"
+      ]
+    },
+
+    {
+      "id":          "sro:ConsultingAction",
+      "type":        "Entity",
+      "name":        "ConsultingAction",
+      "description": "A follow-up consulting action generated from the AI analysis. Assigned to a consultant role and tracked to completion. ICA creates one task per ConsultingAction when the package is delivered.",
+      "identityKey": "actionId: string",
+      "humanRef":    "title",
+      "attributes": {
+        "actionId":    "string",
+        "title":       "string",
+        "description": "string",
+        "ownerRole":   "consultant|architect|partner|client",
+        "priority":    "critical|high|medium|low",
+        "status":      "pending|acknowledged|in-progress|completed",
+        "dueLabel":    "string"
+      },
+      "invariant": [
+        "actionId must be unique within the package",
+        "title must be an actionable verb phrase",
+        "ownerRole must be one of the defined consultant role values",
+        "A completed action must have been in 'in-progress' before completion"
+      ],
+      "hasState": [
+        "sro:ActionPending",
+        "sro:ActionAcknowledged",
+        "sro:ActionInProgress",
+        "sro:ActionCompleted"
+      ],
+      "initialState": "sro:ActionPending",
+      "terminalStates": [
+        "sro:ActionCompleted"
+      ],
+      "relatesTo": [
+        "sro:EngagementPackage",
+        "sro:EngagementRisk"
+      ],
+      "emitsEvent": [
+        "sro:ActionCompleted"
+      ]
+    },
+
+    {
+      "id":          "sro:ICADeliveryWorkflow",
+      "type":        "Entity",
+      "name":        "ICADeliveryWorkflow",
+      "description": "The ICA Langflow-based delivery orchestration layer. Invoked by the app in two phases after the readiness assessment and HITL decision are complete. Phase 1 generates per-person task notification emails. Phase 2 generates the 5 delivery artefacts after all tasks are marked done.",
+      "identityKey": "workflowId: string",
+      "humanRef":    "workflowName",
+      "attributes": {
+        "workflowId":   "string",
+        "workflowName": "string",
+        "platform":     "IBM Consulting Advantage — Langflow",
+        "endpoint":     "https://langflow.servicesessentials.ibm.com/api/v1/run/<FLOW_ID>",
+        "authMethod":   "Bearer ICA_LANGFLOW_API_KEY"
+      },
+      "phases": {
+        "phase1_notify": {
+          "trigger":     "after HITL consultant approval",
+          "flowEnvVar":  "ICA_LANGFLOW_FLOW_ID_NOTIFY",
+          "input":       "action_plan, engagement_name, client_name, lead_consultant, readiness_decision, readiness_score, acknowledge_url, status_url, package_url",
+          "output":      "JSON: { dispatched: boolean, notifications: ICANotification[] }",
+          "ICANotification": {
+            "taskId":             "string — matches ConsultingAction.actionId",
+            "assigneeName":       "string",
+            "assigneeEmail":      "string",
+            "ownerRole":          "consultant | architect | partner | client",
+            "priority":           "critical | high | medium | low",
+            "dueLabel":           "string",
+            "subject":            "string — email subject line",
+            "body":               "string — full plain-text email body",
+            "acknowledgeUrl":     "string — POST URL to mark task done",
+            "acknowledgePayload": "{ taskId, status, completedBy, completionNote }"
+          },
+          "appAction": "Send ICA-authored emails to each assigneeEmail. Fall back to generic task email if ICA returns no notifications."
+        },
+        "phase2_assets": {
+          "trigger":     "POST /api/final-approval — after all tasks complete AND lead consultant explicitly approves",
+          "flowEnvVar":  "ICA_LANGFLOW_FLOW_ID_ASSETS",
+          "input":       "engagement_name, client_name, lead_consultant, readiness_decision, readiness_score, confidence_score, executive_summary, critical_issues, recommendations, open_questions, risk_explanation, business_impact",
+          "output":      "JSON: { executiveSummary, clientEmail, internalEmail, jiraEpic, slackMessage }",
+          "deliveryMapping": {
+            "executiveSummary": "emailed to consultant — subject: [Executive Summary] {engagement_name}",
+            "internalEmail":    "emailed to consultant — subject: [Internal] {engagement_name} Delivery Summary",
+            "jiraEpic":         "emailed to consultant — subject: [Jira Epic] {engagement_name} Readiness Remediation",
+            "clientEmail":      "emailed to client contact — subject: {engagement_name} Readiness Assessment Summary",
+            "slackMessage":     "emailed to consultant as Slack draft — subject: [Slack Draft] {engagement_name} Team Update"
+          }
+        }
+      },
+      "constraints": [
+        "Phase 1 must complete before assignees can be notified",
+        "Phase 2 only runs when all tasks are marked completed — never before",
+        "ICA_LANGFLOW_FLOW_ID_NOTIFY must be set for Phase 1 to use Langflow (falls back to A2A)",
+        "ICA_LANGFLOW_FLOW_ID_ASSETS must be set for Phase 2 to use Langflow (falls back to A2A)",
+        "The app delivers emails — ICA generates content only",
+        "YAML instruction for both phases: output starts with { — no prose, no markdown fences"
+      ],
+      "invariant": [
+        "Phase 1 input: every task in action_plan must produce one entry in notifications",
+        "Phase 2 input: all 5 output keys (executiveSummary, clientEmail, internalEmail, jiraEpic, slackMessage) must be non-empty",
+        "Both phases return compact JSON with no surrounding prose",
+        "acknowledgeUrl in phase1 notifications must be a public URL reachable from ICA cloud"
+      ],
+      "relatesTo": [
+        "sro:ICAConsultingLayer",
+        "sro:ConsultingAction",
+        "sro:EngagementPackage",
+        "sro:HITLRecord"
+      ]
+    },
+
+    {
+      "id":          "sro:Phase1NotifyAssignees",
+      "type":        "Operation",
+      "name":        "Phase1NotifyAssignees",
+      "description": "ICA Langflow Phase 1: generate per-person task notification email text for each ConsultingAction. Called by POST /api/hitl-decision after consultant approves. Returns ICANotification array. The app sends the emails.",
+      "from":        "sro:HITLRecord",
+      "to":          "sro:ICADeliveryWorkflow",
+      "precondition": [
+        "HITLRecord.consultantDecision must be 'accepted' or 'overridden'",
+        "action_plan must contain at least one ConsultingAction",
+        "ICA_LANGFLOW_FLOW_ID_NOTIFY must be set in environment",
+        "ICA_LANGFLOW_API_KEY must be set in environment"
+      ],
+      "postcondition": [
+        "ICA returns JSON with notifications[] array — one entry per task",
+        "Each notification contains subject, body, assigneeEmail, acknowledgeUrl",
+        "App sends email to each unique assigneeEmail with the ICA-authored body",
+        "If ICA returns no notifications, app falls back to generic task email template"
+      ]
+    },
+
+    {
+      "id":          "sro:Phase2GenerateDeliveryAssets",
+      "type":        "Operation",
+      "name":        "Phase2GenerateDeliveryAssets",
+      "description": "ICA Langflow Phase 2: generate 5 delivery artefacts. Called by POST /api/final-approval after lead consultant approves. All tasks must be complete before approval is allowed. Returns executiveSummary, clientEmail, internalEmail, jiraEpic, slackMessage. The app emails each to the correct recipient.",
+      "from":        "sro:ConsultingAction",
+      "to":          "sro:ICADeliveryWorkflow",
+      "precondition": [
+        "All ConsultingActions must be in status 'completed'",
+        "ICA_LANGFLOW_FLOW_ID_ASSETS must be set in environment",
+        "ICA_LANGFLOW_API_KEY must be set in environment",
+        "latestReview (AIAnalysisResult) must be available in workflow state"
+      ],
+      "postcondition": [
+        "ICA returns JSON with exactly 5 keys: executiveSummary, clientEmail, internalEmail, jiraEpic, slackMessage",
+        "executiveSummary + internalEmail + jiraEpic + slackMessage emailed to consultant",
+        "clientEmail emailed to client contact",
+        "All 5 assets stored in workflow state under lastDispatchResult.deliveryAssets",
+        "Consultant can see all assets in the dashboard"
+      ]
+    },
+
+    {
+      "id":          "sro:HasEngagement",
+      "type":        "Operation",
+      "name":        "HasEngagement",
+      "description": "Links an EngagementPackage to its Engagement identity",
+      "from":        "sro:EngagementPackage",
+      "to":          "sro:Engagement",
+      "precondition": [
+        "EngagementPackage must exist",
+        "Engagement must have a valid engagementId and name"
+      ],
+      "postcondition": [
+        "EngagementPackage is bound to exactly one Engagement",
+        "Engagement identity is accessible from the package"
+      ]
+    },
+
+    {
+      "id":          "sro:HasReadiness",
+      "type":        "Operation",
+      "name":        "HasReadiness",
+      "description": "Links an EngagementPackage to its ReadinessResult produced by Agent 2 (Delivery Readiness Advisor)",
+      "from":        "sro:EngagementPackage",
+      "to":          "sro:ReadinessResult",
+      "precondition": [
+        "EngagementPackage must exist",
+        "Agent 2 pipeline must have completed scoring"
+      ],
+      "postcondition": [
+        "EngagementPackage holds exactly one ReadinessResult",
+        "decision, score, and confidence are all populated"
+      ]
+    },
+
+    {
+      "id":          "sro:HasHITLRecord",
+      "type":        "Operation",
+      "name":        "HasHITLRecord",
+      "description": "Links an EngagementPackage to the consultant's HITLRecord. Null until the consultant explicitly accepts or overrides the AI recommendation.",
+      "from":        "sro:EngagementPackage",
+      "to":          "sro:HITLRecord",
+      "precondition": [
+        "EngagementPackage must exist",
+        "ReadinessResult must already be scored",
+        "Consultant must have reviewed the AI recommendation"
+      ],
+      "postcondition": [
+        "HITLRecord is attached to the package",
+        "consultantDecision is recorded as 'accepted' or 'overridden'",
+        "Justification is populated if consultantDecision is 'overridden'"
+      ]
+    },
+
+    {
+      "id":          "sro:HasConsultingAsset",
+      "type":        "Operation",
+      "name":        "HasConsultingAsset",
+      "description": "Links an EngagementPackage to a generated ConsultingAsset deliverable",
+      "from":        "sro:EngagementPackage",
+      "to":          "sro:ConsultingAsset",
+      "precondition": [
+        "EngagementPackage must exist",
+        "Delivery Readiness Advisor pipeline must have completed asset generation"
+      ],
+      "postcondition": [
+        "Package holds one or more ConsultingAssets",
+        "Each asset has a unique assetId and non-empty content"
+      ]
+    },
+
+    {
+      "id":          "sro:SupportsGoal",
+      "type":        "Operation",
+      "name":        "SupportsGoal",
+      "description": "Links a Requirement to the Business Goal it supports",
+      "from":        "sro:Requirement",
+      "to":          "sro:Goal",
+      "precondition": [
+        "Requirement must exist",
+        "Goal must exist within the same engagement"
+      ],
+      "postcondition": [
+        "Requirement is recorded as contributing to the Goal",
+        "Engagement readiness check considers this goal covered by the requirement"
+      ]
+    },
+
+    {
+      "id":          "sro:DependsOn",
+      "type":        "Operation",
+      "name":        "DependsOn",
+      "description": "Links a Requirement to another Requirement it depends on. A dependent requirement cannot be delivered before its dependency is resolved.",
+      "from":        "sro:Requirement",
+      "to":          "sro:Requirement",
+      "precondition": [
+        "Both requirements must exist within the same engagement",
+        "No circular dependencies allowed"
+      ],
+      "postcondition": [
+        "Dependent requirement is blocked until prerequisite is validated",
+        "Dependency relationship is recorded and visible in the risk analysis"
+      ]
+    },
+
+    {
+      "id":          "sro:ConflictsWith",
+      "type":        "Operation",
+      "name":        "ConflictsWith",
+      "description": "Identifies two Requirements that are mutually contradictory. A conflict must be resolved before the engagement can be marked ready.",
+      "from":        "sro:Requirement",
+      "to":          "sro:Requirement",
+      "precondition": [
+        "Both requirements must exist within the same engagement",
+        "Conflict must be documented with a description"
+      ],
+      "postcondition": [
+        "Both requirements are set to status 'conflicted'",
+        "Conflict is surfaced in criticalIssues and blocks the readiness score from reaching 'ready'"
+      ]
+    },
+
+    {
+      "id":          "sro:BlocksDelivery",
+      "type":        "Operation",
+      "name":        "BlocksDelivery",
+      "description": "Links an EngagementRisk or unresolved Requirement to the ReadinessResult it is blocking",
+      "from":        "sro:EngagementRisk",
+      "to":          "sro:ReadinessResult",
+      "precondition": [
+        "EngagementRisk must exist and be in 'open' status",
+        "ReadinessResult must exist"
+      ],
+      "postcondition": [
+        "ReadinessResult cannot be set to 'ready' while this risk is unresolved",
+        "Risk appears in criticalIssues of the AnalysisResult"
+      ]
+    },
+
+    {
+      "id":          "sro:AssignedTo",
+      "type":        "Operation",
+      "name":        "AssignedTo",
+      "description": "Links an EngagementRisk or ConsultingAction to the Stakeholder role responsible for resolving it",
+      "from":        "sro:EngagementRisk",
+      "to":          "sro:Stakeholder",
+      "precondition": [
+        "EngagementRisk must exist",
+        "Target Stakeholder role must be one of the defined ownerRole values"
+      ],
+      "postcondition": [
+        "Risk has an assigned owner role",
+        "Owner role is accountable for delivering the recommendedAction"
+      ]
+    },
+
+    {
+      "id":          "sro:OverridesAIRecommendation",
+      "type":        "Operation",
+      "name":        "OverridesAIRecommendation",
+      "description": "Links an HITLRecord to the ReadinessResult whose AI recommendation the consultant chose to override",
+      "from":        "sro:HITLRecord",
+      "to":          "sro:ReadinessResult",
+      "precondition": [
+        "HITLRecord must exist",
+        "consultantDecision must be 'overridden'",
+        "justification must be non-empty"
+      ],
+      "postcondition": [
+        "Override is recorded in the audit trail with timestamp and justification",
+        "consultantChoice supersedes the AI decision for ICA delivery",
+        "Both the AI recommendation and the consultant's override are permanently stored"
+      ]
+    },
+
+    {
+      "id":          "sro:RequirementIdentified",
+      "type":        "State",
+      "name":        "RequirementIdentified",
+      "description": "Requirement has been extracted from discovery notes but not yet clarified or validated"
+    },
+    {
+      "id":          "sro:RequirementClarified",
+      "type":        "State",
+      "name":        "RequirementClarified",
+      "description": "Requirement has been clarified with additional detail but not yet formally validated by a stakeholder"
+    },
+    {
+      "id":          "sro:RequirementValidated",
+      "type":        "State",
+      "name":        "RequirementValidated",
+      "description": "Requirement has been validated and confirmed — eligible to support a Goal and contribute to delivery readiness"
+    },
+    {
+      "id":          "sro:RequirementConflicted",
+      "type":        "State",
+      "name":        "RequirementConflicted",
+      "description": "Requirement conflicts with another requirement — blocks delivery readiness until resolved"
+    },
+    {
+      "id":          "sro:RequirementOutOfScope",
+      "type":        "State",
+      "name":        "RequirementOutOfScope",
+      "description": "Requirement has been explicitly excluded from this engagement scope"
+    },
+    {
+      "id":          "sro:RequirementDeferred",
+      "type":        "State",
+      "name":        "RequirementDeferred",
+      "description": "Requirement is acknowledged but deferred to a future phase or engagement"
+    },
+
+    {
+      "id":          "sro:ReadinessPending",
+      "type":        "State",
+      "name":        "ReadinessPending",
+      "description": "Agent 2 pipeline has not yet completed scoring — readiness result not available"
+    },
+    {
+      "id":          "sro:ReadinessScored",
+      "type":        "State",
+      "name":        "ReadinessScored",
+      "description": "Agent 2 has produced a score, decision, and confidence — awaiting consultant HITL review"
+    },
+    {
+      "id":          "sro:ReadinessDelivered",
+      "type":        "State",
+      "name":        "ReadinessDelivered",
+      "description": "Consultant has recorded their HITL decision and the package has been delivered to ICA"
+    },
+
+    {
+      "id":          "sro:HITLPending",
+      "type":        "State",
+      "name":        "HITLPending",
+      "description": "ReadinessResult has been scored — consultant has not yet reviewed or recorded a decision"
+    },
+    {
+      "id":          "sro:HITLAccepted",
+      "type":        "State",
+      "name":        "HITLAccepted",
+      "description": "Consultant has accepted the AI recommendation — consultantChoice matches aiRecommendation"
+    },
+    {
+      "id":          "sro:HITLOverridden",
+      "type":        "State",
+      "name":        "HITLOverridden",
+      "description": "Consultant has overridden the AI recommendation — consultantChoice differs from aiRecommendation and justification is recorded"
+    },
+
+    {
+      "id":          "sro:AssetDraft",
+      "type":        "State",
+      "name":        "AssetDraft",
+      "description": "ConsultingAsset has been generated — not yet reviewed by the consultant"
+    },
+    {
+      "id":          "sro:AssetReviewed",
+      "type":        "State",
+      "name":        "AssetReviewed",
+      "description": "Consultant has reviewed or edited the asset content"
+    },
+    {
+      "id":          "sro:AssetApproved",
+      "type":        "State",
+      "name":        "AssetApproved",
+      "description": "Consultant has approved the asset — ready for client delivery via ICA"
+    },
+
+    {
+      "id":          "sro:RiskOpen",
+      "type":        "State",
+      "name":        "RiskOpen",
+      "description": "EngagementRisk has been identified and is unresolved — may be blocking delivery"
+    },
+    {
+      "id":          "sro:RiskMonitoring",
+      "type":        "State",
+      "name":        "RiskMonitoring",
+      "description": "EngagementRisk is acknowledged and being actively monitored — not yet resolved"
+    },
+    {
+      "id":          "sro:RiskResolved",
+      "type":        "State",
+      "name":        "RiskResolved",
+      "description": "EngagementRisk has been resolved and no longer blocks delivery"
+    },
+
+    {
+      "id":          "sro:ActionPending",
+      "type":        "State",
+      "name":        "ActionPending",
+      "description": "ConsultingAction has been created but not yet picked up by the assigned owner"
+    },
+    {
+      "id":          "sro:ActionAcknowledged",
+      "type":        "State",
+      "name":        "ActionAcknowledged",
+      "description": "Owner has acknowledged the action and confirmed they will address it"
+    },
+    {
+      "id":          "sro:ActionInProgress",
+      "type":        "State",
+      "name":        "ActionInProgress",
+      "description": "Owner is actively working on the consulting action"
+    },
+    {
+      "id":          "sro:ActionCompleted",
+      "type":        "State",
+      "name":        "ActionCompleted",
+      "description": "ConsultingAction is complete — the engagement can advance past this blocker"
+    }
+
+  ]
+}

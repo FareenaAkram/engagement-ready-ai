@@ -1,0 +1,25 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+.bob/mcp.json
+
+# Local tool settings — machine-specific, not project config
+.claude/
+
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+build/
+
+# Misc
+*.log
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

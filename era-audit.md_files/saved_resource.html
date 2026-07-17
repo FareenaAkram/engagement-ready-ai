@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- saved from url=(0253)https://a606b01e-ef39-4592-9d11-3f4c223b703d.frame.claudeusercontent.com/_f/1783798366-ac05/?__frame_t=0-TDy91B_z7jtnudC5c3hKh8.43eaa13c-c3b6-4cc8-95c8-480573ec5aa8.9b036352-d65b-446c-bda5-1848dc70575d.1783801970&__frame_v=manifest.21ba44c2bfde1499.json -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!-- frame-runtime --><!--<base href="/_f/1783798366-ac05/">--><base href="."><script>window.__FRAME_PREAMBLE={"capabilities":{"downloads":"downloads.DUzXFHNF.js","mcp":"mcp.Djj5DQjZ.js","self":"self.DqF_PxOe.js"},"transforms":"_transforms.DYk1Ltlh.js"}</script><script>(function(){"use strict";const X="modulepreload",Y=function(e){return"/"+e},Z={},U=function(t,n,u){let o=Promise.resolve();function i(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return o.then(f=>{for(const a of f||[])a.status==="rejected"&&i(a.reason);return t().catch(i)})},D=["light","dark","system"];function $(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_init;return t!=null&&typeof t=="object"}function q(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_theme;if(t==null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&D.includes(n)}function M(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const u=n.getAttribute("href");if(!u)return;let o,i;try{o=new URL(u,document.baseURI),i=new URL(document.baseURI).origin}catch{return}(o.protocol==="http:"||o.protocol==="https:")&&o.origin!==i&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:o.href},"*"))}const L={};function y(e){if(window===top)return;const t=Date.now();t-(L[e]||0)<500||(L[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const F=2e3,T=["wheel","touchstart","touchmove","keydown","pointerdown"];let k=0;function B(e){e.isTrusted&&(k=Date.now())}function z(){addEventListener("click",M,!0),addEventListener("auxclick",M,!0)}function W(){for(let e=0;e<T.length;e++)addEventListener(T[e],B,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-k<F&&y("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&y("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&y("click")},{capture:!0,passive:!0})}function x(e,t,n){const u=[...t.values()].filter(o=>o.targets.some(i=>i.startsWith(e+".")));return{wrap(o,i){const f=`${e}.${o}`,a=u.filter(s=>s.targets.includes(f));return a.length===0?(...s)=>{try{return i(...s)}catch(d){return Promise.reject(d)}}:(...s)=>{let d=s;for(const c of a){const l=c.module.parameters;if(l)try{d=l(d)}catch{return Promise.reject({code:"transform_error",id:c.id,scope:e,message:"parameters transform failed"})}}let m;try{m=i(...d)}catch(c){m=Promise.reject(c)}return m.then(c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.returns;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"returns"}),c}}return c},c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.throws;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"throws"}),Promise.reject(c)}}return Promise.reject(c)})}}}}function H(e,t,n,u=()=>{}){const o=new Set(e.changes??[]),i=new Map;for(const f of o){const a=t[f];a&&i.set(f,a)}return{contract:e.contract,changes:o,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},transforms:i,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>x(f,i,u)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let u=0;for(let o=0;o<n.length;o++){const i=n[o];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&u++}if(u&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:u},"*")}catch{}})();const K=1e4,G=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function J(e){for(const t of G)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const w=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities??{}}),E=window.__FRAME_PREAMBLE?.transforms,C=/^[\w.-]+\.js$/,V=/^[a-z][a-z0-9_-]{0,63}$/;let A=null,g=null;function P(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let R=!1;function N(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,R=!0):R&&(delete t.dataset.theme,t.style.colorScheme="",R=!1)}const _=new Map;function Q(e,t){const n=_.get(e);if(!n)return;Object.assign(n.impl,t),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const u=n.queue;n.queue=[];for(const o of u){const i=t[o.method];i?i(...o.args).then(o.resolve,o.reject):o.reject({code:"capability_removed",message:`${e}.${o.method} is not in this runtime`})}}function O(e,t){const n=_.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const u=n.queue;n.queue=[];for(const o of u)o.reject(t)}const j=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(j&&j.writable===!1)){z(),W();const e=j?.value??{};P(window,"claude",e);const t=s=>{const d={impl:Object.create(null),queue:[]};_.set(s,d);const m=new Proxy(d.impl,{get:(c,l)=>{if(typeof l=="string"&&!(l==="then"||l==="toJSON"||l==="valueOf"))return l==="toString"?Object.prototype.toString:(...h)=>{const p=c[l]??c.__settled;return p?p(...h):new Promise((b,S)=>{d.queue.push({method:l,args:h,resolve:b,reject:S})})}},set:()=>!1});P(e,s,m)};for(const s of Object.keys(w)){if(e[s]!==void 0){P(e,s,e[s]);continue}t(s)}let n=null,u=null,o=0;const i=s=>{s.source!==parent||!J(s.origin)||$(s.data)&&(n=s.data.__frame_init,g=s.origin,removeEventListener("message",i),clearTimeout(o),u?.())};addEventListener("message",i),parent.postMessage({__frame_connect:!0},"*");const f=new Promise(s=>{u=s,o=setTimeout(()=>{removeEventListener("message",i),s()},K)}),a=document.readyState==="loading"?new Promise(s=>document.addEventListener("DOMContentLoaded",()=>s(),{once:!0})):Promise.resolve();f.then(async()=>{if(!n||!g){for(const r of _.keys())O(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}N(n.theme);const s=g;addEventListener("message",r=>{r.source!==parent||r.origin!==s||q(r.data)&&N(r.data.__frame_theme.theme)});const d=r=>U(()=>import("/_runtime/"+r),void 0),m=Object.keys(n.capabilities??{});for(const r of m)Object.hasOwn(w,r)||V.test(r)&&e[r]===void 0&&(t(r),O(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const c=m.filter(r=>Object.hasOwn(w,r)).map(r=>[r,w[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[l,...h]=await Promise.allSettled([E&&C.test(E)?d(E):Promise.resolve({}),...c.map(([,r])=>d(r))]),p=g;A=H(n,l.status==="fulfilled"&&l.value?.TRANSFORMS||{},{shellOrigin:p,mount:Q},r=>parent.postMessage({__frame_cap_telemetry:r},p));const b=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},p),S=A;h.forEach((r,v)=>{const I=c[v][0];if(r.status!=="fulfilled"){b(I);return}try{r.value?.install?.(S)}catch{b(I)}});for(const[r,v]of _)v.queue.length===0&&Object.keys(v.impl).length>0||O(r,{code:m.includes(r)?"capability_disabled":"not_granted",message:"capability not available in this session"});await a,parent.postMessage({__frame_ready:!0},g)})}})();</script><!-- /frame-runtime --><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<style>:root{color-scheme:light}body{background:#fff;color:rgba(0,0,0,.8);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:rgba(0,0,0,.6)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:hsl(210 100% 45%);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid rgba(0,0,0,.1);padding-left:10px;color:rgba(0,0,0,.6)}:not(pre)>code{background:rgba(0,0,0,.04);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:rgba(0,0,0,.04);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:rgba(0,0,0,.06);font-weight:600}td{background:rgba(0,0,0,.04)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid rgba(0,0,0,.16);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+<h1>Engagement Ready AI — Project Audit</h1>
+<p><em>Reviewed 2026-07-12 · Next.js 15 app for IBM Consulting engagement readiness, built on watsonx.ai + ICA + Context Studio</em></p>
+<h2>TL;DR</h2>
+<p>The <strong>safe path works</strong>: draft → AI assessment → HITL decision → task tracking → final approval → delivery all run end-to-end without crashing, because every IBM/ICA integration has a mock fallback and the app is built to degrade gracefully when credentials are missing. That's genuinely well done.</p>
+<p>The <strong>live path is unproven</strong>: real ICA/Jira/Slack credentials are either absent or were never confirmed against the real backend. The project's own docs admit this (see "ICA Reality" doc below) — the ICA connection strategy changed at least twice during development and the final approach (Agent-API / Langflow) was still being reverse-engineered by trial-and-error scripts sitting in <code>.bob/</code>.</p>
+<p>There are <strong>2 real functional bugs</strong> in the core workflow (one can crash a screen, one causes a stale/confusing UI for up to 30s), a handful of <strong>dead code / orphaned files</strong>, a <strong>non-functional Settings page</strong>, and <strong>one important security issue</strong>: live, long-lived bearer tokens are sitting in plaintext in <code>.bob/mcp.json</code> and <code>.env.local</code>.</p>
+<hr>
+<h2>1. Does the whole workflow actually run?</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Trigger</th>
+<th>Works?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>draft</code> → <code>assessment-complete</code></td>
+<td>Submit intake → <code>POST /api/readiness-review</code></td>
+<td>Works, but see Bug #1</td>
+</tr>
+<tr>
+<td><code>assessment-complete</code> → <code>action-plan-accepted</code></td>
+<td>Accept AI plan → <code>POST /api/hitl-decision</code></td>
+<td>Works</td>
+</tr>
+<tr>
+<td>→ <code>tasks-in-progress</code></td>
+<td>First task update → <code>POST /api/task/update</code></td>
+<td>Works</td>
+</tr>
+<tr>
+<td>→ <code>ready-for-review</code></td>
+<td>Last task done → <code>POST /api/task/update</code></td>
+<td>Works server-side, client UI goes stale (Bug #2)</td>
+</tr>
+<tr>
+<td>→ <code>ready-for-engagement</code> → <code>delivery-package-sent</code></td>
+<td>Final approval → <code>POST /api/final-approval</code> → <code>generate-deliverables</code></td>
+<td>Works</td>
+</tr>
+</tbody></table>
+<p>Every page's <code>fetch()</code> call resolves to a real route — no broken wiring on the happy path. But three things are <strong>dead code that looks alive</strong>:</p>
+<ul>
+<li><strong><code>components/ui/maintenance-tasks.tsx</code></strong> — a fully-built 448-line alternate Action Center that <strong>nothing renders</strong>. <code>/maintenance-tasks</code> actually renders <code>ica-action-center.tsx</code>. If anyone edits this file expecting it to change the app, nothing happens.</li>
+<li><strong><code>app/api/ica-agent/assign-tasks/route.ts</code></strong> and <strong><code>app/api/advance-stage/route.ts</code></strong> — fully implemented, zero callers anywhere in the app.</li>
+<li><strong><code>app/api/debug-watsonx/</code></strong> — empty folder, no <code>route.ts</code>, would 404.</li>
+</ul>
+<h3>Bug #1 — a shape-deviant Granite response can crash the readiness-review screen</h3>
+<p><code>services/dashboard-service.ts</code> (<code>submitReadinessReview</code>) builds the AI result and <strong>returns it straight to the browser without running it through <code>normaliseReview()</code></strong> — the one normalization function AGENTS.md calls "mandatory." Combined with the fact that <code>tryParseJson()</code> in <code>watsonx-service.ts</code> does zero schema validation (a syntactically-valid but wrong-shaped Granite reply is accepted as <code>status: 'success'</code>), <code>components/ui/readiness-review.tsx:708</code> does <code>result.criticalIssues.length</code> with no guard. If Granite ever omits or mistypes that field, this throws on the very next render after the consultant clicks "Run AI assessment." Low probability, high visibility.</p>
+<p><strong>Fix:</strong> pipe the result through <code>normaliseReview()</code> before returning it (one-line change), and/or add a minimal zod shape check on the parsed Granite JSON.</p>
+<h3>Bug #2 — Action Center shows the wrong panel for up to 30s after the last task is completed</h3>
+<p>Marking the last task done invalidates only the <code>['task-list']</code> query, not <code>['dashboard']</code>/<code>['ai-analysis']</code>. Since those have a 30s <code>staleTime</code> and no polling, the client's <code>workflowStage</code> doesn't refresh — so <code>ICAActionCenter</code> falls through to the generic "keep working on tasks" panel instead of showing <strong>Approve for Engagement</strong>, even though the server has already advanced the stage. The consultant has to wait or manually reload.</p>
+<p><strong>Fix:</strong> in the task "mark done" mutation's <code>onSuccess</code>, also invalidate <code>['dashboard']</code> (one line).</p>
+<h3>Minor issues found</h3>
+<ul>
+<li><code>app/api/settings/route.ts</code> is the only GET route missing <code>export const dynamic = 'force-dynamic'</code>.</li>
+<li><code>app/api/notify/route.ts</code> mislabels which channel failed when the requested channel list excludes one of <code>ica</code>/<code>slack</code>/<code>email</code> (index-based mismatch).</li>
+<li><code>data/mock-dashboard.ts</code>'s <code>analytics</code> field is never overlaid with live data (harmless today — nothing reads it — but a trap for future code).</li>
+<li><code>workflowStage</code> never literally equals <code>'tasks-complete'</code> even though it's a defined stage (only appears in history labels) — fine today, but a landmine for future <code>=== 'tasks-complete'</code> checks.</li>
+<li><code>readWorkflowState</code>/<code>writeWorkflowState</code> swallow filesystem errors with <strong>no logging at all</strong> — a corrupted state file would silently reset the whole engagement with zero trace.</li>
+</ul>
+<h3>The Settings page doesn't actually do anything</h3>
+<p><code>components/ui/settings.tsx</code> has no <code>POST /api/settings</code> to save to — edits vanish on refresh. Worse, the "current settings" panel always shows the <strong>server's hardcoded defaults</strong>, not your edits (<code>data?.data ?? settings</code> — the query always wins). None of its 4 fields (engagement label, consultant name, auto-refresh interval, animation toggle) are read anywhere else in the app. It's pure decoration right now.</p>
+<hr>
+<h2>2. ICA task assignment &amp; "Generate Delivery Assets" — deep dive</h2>
+<p>There are genuinely <strong>two separate ICA features</strong> wired into two different screens; worth knowing so you don't conflate them.</p>
+<h3>A) Task assignment (QA Review → Accept AI Plan)</h3>
+<pre><code>Accept plan -&gt; POST /api/hitl-decision
+  -&gt; writes engagement package to .next/tmp/ica-packages/*.json (always succeeds)
+  -&gt; pushToICAAgenticApp() - raw JSON-RPC "tools/call" to the ICA MCP gateway
+  -&gt; assignTasksViaICA() - tries Langflow HTTP call -&gt; then ICA Agent-API (A2A) call -&gt; then mock
+  -&gt; if ICA returns 0 emails, falls back to local nodemailer send
+</code></pre>
+<p><strong>Verdict:</strong> the <em>code</em> is real (real HTTP calls, real auth headers) but the Jira-ticket-creation and Slack-posting for this step are <strong>not done by this app's code</strong> — they're a natural-language instruction embedded in the prompt sent to the external ICA agent ("...create Jira tickets, post to Slack..."), and the app just trusts whatever JSON comes back. In mock mode (no ICA agent reachable), it fabricates <code>ERA-100</code>, <code>ERA-101</code> ticket numbers and explicitly marks <code>accepted: false</code> — that part is honest, not disguised as real.</p>
+<p><strong>A real bug here:</strong> <code>hasICAAgenticConfig()</code> checks <code>ICA_A2A_KEY</code>, but the code it gates authenticates using a <strong>different</strong> variable, <code>ICA_BEARER</code> (and the error message even says <code>'ICA_BEARER not set'</code> while checking the wrong key). In your current <code>.env.local</code> both happen to be populated so it's masked — but it's a latent bug that would misfire in a leaner config, and it also feeds the "live/mock" status badge in the UI, so that indicator can't be fully trusted.</p>
+<p><strong>Also confirmed:</strong> the <code>.bob/test-ica-*.mjs</code> scripts are active reverse-engineering of the ICA Agentic App's session/tool protocol by trial and error — brute-forcing endpoint names, testing multiple payload shapes. That's a strong signal the "real" MCP push (<code>ingest_engagement_package</code>) has <strong>not been confirmed working against the live ICA backend</strong> — it's a best-guess contract, not a verified one.</p>
+<h3>B) Generate Delivery Assets (QA Review "ICA Accelerator" buttons + Final Approval)</h3>
+<p>Two different generators share the name:</p>
+<ol>
+<li><strong>On-demand single asset</strong> (executive summary, RAID log, user stories, etc. — 18 types) — one Granite call per click. Works correctly, has an honest "(Demo Mode)" fallback label when watsonx isn't configured. <strong>But results live only in component <code>useState</code> — refresh the page and everything generated is gone.</strong> Nothing is persisted or sent anywhere.</li>
+<li><strong>Final-approval delivery package</strong> (executive summary, client email, internal email, Jira epic, Slack message) — this one <em>is</em> persisted to the workflow state file, and <em>does</em> trigger real side effects: real nodemailer send, real Slack webhook post, real Jira Epic+Story creation via a genuine Jira Cloud REST client — <strong>all gated correctly, all silently no-op today because <code>JIRA_*</code> and <code>SLACK_WEBHOOK_URL</code> aren't set in your <code>.env.local</code>.</strong></li>
+</ol>
+<p><strong>Suggested improvements for this flow:</strong></p>
+<ul>
+<li>Persist on-demand generated assets (flow A) into the workflow state file the same way flow B does, so they survive a refresh and show up in the delivery package.</li>
+<li>Fix the <code>ICA_A2A_KEY</code>/<code>ICA_BEARER</code> mismatch so the "live" badge is trustworthy.</li>
+<li>Delete the two dead/duplicate routes (<code>ica-agent/assign-tasks</code>, <code>advance-stage</code>) or wire them in — right now they're confusing maintenance surface with no purpose.</li>
+<li>Add a lightweight retry/confirmation step after the ICA agent call: since Jira/Slack creation for Phase 1 is only a <em>claim</em> from the external agent's text response, consider having the app independently verify (e.g., a follow-up read call) rather than trusting self-reported JSON.</li>
+</ul>
+<hr>
+<h2>3. Security note (please action this)</h2>
+<p><code>.bob/mcp.json</code> and <code>.env.local</code> contain <strong>live, long-lived bearer tokens</strong> in plaintext (one ICA gateway token has no expiry until 2096). This folder isn't a git repo yet, which limits accidental push risk today, but:</p>
+<ul>
+<li>If you ever <code>git init</code> this project, make sure <code>.env.local</code> and <code>.bob/mcp.json</code> are in <code>.gitignore</code> <strong>before</strong> the first commit.</li>
+<li>Treat these as compromised if this folder is ever shared/zipped/uploaded anywhere — rotate them.</li>
+</ul>
+<hr>
+<h2>4. Integrating Jira &amp; Slack through ICA — simple path (not the complex one)</h2>
+<p>Your docs describe <strong>three different ICA connection strategies</strong> built at different times (direct REST → MCP-via-Orchestrate → Agent-API/Langflow A2A). That churn is likely your biggest productivity drag — pick one and stop re-litigating it. Given what's already built and working in your codebase, here's the lowest-complexity path:</p>
+<p><strong>Recommended: keep ICA out of the Jira/Slack critical path. Let this app talk to Jira and Slack directly, and use ICA only for the parts only ICA can do (task assignment routing, org-aware notifications).</strong></p>
+<p>Why: <code>services/jira-service.ts</code> and <code>services/notification-service.ts</code>'s Slack webhook are <strong>already real, already tested-shape, already working</strong> the moment you provide credentials — no protocol reverse-engineering needed, unlike the ICA Agentic App MCP path. Concretely:</p>
+<ol>
+<li><strong>Slack — 10 minute setup.</strong> Create a Slack app → enable Incoming Webhooks → pick a channel → copy the webhook URL → set <code>SLACK_WEBHOOK_URL</code> in <code>.env.local</code>. Nothing else to change; <code>hasSlackConfig()</code> flips on and the delivery flow starts posting for real.</li>
+<li><strong>Jira — 15 minute setup.</strong> Create an API token in your Atlassian account → set <code>JIRA_BASE_URL</code>, <code>JIRA_EMAIL</code>, <code>JIRA_API_TOKEN</code>, <code>JIRA_PROJECT_KEY</code> → <code>hasJiraConfig()</code> flips on and Epic+Story creation starts firing for real on final approval.</li>
+<li><strong>Where ICA still adds value:</strong> keep using the ICA Agent-API call for <em>assigning</em> tasks to the right consulting-team roles (that routing logic genuinely benefits from ICA's org knowledge) — but stop asking the ICA agent to "also create the Jira ticket and post to Slack" in the same prompt. Split responsibility: <strong>ICA decides who/what; this app's own Jira/Slack clients execute the write</strong>. That removes your two least-reliable dependencies (unverified MCP protocol, trusting an LLM's self-reported "I created the ticket") from the two actions you most need to be correct (Jira tickets, Slack pings).</li>
+<li>Once that's stable, if you still want the "official" ICA-mediated route for compliance/governance reasons, layer it back in behind the same <code>hasXConfig()</code> guard pattern you already use — additive, not a rewrite.</li>
+</ol>
+<p>This is deliberately the "boring" option — it uses code you already have working, skips a protocol that's still being reverse-engineered, and gets you a demoable, correct Jira+Slack flow in under an hour instead of more MCP archaeology.</p>
+<hr>
+<h2>5. Productivity / workflow improvement suggestions (roughly ordered by effort:impact)</h2>
+<p><strong>Quick wins (under an hour each):</strong></p>
+<ul>
+<li>Fix Bug #2 (add <code>invalidateQueries(['dashboard'])</code> to the task-complete mutation) — removes the most user-visible glitch.</li>
+<li>Add <code>normaliseReview()</code> to <code>submitReadinessReview()</code>'s return path — closes the one crash risk.</li>
+<li>Add <code>export const dynamic = 'force-dynamic'</code> to <code>app/api/settings/route.ts</code>.</li>
+<li>Delete or clearly comment out the 3 dead files (<code>maintenance-tasks.tsx</code>, <code>ica-agent/assign-tasks/route.ts</code>, <code>advance-stage/route.ts</code>) so future edits don't target them by mistake.</li>
+<li>Fix the <code>ICA_A2A_KEY</code> vs <code>ICA_BEARER</code> mismatch in <code>hasICAAgenticConfig()</code>/<code>getICAStatus()</code>.</li>
+</ul>
+<p><strong>Medium (a session each):</strong></p>
+<ul>
+<li>Persist on-demand-generated ICA assets (the QA Review accelerator panel) into workflow state so they survive refresh, instead of living only in <code>useState</code>.</li>
+<li>Wire Jira + Slack directly (per §4) — biggest real productivity unlock, since it turns "demo mode" into an actually-working delivery pipeline today.</li>
+<li>Make the Settings page functional: add a <code>POST /api/settings</code>, persist to the workflow-state file (or a small config file), and fix the <code>data?.data ?? settings</code> precedence bug so user edits actually display.</li>
+</ul>
+<p><strong>Bigger (worth a deliberate decision, not urgent):</strong></p>
+<ul>
+<li>Pick ONE ICA connection strategy (direct REST vs MCP vs Agent-API/Langflow) and delete the others' code paths — right now three strategies coexist, which is exactly the kind of complexity to avoid. Recommend: Agent-API/Langflow for task routing (already working in mock mode, closest to "done"), direct Jira/Slack clients for delivery (per §4), and drop the raw MCP <code>pushToICAAgenticApp</code> push entirely unless the real contract gets confirmed by IBM.</li>
+<li>Add basic logging (<code>console.warn</code>) to the two silent catch-alls in <code>lib/workflow-state.ts</code> so a corrupted state file doesn't fail invisibly.</li>
+</ul>
+<hr>
+<h2>Bottom line</h2>
+<p>Nothing is fundamentally broken — the app runs, degrades gracefully, and the "demo mode" story is honest and consistent. The two real bugs are small, fixable in under an hour combined. The biggest lever for "everything actually working" isn't more code — it's <strong>committing to one ICA integration strategy</strong> and <strong>turning on the Jira/Slack credentials directly</strong> rather than routing them through an unverified ICA protocol.</p>
+
+</body></html>

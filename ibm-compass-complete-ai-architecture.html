@@ -1,0 +1,1035 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IBM Compass — Complete AI Architecture</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #1f2328;
+    background: #fff;
+    padding: 32px 16px 64px;
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+
+  /* Hero */
+  .hero {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 28px 28px 22px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #7c5cd8;
+    border: 1px solid #7c5cd8;
+    border-radius: 4px;
+    padding: 2px 9px;
+    margin-bottom: 12px;
+  }
+  .hero h1 { font-size: 26px; font-weight: 800; letter-spacing: -.4px; margin-bottom: 6px; }
+  .hero .sub { font-size: 14px; color: #57606a; }
+
+  /* TOC */
+  .toc {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    font-size: 13px;
+  }
+  .toc h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #57606a; margin-bottom: 10px; font-weight: 700; }
+  .toc ol { padding-left: 18px; column-count: 2; column-gap: 24px; }
+  .toc li { margin-bottom: 3px; }
+  .toc a { color: #3b82d4; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Section */
+  .section { margin-bottom: 44px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #fff;
+    background: #3b82d4;
+    border-radius: 4px;
+    padding: 2px 7px;
+    min-width: 28px;
+    text-align: center;
+  }
+  .section-title { font-size: 17px; font-weight: 700; }
+
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* Callout */
+  .callout {
+    background: #f7f8fa;
+    border-left: 3px solid #3b82d4;
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+  .callout.purple { border-left-color: #7c5cd8; }
+  .callout.green  { border-left-color: #1a7f37; }
+  .callout strong { color: #1f2328; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 14px; }
+  th {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #57606a;
+  }
+  td { border: 1px solid #e5e7eb; padding: 8px 10px; vertical-align: top; color: #1f2328; }
+  tr:nth-child(even) td { background: #f7f8fa; }
+  .mono { font-family: "Cascadia Code", "Consolas", monospace; font-size: 12px; color: #7c5cd8; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .card .chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #fff;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-bottom: 6px;
+  }
+  .chip-blue   { background: #3b82d4; }
+  .chip-purple { background: #7c5cd8; }
+  .chip-green  { background: #1a7f37; }
+  .chip-orange { background: #e05d0b; }
+  .chip-grey   { background: #57606a; }
+  .card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .card p  { font-size: 12px; color: #57606a; margin: 0; }
+  .card ul { font-size: 12px; color: #57606a; padding-left: 14px; margin: 0; }
+
+  /* Arch diagram */
+  .arch-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f7f8fa;
+    padding: 20px;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+  .arch-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .arch-node {
+    border-radius: 5px;
+    padding: 6px 11px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .an-blue   { background: #dbeafe; border-color: #3b82d4; color: #1e3a5f; }
+  .an-purple { background: #ede9fe; border-color: #7c5cd8; color: #3b0f87; }
+  .an-green  { background: #dcfce7; border-color: #1a7f37; color: #14532d; }
+  .an-orange { background: #fff7ed; border-color: #e05d0b; color: #7c2d12; }
+  .an-grey   { background: #f1f5f9; border-color: #94a3b8; color: #334155; }
+  .an-dark   { background: #1f2328; border-color: #1f2328; color: #fff; }
+  .arch-label {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #57606a;
+    margin-bottom: 6px;
+  }
+  .arch-divider {
+    border: none;
+    border-top: 1px dashed #e5e7eb;
+    margin: 10px 0;
+  }
+  .arrow {
+    text-align: center;
+    font-size: 16px;
+    color: #57606a;
+    margin: 4px 0;
+    line-height: 1;
+  }
+
+  /* Sequence diagram */
+  .seq {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    font-size: 12px;
+  }
+  .seq-header {
+    background: #1f2328;
+    color: #fff;
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+  .seq-body { padding: 0; }
+  .seq-row {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 8px 12px;
+    gap: 10px;
+  }
+  .seq-row:last-child { border-bottom: none; }
+  .seq-step {
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #3b82d4;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .seq-step.purple { background: #7c5cd8; }
+  .seq-step.green  { background: #1a7f37; }
+  .seq-from {
+    min-width: 120px;
+    font-weight: 600;
+    font-size: 11px;
+    color: #57606a;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding-top: 2px;
+  }
+  .seq-arrow { color: #3b82d4; font-size: 13px; padding-top: 2px; flex-shrink: 0; }
+  .seq-arrow.purple { color: #7c5cd8; }
+  .seq-to {
+    min-width: 120px;
+    font-weight: 600;
+    font-size: 11px;
+    color: #1f2328;
+    padding-top: 2px;
+  }
+  .seq-msg { color: #57606a; font-size: 12px; flex: 1; padding-top: 1px; }
+
+  /* Code-style block */
+  .code-block {
+    background: #f1f5f9;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #1f2328;
+    margin-bottom: 14px;
+    overflow-x: auto;
+  }
+  .code-block .kw  { color: #7c5cd8; font-weight: 700; }
+  .code-block .str { color: #1a7f37; }
+  .code-block .cmt { color: #57606a; font-style: italic; }
+  .code-block .fn  { color: #3b82d4; }
+
+  /* Flow list */
+  .flow { list-style: none; padding: 0; }
+  .flow li {
+    display: flex;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+    align-items: flex-start;
+  }
+  .flow li:last-child { border-bottom: none; }
+  .flow-num {
+    width: 22px;
+    height: 22px;
+    background: #3b82d4;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Tags inline */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-weight: 600;
+    background: #ede9fe;
+    color: #3b0f87;
+    margin-left: 4px;
+  }
+  .tag.blue { background: #dbeafe; color: #1e3a5f; }
+  .tag.green { background: #dcfce7; color: #14532d; }
+
+  /* Footer */
+  footer {
+    margin-top: 48px;
+    padding-top: 14px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 12px;
+    color: #57606a;
+  }
+
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; }
+    .toc ol { column-count: 1; }
+    .seq-from, .seq-to { min-width: 80px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="hero">
+    <div class="badge">IBM AI Architect Design Document</div>
+    <h1>IBM Compass — Complete AI Architecture</h1>
+    <div class="sub">Multi-Agent System · watsonx Orchestrate · Granite LLMs · Enterprise RAG · Scale Design</div>
+  </div>
+
+  
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#s1">System Overview</a></li>
+      <li><a href="#s2">Agent Catalogue</a></li>
+      <li><a href="#s3">Orchestrator Design</a></li>
+      <li><a href="#s4">Agent Communication</a></li>
+      <li><a href="#s5">Memory Architecture</a></li>
+      <li><a href="#s6">RAG Architecture</a></li>
+      <li><a href="#s7">Enterprise Data Indexing</a></li>
+      <li><a href="#s8">Backend Technologies</a></li>
+      <li><a href="#s9">API Design</a></li>
+      <li><a href="#s10">Sequence Diagrams</a></li>
+      <li><a href="#s11">Security &amp; Governance</a></li>
+      <li><a href="#s12">Enterprise Scale Design</a></li>
+    </ol>
+  </div>
+
+  
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">System Overview — The Three-Layer Architecture</span>
+    </div>
+    <p>IBM Compass is designed as a <strong>three-layer AI system</strong>: an <em>Orchestration Layer</em> driven by watsonx Orchestrate, a <em>Cognitive Layer</em> of specialised sub-agents powered by IBM Granite LLMs, and a <em>Grounding Layer</em> providing RAG, memory, and tool access. These layers sit behind a unified API gateway and interact with the IBM enterprise tool ecosystem.</p>
+
+    <div class="arch-box">
+      <div class="arch-label">▲ User Interface Layer</div>
+      <div class="arch-row">
+        <div class="arch-node an-grey">Chat UI (React)</div>
+        <div class="arch-node an-grey">Daily Briefing Widget</div>
+        <div class="arch-node an-grey">Slack / Teams Bot</div>
+        <div class="arch-node an-grey">REST / Webhook</div>
+      </div>
+      <hr class="arch-divider" />
+      <div class="arch-label">▲ API Gateway &amp; Auth (Kong + IBM APIC + OAuth 2.0)</div>
+      <hr class="arch-divider" />
+      <div class="arch-label">▲ Orchestration Layer — watsonx Orchestrate</div>
+      <div class="arch-row">
+        <div class="arch-node an-dark" style="min-width:200px">Compass Orchestrator Agent<br /><span style="font-size:10px;font-weight:400;opacity:.8">Intent Router · Task Planner · Delegator</span></div>
+      </div>
+      <div class="arrow">↓ delegates to</div>
+      <div class="arch-label">▲ Cognitive Layer — Specialised Sub-Agents (Granite LLMs)</div>
+      <div class="arch-row">
+        <div class="arch-node an-blue">Briefing Agent</div>
+        <div class="arch-node an-blue">Meeting Agent</div>
+        <div class="arch-node an-blue">Knowledge Agent</div>
+        <div class="arch-node an-blue">Risk Agent</div>
+        <div class="arch-node an-blue">Draft Agent</div>
+        <div class="arch-node an-blue">Approval Agent</div>
+        <div class="arch-node an-blue">Calendar Agent</div>
+      </div>
+      <hr class="arch-divider" />
+      <div class="arch-label">▲ Grounding Layer</div>
+      <div class="arch-row">
+        <div class="arch-node an-purple">RAG Pipeline<br />(watsonx.ai + Elasticsearch)</div>
+        <div class="arch-node an-purple">Working Memory<br />(Redis)</div>
+        <div class="arch-node an-purple">Long-Term Memory<br />(PostgreSQL + pgvector)</div>
+        <div class="arch-node an-purple">Tool Registry<br />(watsonx Skills)</div>
+      </div>
+      <hr class="arch-divider" />
+      <div class="arch-label">▲ Enterprise Data &amp; Integration Layer</div>
+      <div class="arch-row">
+        <div class="arch-node an-green">Jira</div>
+        <div class="arch-node an-green">Confluence</div>
+        <div class="arch-node an-green">Slack</div>
+        <div class="arch-node an-green">GitHub</div>
+        <div class="arch-node an-green">Workday</div>
+        <div class="arch-node an-green">ServiceNow</div>
+        <div class="arch-node an-green">Box / SharePoint</div>
+        <div class="arch-node an-green">Calendar APIs</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Key Design Principle:</strong> Every agent is stateless and idempotent. All state is held in the Grounding Layer. This allows horizontal scaling, replay of actions, and full audit trails — mandatory for enterprise governance.
+    </div>
+  </div>
+
+  
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Agent Catalogue — Roles &amp; Responsibilities</span>
+    </div>
+    <p>Compass runs <strong>8 specialised agents</strong>. Each is an autonomous unit with a defined capability domain, input contract, output contract, and set of permitted tools. No agent has knowledge of another agent's internals — communication happens exclusively via the Orchestrator.</p>
+
+    <table>
+      <tr>
+        <th>Agent</th>
+        <th>Role</th>
+        <th>LLM</th>
+        <th>Primary Tools</th>
+      </tr>
+      <tr>
+        <td><strong>Orchestrator Agent</strong></td>
+        <td>Intent classification, task decomposition, delegation to sub-agents, result synthesis, guardrails enforcement</td>
+        <td class="mono">Granite 34B Instruct</td>
+        <td>All sub-agent dispatch APIs, memory read/write, audit logger</td>
+      </tr>
+      <tr>
+        <td><strong>Briefing Agent</strong></td>
+        <td>Assembles the daily personalised briefing by aggregating priority signals from calendar, Jira, email, Slack. Ranks tasks by urgency and generates a structured narrative summary.</td>
+        <td class="mono">Granite 13B</td>
+        <td>Calendar API, Jira API, Slack summary tool, user memory read</td>
+      </tr>
+      <tr>
+        <td><strong>Meeting Intelligence Agent</strong></td>
+        <td>Consumes meeting transcript (Webex/Zoom STT), extracts action items with owners and due dates, creates Jira tickets, drafts follow-up emails, and stores meeting summary in memory.</td>
+        <td class="mono">Granite 13B</td>
+        <td>Webex transcript API, Jira create-ticket, email draft tool, Confluence write</td>
+      </tr>
+      <tr>
+        <td><strong>Knowledge Agent</strong></td>
+        <td>Answers employee questions grounded in IBM's internal corpus via RAG. Returns cited answers with document links, confidence scores, and recommended experts. Never answers without retrieval.</td>
+        <td class="mono">Granite 13B + RAG</td>
+        <td>RAG retriever, Elasticsearch, Confluence read, Box read, expert directory</td>
+      </tr>
+      <tr>
+        <td><strong>Risk Radar Agent</strong></td>
+        <td>Continuously polls Jira velocity, GitHub commit cadence, milestone dates, and resource calendars. Detects anomalies using time-series models. Generates risk summaries with severity, likelihood, and recommended intervention.</td>
+        <td class="mono">Granite 13B + ML anomaly model (watsonx.data)</td>
+        <td>Jira API, GitHub API, watsonx.data pipeline, risk scoring model</td>
+      </tr>
+      <tr>
+        <td><strong>Draft Generation Agent</strong></td>
+        <td>Produces high-quality long-form drafts: status reports, client emails, executive summaries, PR descriptions, Jira stories. Grounded in live project context. Respects user's tone profile stored in long-term memory.</td>
+        <td class="mono">Granite 34B Instruct</td>
+        <td>Context assembler, memory read (tone profile), Jira read, template library</td>
+      </tr>
+      <tr>
+        <td><strong>Approval Workflow Agent</strong></td>
+        <td>Tracks all in-flight approvals in ServiceNow, Workday, and procurement. Detects stalling (SLA breach), generates escalation messages, routes low-risk approvals for auto-approval, and keeps a live approval ledger.</td>
+        <td class="mono">Granite 13B</td>
+        <td>ServiceNow API, Workday API, escalation tool, notification dispatcher</td>
+      </tr>
+      <tr>
+        <td><strong>Calendar Optimiser Agent</strong></td>
+        <td>Analyses meeting load vs deep-work budget. Proposes reschedule, decline, or delegate recommendations for non-essential meetings. Blocks focus time. Sends meeting pre-briefs 30 minutes before each call.</td>
+        <td class="mono">Granite 13B</td>
+        <td>Calendar API (Google/Outlook), meeting context assembler, notification tool</td>
+      </tr>
+    </table>
+
+    <div class="callout purple">
+      <strong>Watsonx binding:</strong> Every agent is implemented as a <strong>watsonx Orchestrate Skill</strong> with a defined OpenAPI-compliant interface. The Orchestrator calls these skills programmatically, enabling full auditability, versioning, and rollback per agent independently.
+    </div>
+  </div>
+
+  
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Orchestrator Agent — Delegation Design</span>
+    </div>
+
+    <p>The <strong>Compass Orchestrator</strong> is the single point of entry for all requests. It runs on <strong>Granite 34B Instruct</strong> with a system prompt that encodes the full capability map of all sub-agents, the delegation policy, and the guardrail rules. It does not execute tasks itself — it reasons, plans, and delegates.</p>
+
+    <div class="callout green">
+      <strong>Recommendation: Yes — the Orchestrator should always delegate.</strong> The Orchestrator should never directly write to Jira, send emails, or query knowledge. Delegation maintains a clean separation of concerns, allows per-agent observability, and makes failure isolation possible. The Orchestrator's only job is to <em>think and route</em>.
+    </div>
+
+    <p><strong>Orchestrator execution model:</strong> The Orchestrator follows a <em>Plan → Delegate → Observe → Synthesise</em> loop:</p>
+    <ul class="flow">
+      <li><span class="flow-num">1</span><div><strong>Intent Classification</strong> — Granite 34B classifies the incoming request into one of 12 intent categories (briefing, knowledge_query, meeting_process, draft_request, risk_check, approval_action, calendar_optimise, compound). Uses watsonx NLP classifier as a pre-filter for speed.</div></li>
+      <li><span class="flow-num">2</span><div><strong>Task Decomposition</strong> — For compound requests (e.g., "prepare me for my 3pm client call"), the Orchestrator breaks this into sub-tasks: (a) fetch meeting context, (b) RAG-query relevant account docs, (c) surface recent Jira items, (d) draft pre-brief. Tasks are dependency-ordered.</div></li>
+      <li><span class="flow-num">3</span><div><strong>Parallel Delegation</strong> — Independent sub-tasks are dispatched in parallel to multiple agents via watsonx Orchestrate's async skill invocation. Dependent tasks are chained. This is the primary source of response-time optimisation.</div></li>
+      <li><span class="flow-num">4</span><div><strong>Result Aggregation</strong> — The Orchestrator receives all agent outputs and synthesises a unified, coherent response. It resolves conflicts (e.g., Knowledge Agent and Risk Agent give different project status) by sourcing priority rules from governance config.</div></li>
+      <li><span class="flow-num">5</span><div><strong>Guardrail Check</strong> — Before returning or acting, the Orchestrator runs all outputs through IBM watsonx.governance's content shield: PII check, hallucination risk flag, action-confidence threshold (high-risk actions require explicit user confirmation).</div></li>
+    </ul>
+
+    <div class="code-block">
+<span class="cmt">// Orchestrator decision schema (simplified)</span>
+{
+  <span class="kw">"intent"</span>: <span class="str">"compound"</span>,
+  <span class="kw">"sub_tasks"</span>: [
+    { <span class="kw">"agent"</span>: <span class="str">"calendar_agent"</span>,   <span class="kw">"input"</span>: <span class="fn">getMeetingContext</span>(<span class="str">"15:00"</span>), <span class="kw">"depends_on"</span>: [] },
+    { <span class="kw">"agent"</span>: <span class="str">"knowledge_agent"</span>,  <span class="kw">"input"</span>: <span class="fn">ragQuery</span>(<span class="str">"client account docs"</span>), <span class="kw">"depends_on"</span>: [] },
+    { <span class="kw">"agent"</span>: <span class="str">"risk_agent"</span>,       <span class="kw">"input"</span>: <span class="fn">recentRisks</span>(<span class="str">"project_id"</span>), <span class="kw">"depends_on"</span>: [] },
+    { <span class="kw">"agent"</span>: <span class="str">"draft_agent"</span>,      <span class="kw">"input"</span>: <span class="fn">assembleBrief</span>(results[0..2]),  <span class="kw">"depends_on"</span>: [0,1,2] }
+  ],
+  <span class="kw">"execution"</span>: <span class="str">"parallel_with_dependencies"</span>,
+  <span class="kw">"guardrails"</span>: { <span class="kw">"pii_scan"</span>: <span class="kw">true</span>, <span class="kw">"confidence_threshold"</span>: 0.82 }
+}
+    </div>
+  </div>
+
+  
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Agent Communication Patterns</span>
+    </div>
+    <p>Compass uses <strong>three communication patterns</strong> depending on the task type, latency requirement, and whether agents need to coordinate:</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="chip chip-blue">Pattern 1</div>
+        <h4>Request/Response (Sync)</h4>
+        <p>Used for user-initiated queries requiring immediate response (&lt;3s). Orchestrator dispatches skills via watsonx Orchestrate REST API. Agents return structured JSON. Used for chat interactions, knowledge queries, and briefing delivery.</p>
+      </div>
+      <div class="card">
+        <div class="chip chip-purple">Pattern 2</div>
+        <h4>Event-Driven (Async via IBM MQ)</h4>
+        <p>Used for background monitoring and proactive triggers. The Risk Agent and Approval Agent publish to IBM MQ topic queues when anomalies are detected. The Briefing Agent subscribes and incorporates signals into the next briefing cycle.</p>
+      </div>
+      <div class="card">
+        <div class="chip chip-green">Pattern 3</div>
+        <h4>Scheduled Batch (cron + Kafka)</h4>
+        <p>Used for the nightly/morning indexing pipeline: re-ingest changed documents, recompute user context vectors, refresh risk scores. Kafka streams connector pipes data from Jira/GitHub/Confluence into the watsonx.data pipeline.</p>
+      </div>
+      <div class="card">
+        <div class="chip chip-orange">Pattern 4</div>
+        <h4>Agent Handoff (Shared Context)</h4>
+        <p>When an agent needs output from another (e.g., Draft Agent needs Knowledge Agent's RAG output), the Orchestrator passes a <em>context bundle</em> as a JSON payload. No agent calls another directly — all routing passes through the Orchestrator.</p>
+      </div>
+    </div>
+
+    <p>All agent-to-agent message envelopes conform to a standard schema including: <span class="tag">request_id</span> <span class="tag">user_id</span> <span class="tag">session_id</span> <span class="tag">confidence</span> <span class="tag">citations[]</span> <span class="tag">action_type</span> <span class="tag">requires_confirmation</span>. This ensures full traceability through watsonx.governance.</p>
+  </div>
+
+  
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Memory Architecture — Three-Tier Memory Design</span>
+    </div>
+    <p>Enterprise AI assistants fail without structured memory. Compass implements a <strong>three-tier memory model</strong> matching the temporal horizon of each memory type to the right storage technology.</p>
+
+    <table>
+      <tr>
+        <th>Memory Tier</th>
+        <th>Scope</th>
+        <th>Technology</th>
+        <th>TTL</th>
+        <th>Contents</th>
+      </tr>
+      <tr>
+        <td><strong>Working Memory</strong><br /><span style="font-size:11px;color:#57606a">In-session context</span></td>
+        <td>Single conversation / task</td>
+        <td class="mono">Redis Cluster</td>
+        <td>2 hrs</td>
+        <td>Current session messages, intermediate agent outputs, task plan state, tool call history</td>
+      </tr>
+      <tr>
+        <td><strong>Episodic Memory</strong><br /><span style="font-size:11px;color:#57606a">Recent history</span></td>
+        <td>Last 30 days per user</td>
+        <td class="mono">PostgreSQL + pgvector</td>
+        <td>30 days rolling</td>
+        <td>Past meeting summaries, prior action items (done/open), recent document queries, approval states, drafts produced</td>
+      </tr>
+      <tr>
+        <td><strong>Semantic Memory</strong><br /><span style="font-size:11px;color:#57606a">User profile &amp; preferences</span></td>
+        <td>Persistent per user</td>
+        <td class="mono">PostgreSQL + pgvector</td>
+        <td>Indefinite</td>
+        <td>Writing tone profile, preferred communication style, project ownership list, org chart position, skill tags, trust-level for auto-actions</td>
+      </tr>
+    </table>
+
+    <div class="callout">
+      <strong>Memory Retrieval Strategy:</strong> At each agent invocation, the Orchestrator performs a <em>memory retrieval step</em> — a vector similarity search over episodic and semantic memory keyed on the current request embedding. The top-5 memory chunks are injected into the agent's context window as a "memory block", giving the agent rich personal context without blowing context limits.
+    </div>
+
+    <div class="callout purple">
+      <strong>Privacy enforcement:</strong> Memory is <em>strictly user-scoped</em> — enforced at the storage layer via row-level security in PostgreSQL. No user's memory is accessible to any other user's agent call, even within the same team. Sensitive fields (salary, performance ratings) are excluded from memory entirely via a field-level suppression list in the data pipeline.
+    </div>
+  </div>
+
+  
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">RAG Architecture — Retrieval-Augmented Generation</span>
+    </div>
+    <p>The <strong>Knowledge Agent</strong> is entirely RAG-driven. It never answers factual questions from model weights alone — all answers must be grounded in retrieved enterprise documents. This is the primary defence against hallucination in enterprise context.</p>
+
+    <div class="arch-box">
+      <div class="arch-label">RAG Pipeline — Query Path</div>
+      <div class="arch-row">
+        <div class="arch-node an-grey">User Query</div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-node an-blue">Query Rewriter<br /><span style="font-weight:400;font-size:10px">Granite 8B — expands acronyms,<br />disambiguates IBM jargon</span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-node an-purple">Hybrid Retriever<br /><span style="font-weight:400;font-size:10px">Dense: watsonx.ai embeddings (slate-125m-english-rtrvr)<br />Sparse: BM25 via Elasticsearch<br />Fusion: Reciprocal Rank Fusion</span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-node an-orange">Reranker<br /><span style="font-weight:400;font-size:10px">IBM cross-encoder reranking model<br />Top-K=5 final chunks</span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-node an-green">Context Assembly<br /><span style="font-weight:400;font-size:10px">Inject chunks + metadata + access-control tags into prompt</span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-node an-dark">Granite 13B Generation<br /><span style="font-weight:400;font-size:10px">Answer with inline citations + confidence score<br />Hallucination guard: answer must cite retrieved chunk</span></div>
+      </div>
+    </div>
+
+    <table>
+      <tr><th>RAG Component</th><th>Technology</th><th>Rationale</th></tr>
+      <tr>
+        <td>Embedding model</td>
+        <td class="mono">ibm/slate-125m-english-rtrvr</td>
+        <td>IBM-native, on-premises deployable, no data egress. Trained on enterprise language patterns.</td>
+      </tr>
+      <tr>
+        <td>Vector store</td>
+        <td class="mono">Elasticsearch 8.x (HNSW dense vectors)</td>
+        <td>Already in IBM's enterprise stack. Supports hybrid BM25+dense in a single query.</td>
+      </tr>
+      <tr>
+        <td>Query rewriting</td>
+        <td class="mono">Granite 8B Instruct</td>
+        <td>Lightweight rewriter expands IBM abbreviations (e.g., "GTS", "ELM", "SOW") to improve recall.</td>
+      </tr>
+      <tr>
+        <td>Reranker</td>
+        <td class="mono">IBM cross-encoder (watsonx.ai)</td>
+        <td>Precision-focused reranking reduces irrelevant chunk injection — critical for enterprise accuracy.</td>
+      </tr>
+      <tr>
+        <td>Chunk strategy</td>
+        <td>Semantic chunking (512 tokens, 64 overlap)</td>
+        <td>Preserves sentence coherence across document boundaries. Better than fixed-size chunking for policy docs.</td>
+      </tr>
+      <tr>
+        <td>Citation enforcement</td>
+        <td>Structured output + post-processor</td>
+        <td>Generated answer must include document_id, chunk_id, and page reference for every factual claim.</td>
+      </tr>
+    </table>
+
+    <div class="callout green">
+      <strong>Contextual RAG (advanced):</strong> For each chunk at index time, Compass generates a "context header" using Granite 8B that describes where in the document the chunk appears and what broader topic it belongs to. This context header is prepended to the chunk embedding, dramatically improving retrieval precision for policy and procedural documents.
+    </div>
+  </div>
+
+  
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-title">Enterprise Data Indexing Strategy</span>
+    </div>
+    <p>Data indexing is the foundation of Compass's knowledge quality. The architecture supports <strong>four indexing modes</strong> to handle the variety of enterprise data freshness requirements.</p>
+
+    <table>
+      <tr><th>Mode</th><th>Trigger</th><th>Sources</th><th>Latency Target</th></tr>
+      <tr>
+        <td><strong>Real-time (streaming)</strong></td>
+        <td>Webhook / Kafka event</td>
+        <td>Jira ticket updates, Slack messages (flagged), GitHub commits</td>
+        <td>&lt; 30 seconds</td>
+      </tr>
+      <tr>
+        <td><strong>Near-real-time (micro-batch)</strong></td>
+        <td>Every 15 minutes</td>
+        <td>Calendar changes, email summaries, ServiceNow approval changes</td>
+        <td>&lt; 20 minutes</td>
+      </tr>
+      <tr>
+        <td><strong>Nightly batch</strong></td>
+        <td>02:00 user local time</td>
+        <td>Confluence pages, Box files, SharePoint docs, GitHub READMEs</td>
+        <td>&lt; 8 hours</td>
+      </tr>
+      <tr>
+        <td><strong>On-demand (cold path)</strong></td>
+        <td>User query triggers a miss</td>
+        <td>Any document URL the user provides; ad-hoc indexing on cache miss</td>
+        <td>&lt; 10 seconds</td>
+      </tr>
+    </table>
+
+    <p>The indexing pipeline stages are:</p>
+    <ul class="flow">
+      <li><span class="flow-num">1</span><div><strong>Ingest</strong> — IBM DataStage connectors pull from source APIs. Kafka Connect ingests streaming events. All data tagged with: source_system, doc_id, owner_id, access_classification (PUBLIC/INTERNAL/CONFIDENTIAL/RESTRICTED), last_modified.</div></li>
+      <li><span class="flow-num">2</span><div><strong>Parse &amp; Clean</strong> — Apache Tika for format extraction (PDF, DOCX, PPTX, HTML). IBM Watson NLP pre-processor strips boilerplate, normalises IBM taxonomy terms, detects language.</div></li>
+      <li><span class="flow-num">3</span><div><strong>Chunk</strong> — Semantic chunking using sentence boundary detection. Each chunk inherits parent document's access_classification — retrieval is access-controlled at chunk granularity.</div></li>
+      <li><span class="flow-num">4</span><div><strong>Enrich</strong> — Granite 8B generates a context header per chunk. Named entity extraction tags IBM product names, project codes, people names. Metadata enriched: team, business_unit, client_id.</div></li>
+      <li><span class="flow-num">5</span><div><strong>Embed</strong> — ibm/slate-125m-english-rtrvr generates dense vectors per chunk. Stored alongside BM25 inverted index in Elasticsearch.</div></li>
+      <li><span class="flow-num">6</span><div><strong>Access Control Enforcement</strong> — At query time, the retriever filters Elasticsearch to chunks where access_classification ≤ user's clearance AND doc_id ∈ user's permitted_docs (from w3 SSO group membership). Users never see content they don't have access to.</div></li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <span class="section-title">Recommended Backend Technologies</span>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="chip chip-dark" style="background:#1f2328;color:#fff">AI Platform</div>
+        <h4>IBM watsonx.ai</h4>
+        <ul>
+          <li>Granite 13B &amp; 34B for all LLM inference</li>
+          <li>ibm/slate-125m-english-rtrvr embeddings</li>
+          <li>watsonx.governance for AI observability</li>
+          <li>Fine-tuning pipelines on IBM corpus</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="chip chip-blue">Orchestration</div>
+        <h4>IBM watsonx Orchestrate</h4>
+        <ul>
+          <li>Skill registry for all 8 agents</li>
+          <li>OpenAPI skill definitions</li>
+          <li>Action chaining &amp; parallel execution</li>
+          <li>Human-in-loop confirmation steps</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="chip chip-purple">API Layer</div>
+        <h4>IBM API Connect + Kong</h4>
+        <ul>
+          <li>API gateway for all integrations</li>
+          <li>Rate limiting, OAuth 2.0 / OIDC</li>
+          <li>IBM w3 SSO via Okta federation</li>
+          <li>API versioning &amp; deprecation policy</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="chip chip-green">Data Platform</div>
+        <h4>IBM watsonx.data + PostgreSQL</h4>
+        <ul>
+          <li>watsonx.data for ML feature pipelines</li>
+          <li>PostgreSQL + pgvector for memory store</li>
+          <li>Elasticsearch 8.x for RAG index</li>
+          <li>Redis 7 Cluster for working memory</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="chip chip-orange">Messaging</div>
+        <h4>IBM MQ + Apache Kafka</h4>
+        <ul>
+          <li>Kafka for high-volume event streaming</li>
+          <li>IBM MQ for reliable agent message queues</li>
+          <li>Kafka Connect for enterprise source connectors</li>
+          <li>Dead-letter queues for failed agent tasks</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="chip chip-grey">Infrastructure</div>
+        <h4>IBM Cloud + OpenShift</h4>
+        <ul>
+          <li>Red Hat OpenShift for container orchestration</li>
+          <li>IBM Cloud Code Engine for serverless agents</li>
+          <li>IBM Cloud Secrets Manager for credentials</li>
+          <li>IBM Cloud Activity Tracker for audit logs</li>
+        </ul>
+      </div>
+    </div>
+
+    <table>
+      <tr><th>Backend Service</th><th>Technology</th><th>Purpose</th></tr>
+      <tr><td>Application Server</td><td class="mono">FastAPI (Python 3.12)</td><td>Agent microservices — async, typed, OpenAPI auto-generated</td></tr>
+      <tr><td>Orchestrator Runtime</td><td class="mono">watsonx Orchestrate + custom agent loop</td><td>Plan-execute-observe loop, skill dispatch</td></tr>
+      <tr><td>ML Pipelines</td><td class="mono">Apache Spark on watsonx.data</td><td>Sprint velocity, budget burn, anomaly detection models</td></tr>
+      <tr><td>Monitoring</td><td class="mono">IBM Instana + OpenTelemetry</td><td>Distributed tracing, latency dashboards, AI call chains</td></tr>
+      <tr><td>CI/CD</td><td class="mono">IBM Tekton / GitHub Actions</td><td>Agent versioning, RAG pipeline tests, regression on model updates</td></tr>
+      <tr><td>Secret Management</td><td class="mono">IBM Cloud Secrets Manager + Vault</td><td>Rotate API keys for all 12+ integration connectors</td></tr>
+    </table>
+  </div>
+
+  
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <span class="section-title">API Design</span>
+    </div>
+    <p>Compass exposes a <strong>clean external API surface</strong> for the UI and enterprise integrations, and an <strong>internal skill API surface</strong> for agent-to-agent orchestration. Both follow OpenAPI 3.1 and are versioned under <span class="tag blue">/v1/</span>.</p>
+
+    <p><strong>Core External APIs:</strong></p>
+    <div class="code-block">
+<span class="cmt">// Primary Compass API surface</span>
+
+<span class="kw">POST</span>  <span class="fn">/v1/compass/query</span>          <span class="cmt">// General NL query → Orchestrator</span>
+<span class="kw">GET</span>   <span class="fn">/v1/compass/briefing</span>       <span class="cmt">// Daily briefing for authenticated user</span>
+<span class="kw">POST</span>  <span class="fn">/v1/compass/meeting/process</span> <span class="cmt">// Submit transcript → extract actions</span>
+<span class="kw">GET</span>   <span class="fn">/v1/compass/risks</span>          <span class="cmt">// Current risk radar for user's projects</span>
+<span class="kw">POST</span>  <span class="fn">/v1/compass/draft</span>          <span class="cmt">// Generate draft (type + context)</span>
+<span class="kw">GET</span>   <span class="fn">/v1/compass/approvals</span>      <span class="cmt">// Pending approvals for user</span>
+<span class="kw">POST</span>  <span class="fn">/v1/compass/approvals/:id/action</span> <span class="cmt">// Approve/reject/escalate</span>
+<span class="kw">GET</span>   <span class="fn">/v1/compass/calendar/optimise</span>   <span class="cmt">// Calendar recommendations</span>
+<span class="kw">WS</span>    <span class="fn">/v1/compass/stream</span>         <span class="cmt">// WebSocket for streaming responses</span>
+    </div>
+
+    <p><strong>Internal Agent Skill APIs (watsonx Orchestrate):</strong></p>
+    <div class="code-block">
+<span class="cmt">// Each agent is a watsonx Skill with an OpenAPI spec</span>
+
+<span class="kw">POST</span>  <span class="fn">/skills/briefing-agent/invoke</span>
+<span class="kw">POST</span>  <span class="fn">/skills/knowledge-agent/query</span>
+<span class="kw">POST</span>  <span class="fn">/skills/meeting-agent/process</span>
+<span class="kw">POST</span>  <span class="fn">/skills/risk-agent/assess</span>
+<span class="kw">POST</span>  <span class="fn">/skills/draft-agent/generate</span>
+<span class="kw">POST</span>  <span class="fn">/skills/approval-agent/check</span>
+<span class="kw">POST</span>  <span class="fn">/skills/calendar-agent/analyse</span>
+
+<span class="cmt">// Standard response envelope — ALL agents return this</span>
+{
+  <span class="str">"request_id"</span>: <span class="str">"uuid"</span>,
+  <span class="str">"agent"</span>: <span class="str">"knowledge_agent"</span>,
+  <span class="str">"output"</span>: { ... },
+  <span class="str">"citations"</span>: [{ <span class="str">"doc_id"</span>: <span class="str">"..."</span>, <span class="str">"chunk_id"</span>: <span class="str">"..."</span>, <span class="str">"confidence"</span>: 0.91 }],
+  <span class="str">"requires_confirmation"</span>: <span class="kw">false</span>,
+  <span class="str">"latency_ms"</span>: 1240,
+  <span class="str">"model"</span>: <span class="str">"ibm/granite-13b-instruct-v2"</span>
+}
+    </div>
+
+    <p><strong>Recommended integration connector APIs (all OAuth 2.0):</strong></p>
+    <table>
+      <tr><th>System</th><th>API Standard</th><th>Key Operations</th></tr>
+      <tr><td>Jira</td><td class="mono">Jira REST API v3</td><td>Create/update issues, query boards, sprint velocity</td></tr>
+      <tr><td>Confluence</td><td class="mono">Confluence REST API v2</td><td>Read/write pages, search CQL, space listing</td></tr>
+      <tr><td>Slack</td><td class="mono">Slack Web API + Events API</td><td>Post messages, read channel history (with consent)</td></tr>
+      <tr><td>GitHub Enterprise</td><td class="mono">GitHub REST + GraphQL API</td><td>Commit history, PR status, issue tracking</td></tr>
+      <tr><td>Webex / Zoom</td><td class="mono">Webex Meetings REST API</td><td>Pull transcripts, get participant list</td></tr>
+      <tr><td>Google Calendar / Outlook</td><td class="mono">Google Calendar API / MS Graph</td><td>Read/write events, availability lookup</td></tr>
+      <tr><td>ServiceNow</td><td class="mono">ServiceNow REST API</td><td>Approval requests, ITSM tickets, escalation</td></tr>
+      <tr><td>Workday</td><td class="mono">Workday REST API (Prism)</td><td>HR approvals, org hierarchy, leave requests</td></tr>
+    </table>
+  </div>
+
+  
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <span class="section-title">Sequence Diagrams — Key Flows</span>
+    </div>
+
+    
+    <p><strong>Flow 1 — Proactive Daily Briefing (triggered at 07:30 user local time)</strong></p>
+    <div class="seq">
+      <div class="seq-header">Sequence: Proactive Daily Briefing</div>
+      <div class="seq-body">
+        <div class="seq-row"><span class="seq-step">1</span><span class="seq-from">Cron Scheduler</span><span class="seq-arrow">→</span><span class="seq-to">Orchestrator</span><span class="seq-msg">Trigger briefing for user_id=123 (07:30 local)</span></div>
+        <div class="seq-row"><span class="seq-step">2</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">Memory Store</span><span class="seq-msg">Load user's semantic profile + last 7-day episodic context</span></div>
+        <div class="seq-row"><span class="seq-step">3</span><span class="seq-from">Orchestrator</span><span class="seq-arrow" style="color:#1a7f37">⇉</span><span class="seq-to">Calendar Agent + Risk Agent + Approval Agent</span><span class="seq-msg">Dispatch in parallel: today's schedule, open risks, stalled approvals</span></div>
+        <div class="seq-row"><span class="seq-step">4</span><span class="seq-from">Calendar Agent</span><span class="seq-arrow">→</span><span class="seq-to">Google / Outlook API</span><span class="seq-msg">Fetch today's meetings + attendees + prior meeting notes</span></div>
+        <div class="seq-row"><span class="seq-step">5</span><span class="seq-from">Risk Agent</span><span class="seq-arrow">→</span><span class="seq-to">Jira API + watsonx.data</span><span class="seq-msg">Query sprint velocity, overdue tickets, anomaly score for user's projects</span></div>
+        <div class="seq-row"><span class="seq-step">6</span><span class="seq-from">Approval Agent</span><span class="seq-arrow">→</span><span class="seq-to">ServiceNow + Workday API</span><span class="seq-msg">Get pending approvals with age + SLA breach flags</span></div>
+        <div class="seq-row"><span class="seq-step">7</span><span class="seq-from">All agents</span><span class="seq-arrow">→</span><span class="seq-to">Orchestrator</span><span class="seq-msg">Return structured results (JSON)</span></div>
+        <div class="seq-row"><span class="seq-step green">8</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">Briefing Agent</span><span class="seq-msg">Pass aggregated context → generate prioritised narrative briefing (Granite 13B)</span></div>
+        <div class="seq-row"><span class="seq-step green">9</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">watsonx.governance</span><span class="seq-msg">PII scan + content shield check on generated briefing</span></div>
+        <div class="seq-row"><span class="seq-step green">10</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">User (Push / Slack / UI)</span><span class="seq-msg">Deliver briefing with 3 priority actions, 2 at-risk flags, day agenda</span></div>
+        <div class="seq-row"><span class="seq-step green">11</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">Memory Store</span><span class="seq-msg">Log briefing delivery + user interaction response</span></div>
+      </div>
+    </div>
+
+    
+    <p><strong>Flow 2 — Meeting Intelligence (post-meeting processing)</strong></p>
+    <div class="seq">
+      <div class="seq-header">Sequence: Post-Meeting Processing</div>
+      <div class="seq-body">
+        <div class="seq-row"><span class="seq-step">1</span><span class="seq-from">Webex Webhook</span><span class="seq-arrow">→</span><span class="seq-to">Compass API Gateway</span><span class="seq-msg">POST /v1/compass/meeting/process {meeting_id, transcript_url}</span></div>
+        <div class="seq-row"><span class="seq-step">2</span><span class="seq-from">API Gateway</span><span class="seq-arrow">→</span><span class="seq-to">Orchestrator</span><span class="seq-msg">Validate token, enrich with user context, forward</span></div>
+        <div class="seq-row"><span class="seq-step">3</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">Webex API</span><span class="seq-msg">Download transcript + attendance list</span></div>
+        <div class="seq-row"><span class="seq-step">4</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">Meeting Agent</span><span class="seq-msg">Send transcript + attendees + project context</span></div>
+        <div class="seq-row"><span class="seq-step purple">5</span><span class="seq-from">Meeting Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Granite 13B</span><span class="seq-msg">Extract: action items, owners, due dates, decisions, risks mentioned</span></div>
+        <div class="seq-row"><span class="seq-step purple">6</span><span class="seq-from">Meeting Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Jira API</span><span class="seq-msg">Create tickets for each action item (auto-assign by attendee role)</span></div>
+        <div class="seq-row"><span class="seq-step purple">7</span><span class="seq-from">Meeting Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Draft Agent</span><span class="seq-msg">Request follow-up email draft from meeting summary</span></div>
+        <div class="seq-row"><span class="seq-step purple">8</span><span class="seq-from">Draft Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Granite 34B</span><span class="seq-msg">Generate follow-up email grounded in meeting summary + user tone profile</span></div>
+        <div class="seq-row"><span class="seq-step purple">9</span><span class="seq-from">Meeting Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Confluence API</span><span class="seq-msg">Write meeting notes page to project space</span></div>
+        <div class="seq-row"><span class="seq-step green">10</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">Memory Store</span><span class="seq-msg">Store meeting summary in episodic memory (used in future RAG + briefings)</span></div>
+        <div class="seq-row"><span class="seq-step green">11</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">User</span><span class="seq-msg">Deliver: summary + action items + draft email (awaits send confirmation)</span></div>
+      </div>
+    </div>
+
+    
+    <p><strong>Flow 3 — Enterprise Knowledge Query (RAG)</strong></p>
+    <div class="seq">
+      <div class="seq-header">Sequence: Knowledge Agent RAG Query</div>
+      <div class="seq-body">
+        <div class="seq-row"><span class="seq-step">1</span><span class="seq-from">User</span><span class="seq-arrow">→</span><span class="seq-to">Compass UI</span><span class="seq-msg">"What is IBM's standard SOW review process for Consulting engagements?"</span></div>
+        <div class="seq-row"><span class="seq-step">2</span><span class="seq-from">Compass API</span><span class="seq-arrow">→</span><span class="seq-to">Orchestrator</span><span class="seq-msg">POST /v1/compass/query (intent classified: knowledge_query)</span></div>
+        <div class="seq-row"><span class="seq-step">3</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">Knowledge Agent</span><span class="seq-msg">Dispatch with user clearance level + query</span></div>
+        <div class="seq-row"><span class="seq-step purple">4</span><span class="seq-from">Knowledge Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Granite 8B (query rewriter)</span><span class="seq-msg">Expand query: "SOW" → "Statement of Work", add IBM Consulting context</span></div>
+        <div class="seq-row"><span class="seq-step purple">5</span><span class="seq-from">Knowledge Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Elasticsearch (hybrid search)</span><span class="seq-msg">Dense + BM25 hybrid retrieval, filtered to user's access level (INTERNAL+)</span></div>
+        <div class="seq-row"><span class="seq-step purple">6</span><span class="seq-from">Knowledge Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">IBM Reranker</span><span class="seq-msg">Rerank top-20 → top-5 chunks by relevance</span></div>
+        <div class="seq-row"><span class="seq-step purple">7</span><span class="seq-from">Knowledge Agent</span><span class="seq-arrow purple">→</span><span class="seq-to">Granite 13B (generation)</span><span class="seq-msg">Generate answer grounded in top-5 chunks with inline citations</span></div>
+        <div class="seq-row"><span class="seq-step green">8</span><span class="seq-from">Knowledge Agent</span><span class="seq-arrow">→</span><span class="seq-to">Orchestrator</span><span class="seq-msg">Return: answer + citations[] + confidence=0.91 + related_docs</span></div>
+        <div class="seq-row"><span class="seq-step green">9</span><span class="seq-from">Orchestrator</span><span class="seq-arrow">→</span><span class="seq-to">User</span><span class="seq-msg">Answer with clickable document references and confidence badge</span></div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <span class="section-title">Security &amp; AI Governance</span>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="chip chip-orange">Hallucination</div>
+        <h4>RAG-Only Factual Answers</h4>
+        <p>All factual outputs from Knowledge Agent must cite a retrieved chunk. Answers with confidence &lt;0.75 are flagged as "unverified" and shown to user with a disclaimer. Draft Agent uses a context-injection check to ensure claims trace to source data.</p>
+      </div>
+      <div class="card">
+        <div class="chip chip-orange">PII</div>
+        <h4>IBM Watson NLP PII Shield</h4>
+        <p>All LLM outputs pass through watsonx.governance PII detector before delivery. Salary, personal address, performance data are suppressed at the data layer and never indexed. Cross-user data isolation enforced via row-level security.</p>
+      </div>
+      <div class="card">
+        <div class="chip chip-blue">Audit</div>
+        <h4>Full Action Audit Trail</h4>
+        <p>Every agent action (Jira write, email send, Confluence update) is logged to IBM Cloud Activity Tracker with: user_id, agent_id, action, input_hash, output_hash, timestamp. Immutable audit log retained 7 years per IBM compliance policy.</p>
+      </div>
+      <div class="card">
+        <div class="chip chip-green">Trust</div>
+        <h4>Human-in-Loop for High-Risk Actions</h4>
+        <p>Actions scored as high-risk (send email to external client, approve procurement &gt;$10k, close Jira epic) require explicit user confirmation before execution. Trust level per action category is configurable per user and team policy.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>watsonx.governance integration:</strong> All Compass LLM calls are registered in watsonx.governance with model ID, prompt hash, and response metadata. This provides IBM with a full AI model usage registry, drift detection, and regulatory compliance evidence — essential for enterprise deployment and EU AI Act readiness.
+    </div>
+  </div>
+
+  
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <span class="section-title">Enterprise Scale Design — 100,000 Users</span>
+    </div>
+    <p>Compass is designed to serve <strong>100,000 concurrent IBM employees</strong> at Phase 4, scaling to 280,000 and beyond. The architecture is horizontally scalable at every layer.</p>
+
+    <table>
+      <tr><th>Component</th><th>Scale Strategy</th><th>Target Capacity</th></tr>
+      <tr>
+        <td>Orchestrator Agent</td>
+        <td>Stateless pods on OpenShift; auto-scale via HPA (CPU+RPS). Each pod handles ~50 concurrent requests.</td>
+        <td>2,000 concurrent orchestrations</td>
+      </tr>
+      <tr>
+        <td>Sub-Agent Services</td>
+        <td>IBM Cloud Code Engine serverless functions per agent. Zero-scale when idle, burst to 500 instances.</td>
+        <td>10,000 agent calls/minute</td>
+      </tr>
+      <tr>
+        <td>LLM Inference (Granite)</td>
+        <td>watsonx.ai dedicated GPU nodes (A100/H100). Granite 13B on 8-way tensor parallel. Request queuing with priority lanes (briefing &gt; background).</td>
+        <td>500 LLM requests/second</td>
+      </tr>
+      <tr>
+        <td>RAG Elasticsearch</td>
+        <td>10-node Elasticsearch cluster, 3 replicas per index shard. Index partitioned by business_unit for locality. Read replicas for query load.</td>
+        <td>50M document chunks, 5,000 QPS</td>
+      </tr>
+      <tr>
+        <td>Redis Working Memory</td>
+        <td>Redis Cluster (6 nodes). Session keys partitioned by user_id hash. 2-hour TTL auto-expiry.</td>
+        <td>100,000 concurrent sessions</td>
+      </tr>
+      <tr>
+        <td>Kafka Event Bus</td>
+        <td>IBM Event Streams (managed Kafka). 24 partitions per topic. Retention 7 days. Consumer groups per agent type.</td>
+        <td>100,000 events/second peak</td>
+      </tr>
+      <tr>
+        <td>PostgreSQL Memory Store</td>
+        <td>IBM Cloud Databases for PostgreSQL. Primary + 2 read replicas. pgvector index (HNSW) on episodic memory. Partitioned by user cohort.</td>
+        <td>100M episodic memory records</td>
+      </tr>
+      <tr>
+        <td>Daily Briefing Delivery</td>
+        <td>Staggered cron: briefings generated in rolling 3-hour window (04:00–07:00 UTC across all timezones). Pre-generated and cached in Redis keyed by user_id.</td>
+        <td>100,000 briefings in &lt;3 hours</td>
+      </tr>
+    </table>
+
+    <div class="callout green">
+      <strong>Latency targets:</strong> Interactive queries (chat) &lt;3 seconds P95. Daily briefing delivery (pre-generated) &lt;200ms. Background risk detection (async) best-effort &lt;15 minutes lag. Meeting processing (webhook triggered) &lt;90 seconds end-to-end.
+    </div>
+
+    <div class="callout purple">
+      <strong>Year 2 — Commercialisation:</strong> When IBM Compass is productised as <strong>IBM watsonx Compass</strong>, the architecture supports multi-tenancy via namespace isolation in OpenShift, per-tenant Elasticsearch index partitions, per-tenant Granite model fine-tuning, and per-tenant API keys — enabling Fortune 500 customers to deploy their own isolated instance on IBM Cloud or on-premises via IBM Cloud Pak for Data.
+    </div>
+  </div>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

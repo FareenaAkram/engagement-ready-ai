@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Engagement Ready AI" version="24.0.0" type="device">
+  <diagram id="era-dfd" name="Engagement Ready AI - DFD">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ==================== TRUST BOUNDARY ==================== -->
+        <mxCell id="boundary" value="TRUST BOUNDARY -- passcode-gated (except Slack callback + ICA package pull)" style="rounded=1;arcSize=6;dashed=1;dashPattern=8 6;strokeColor=#0043CE;fillColor=#0043CE;opacity=60;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;fontColor=#0043CE;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="260" y="40" width="600" height="440" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== EXTERNAL ENTITY: Consultant ==================== -->
+        <mxCell id="consultant" value="Consultant&#10;(browser, passcode cookie)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDEFF0;strokeColor=#5B6270;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="95" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== PROCESSES (Gane-Sarson rounded rectangles) ==================== -->
+        <mxCell id="p1" value="1.0 Submit&#10;assessment" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#DBE4FF;strokeColor=#0F62FE;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="80" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2" value="2.0 AI pipeline&#10;(3 Granite agents)" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#DBE4FF;strokeColor=#0F62FE;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="80" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p3" value="3.0 HITL&#10;decision" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#DBE4FF;strokeColor=#0F62FE;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="80" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p4" value="4.0 Assign tasks&#10;and notify" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#DBE4FF;strokeColor=#0F62FE;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="195" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p5" value="5.0 Track task&#10;completion" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#DBE4FF;strokeColor=#0F62FE;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="310" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p6" value="6.0 Final approval&#10;and delivery" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#DBE4FF;strokeColor=#0F62FE;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="310" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== DATA STORE (open-rectangle DFD notation) ==================== -->
+        <mxCell id="d1" value="D1  Workflow state (local JSON file)" style="shape=partialRectangle;top=1;bottom=1;left=0;right=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#171A1F;fontSize=11;fontStyle=1;align=center;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="420" width="260" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== EXTERNAL ENTITIES: IBM services ==================== -->
+        <mxCell id="watsonx" value="watsonx.ai" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDEFF0;strokeColor=#5B6270;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="540" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="contextstudio" value="IBM Context Studio&#10;(MCP)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDEFF0;strokeColor=#5B6270;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="540" width="150" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ica" value="IBM Consulting Advantage&#10;/ Langflow (MCP)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDEFF0;strokeColor=#5B6270;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="600" width="150" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== EXTERNAL ENTITIES: real-world side effects ==================== -->
+        <mxCell id="email" value="Email (SMTP)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDEFF0;strokeColor=#5B6270;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="195" width="130" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="slack" value="Slack" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDEFF0;strokeColor=#5B6270;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="265" width="130" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="jira" value="Jira Cloud" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDEFF0;strokeColor=#5B6270;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="335" width="130" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== FLOWS ==================== -->
+        <mxCell id="e1" value="discovery notes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="consultant" target="p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#8890A0;" edge="1" parent="1" source="p1" target="p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#8890A0;" edge="1" parent="1" source="p2" target="p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e4" value="3 Granite calls" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;exitX=0.5;exitY=1;" edge="1" parent="1" source="p2" target="watsonx">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e5" value="query context" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p2" target="contextstudio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e6" value="read / write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p2" target="d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e7" value="accept / override" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p3" target="p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e8" value="persist decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p3" target="d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#8890A0;" edge="1" parent="1" source="p4" target="p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e10" value="assign via MCP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p4" target="ica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e11" value="task email" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p4" target="email">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e12" value="task DM" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p4" target="slack">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e13" value="update status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p5" target="d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e14" value="&quot;Mark Done&quot; click (HMAC verified -- exempt from passcode gate)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;dashed=1;strokeColor=#0043CE;fontColor=#0043CE;fontStyle=1;" edge="1" parent="1" source="slack" target="p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e15" value="all tasks done" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p5" target="p6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e16" value="generate assets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p6" target="ica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e17" value="delivery email" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p6" target="email">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e18" value="delivery Slack" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p6" target="slack">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e19" value="Jira Epic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;strokeColor=#8890A0;" edge="1" parent="1" source="p6" target="jira">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== LEGEND ==================== -->
+        <mxCell id="legend" value="Legend: rounded blue = process | grey rectangle = external entity | open rectangle = data store | dashed blue border = trust boundary | dashed blue arrow = authenticated a different way (not the passcode cookie)" style="text;html=1;fontSize=10;fontColor=#5B6270;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="670" width="1010" height="30" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

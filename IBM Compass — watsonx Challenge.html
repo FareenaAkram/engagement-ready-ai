@@ -1,0 +1,666 @@
+
+<!-- saved from url=(0079)file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBM Compass — watsonx Challenge</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #1f2328;
+    background: #ffffff;
+    padding: 32px 16px 48px;
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+
+  /* Header */
+  .hero {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 32px 28px 24px;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+  .hero .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #7c5cd8;
+    border: 1px solid #7c5cd8;
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2328;
+    letter-spacing: -.3px;
+    margin-bottom: 6px;
+  }
+  .hero .tagline {
+    font-size: 15px;
+    color: #57606a;
+    margin-bottom: 18px;
+  }
+  .hero .meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #57606a;
+  }
+  .hero .meta span { display: flex; align-items: center; gap: 5px; }
+  .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: #3b82d4; display: inline-block; }
+
+  /* TOC */
+  .toc {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 36px;
+    background: #f7f8fa;
+  }
+  .toc h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #57606a; margin-bottom: 12px; }
+  .toc ol { padding-left: 18px; column-count: 2; column-gap: 24px; }
+  .toc li { margin-bottom: 4px; }
+  .toc a { color: #3b82d4; text-decoration: none; font-size: 13px; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Sections */
+  .section { margin-bottom: 40px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #ffffff;
+    background: #3b82d4;
+    border-radius: 4px;
+    padding: 2px 7px;
+    min-width: 28px;
+    text-align: center;
+  }
+  .section-title { font-size: 17px; font-weight: 700; color: #1f2328; }
+
+  p { margin-bottom: 10px; color: #1f2328; }
+  p:last-child { margin-bottom: 0; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #1f2328; }
+  .card p { font-size: 13px; color: #57606a; margin: 0; }
+  .card .role { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: #7c5cd8; margin-bottom: 4px; }
+  .card .pain { font-size: 12px; color: #e05d0b; margin-top: 6px; font-style: italic; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 13px; }
+  th {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #1f2328;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  td { border: 1px solid #e5e7eb; padding: 8px 10px; color: #1f2328; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f8fa; }
+
+  /* Feature list */
+  .feature-list { list-style: none; padding: 0; }
+  .feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 13px;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .rank {
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rank-1 { background: #1a7f37; }
+  .rank-2 { background: #3b82d4; }
+  .rank-3 { background: #7c5cd8; }
+  .rank-low { background: #57606a; }
+  .feature-desc { color: #57606a; font-size: 12px; }
+  .feature-name { font-weight: 600; color: #1f2328; }
+
+  /* Stat bar */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 4px; }
+  .stat {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat .value { font-size: 26px; font-weight: 800; color: #3b82d4; line-height: 1.1; }
+  .stat .label { font-size: 12px; color: #57606a; margin-top: 4px; }
+
+  /* Timeline */
+  .timeline { list-style: none; padding: 0; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: #e5e7eb;
+  }
+  .timeline li {
+    display: flex;
+    gap: 16px;
+    padding: 0 0 20px 0;
+    position: relative;
+  }
+  .tl-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #3b82d4;
+    border: 3px solid #ffffff;
+    outline: 2px solid #3b82d4;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    z-index: 1;
+  }
+  .tl-body h4 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .tl-body p { font-size: 12px; color: #57606a; margin: 0; }
+  .tl-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #7c5cd8;
+    margin-bottom: 2px;
+  }
+
+  /* Tag chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .chip {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 12px;
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    color: #1f2328;
+    font-weight: 500;
+  }
+
+  /* Risk */
+  .risk-table td:first-child { font-weight: 600; width: 22%; }
+  .high { color: #cf222e; font-weight: 700; }
+  .medium { color: #e05d0b; font-weight: 700; }
+  .low { color: #1a7f37; font-weight: 700; }
+
+  /* Pitch */
+  .pitch {
+    background: #f7f8fa;
+    border-left: 4px solid #3b82d4;
+    border-radius: 0 6px 6px 0;
+    padding: 20px 22px;
+    margin-top: 8px;
+  }
+  .pitch p { font-size: 14px; line-height: 1.75; color: #1f2328; }
+  .pitch .highlight { font-weight: 700; color: #3b82d4; }
+  .pitch .close { font-weight: 700; font-style: italic; font-size: 15px; color: #1f2328; margin-top: 14px; }
+
+  /* Footer */
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 12px;
+    color: #57606a;
+  }
+
+  @media (max-width: 540px) {
+    .cards { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .toc ol { column-count: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="hero">
+    <div class="badge">IBM watsonx Challenge Submission</div>
+    <h1>IBM Compass</h1>
+    <div class="tagline">AI Enterprise Work Orchestrator — Proactive. Integrated. Intelligent.</div>
+    <div class="meta">
+      <span><span class="meta-dot"></span>Platform: IBM watsonx Orchestrate + watsonx.ai</span>
+      <span><span class="meta-dot"></span>Audience: IBM Internal Workforce</span>
+      <span><span class="meta-dot"></span>Category: Enterprise Productivity &amp; AI Automation</span>
+    </div>
+  </div>
+
+  
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s1">Problem Statement</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s2">Why This Problem Exists</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s3">Target Users</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s4">User Personas</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s5">Existing Alternatives</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s6">Gaps in Existing Solutions</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s7">Why AI Is Necessary</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s8">Business Impact</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s9">Hours Saved</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s10">Feature Rankings</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s11">AI Opportunities</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s12">Enterprise Integrations</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s13">Risks</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s14">Future Roadmap</a></li>
+      <li><a href="file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/ibm-compass.html#s15">Pitch for Judges</a></li>
+    </ol>
+  </div>
+
+  
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Problem Statement</span>
+    </div>
+    <p>IBM employees spend an estimated <strong>40–60% of their productive workday</strong> on coordination overhead: switching between tools, re-reading meeting notes, chasing approvals, manually writing status updates, and searching for institutional knowledge buried across Confluence, Box, Jira, Slack, and email.</p>
+    <p>There is no single intelligent system that understands <em>what an employee is working on</em>, anticipates what they need next, and acts on their behalf. The result is cognitive overload, missed deadlines, duplicated work, and burnout — at enterprise scale.</p>
+    <p><strong>IBM Compass</strong> is the solution: a proactive AI enterprise work orchestrator that integrates across IBM's tool ecosystem, reasons over an employee's context, and takes decisive action — before being asked.</p>
+  </div>
+
+  
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Why This Problem Exists in Large Enterprises</span>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h4>Tool Sprawl</h4>
+        <p>The average IBM employee uses 9–12 enterprise tools daily. No single tool has full context of the employee's work state.</p>
+      </div>
+      <div class="card">
+        <h4>Siloed Data</h4>
+        <p>Knowledge lives in disconnected systems — Confluence, Box, GitHub, Jira, Notes — with no unified knowledge graph or retrieval layer.</p>
+      </div>
+      <div class="card">
+        <h4>Reactive Workflows</h4>
+        <p>All enterprise tools are reactive: they wait for user input. Nobody is watching the whole picture to flag what matters most right now.</p>
+      </div>
+      <div class="card">
+        <h4>Scale of Workforce</h4>
+        <p>With 280,000+ employees across 170 countries, even a 1% productivity gain equates to thousands of reclaimed work-hours per day.</p>
+      </div>
+      <div class="card">
+        <h4>Meeting Overload</h4>
+        <p>Studies show knowledge workers attend 23+ hours of meetings per week, yet fewer than 50% of action items are captured and followed up.</p>
+      </div>
+      <div class="card">
+        <h4>Approval Bottlenecks</h4>
+        <p>Procurement, HR, and project approvals routinely stall for 3–7 days due to no automated tracking or escalation intelligence.</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Target Users</span>
+    </div>
+    <div class="chips">
+      <span class="chip">Project Managers &amp; Program Leads</span>
+      <span class="chip">Software Engineers &amp; Architects</span>
+      <span class="chip">Consultants &amp; Client Engagement Leads</span>
+      <span class="chip">Sales &amp; Client Success Managers</span>
+      <span class="chip">HR Business Partners</span>
+      <span class="chip">Finance &amp; Procurement Analysts</span>
+      <span class="chip">Executive Assistants &amp; Chiefs of Staff</span>
+      <span class="chip">Research Scientists &amp; Technical Writers</span>
+    </div>
+    <p style="margin-top:12px">Initial rollout targets <strong>IBM Consulting and IBM Technology</strong> divisions (≈100,000 employees) where project complexity, multi-client workloads, and tool fragmentation are highest.</p>
+  </div>
+
+  
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">User Personas</span>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="role">Persona 1 — Project Manager</div>
+        <h4>Priya, Senior PM — IBM Consulting</h4>
+        <p>Manages 3 concurrent client engagements across 8 time zones. Spends 2hrs/day writing status reports and chasing updates from engineers.</p>
+        <p class="pain">"I need to know what's at risk before my client asks me."</p>
+      </div>
+      <div class="card">
+        <div class="role">Persona 2 — Software Engineer</div>
+        <h4>Marcus, Staff Engineer — IBM Technology</h4>
+        <p>Works across 4 Jira boards and 3 GitHub repos. Loses 90 mins/day to meeting prep, searching docs, and writing PR descriptions.</p>
+        <p class="pain">"I want to focus on coding, not coordinating."</p>
+      </div>
+      <div class="card">
+        <div class="role">Persona 3 — Executive</div>
+        <h4>Sandra, VP of Client Delivery</h4>
+        <p>Oversees a $200M portfolio. Needs synthesized insights, not raw data. Currently gets 47 unread emails every morning.</p>
+        <p class="pain">"Give me the three things I actually need to act on today."</p>
+      </div>
+      <div class="card">
+        <div class="role">Persona 4 — Consultant</div>
+        <h4>James, Associate Partner — IBM iX</h4>
+        <p>Travels constantly; needs knowledge at fingertips during client calls. Spends 45 mins before every meeting manually compiling context.</p>
+        <p class="pain">"I need a pre-brief for every meeting, automatically."</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Existing Alternatives</span>
+    </div>
+    <table>
+      <tbody><tr><th>Tool</th><th>Strength</th><th>Limitation</th></tr>
+      <tr><td>Microsoft Copilot 365</td><td>Deep M365 integration, email/doc drafting</td><td>M365 ecosystem only; no cross-platform reasoning; no proactive orchestration</td></tr>
+      <tr><td>Notion AI</td><td>Smart docs and knowledge base</td><td>No enterprise integrations; no workflow automation; siloed</td></tr>
+      <tr><td>Slack AI</td><td>Channel summarisation</td><td>Messaging only; no project context; reactive</td></tr>
+      <tr><td>Glean</td><td>Enterprise search across tools</td><td>Read-only retrieval; no generation; no action-taking</td></tr>
+      <tr><td>Asana / Monday AI</td><td>Project management with AI suggestions</td><td>PM tool only; no knowledge, email, or communication layer</td></tr>
+      <tr><td>IBM watsonx Orchestrate</td><td>Strong skills &amp; automation framework</td><td>Requires explicit triggers; not yet a unified proactive work assistant</td></tr>
+    </tbody></table>
+  </div>
+
+  
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">Gaps in Existing Solutions</span>
+    </div>
+    <div class="cards">
+      <div class="card"><h4>No Unified Work Context</h4><p>No tool maintains a real-time model of what the employee is doing across all systems simultaneously.</p></div>
+      <div class="card"><h4>No Proactive Intelligence</h4><p>Every existing tool waits for a prompt. None detects a project risk forming 48 hours before it surfaces.</p></div>
+      <div class="card"><h4>No Enterprise-Wide Action</h4><p>No tool can draft a Jira ticket, send a Slack update, update a Confluence page, and flag a calendar conflict — from a single reasoning event.</p></div>
+      <div class="card"><h4>No IBM-Native Grounding</h4><p>Competitors have no access to IBM's internal playbooks, SOWs, delivery frameworks, or client knowledge — Compass does.</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-title">Why AI Is Necessary</span>
+    </div>
+    <p>This problem cannot be solved with traditional automation or dashboards. The challenge is <strong>contextual, dynamic, and language-native</strong>:</p>
+    <ul style="padding-left:18px;margin-top:8px;font-size:13px;color:#1f2328">
+      <li style="margin-bottom:8px"><strong>Natural language understanding</strong> is required to parse meeting transcripts, Slack threads, emails, and documents into structured intent and action items.</li>
+      <li style="margin-bottom:8px"><strong>Reasoning over multi-source context</strong> is required to synthesise a Jira board, a client email, and a calendar block into a risk assessment — no rule engine can do this.</li>
+      <li style="margin-bottom:8px"><strong>Generation capability</strong> is required to produce high-quality drafts of emails, reports, and Jira tasks that match the user's voice and IBM's tone of communication.</li>
+      <li style="margin-bottom:8px"><strong>Temporal reasoning</strong> is required to monitor deadlines, detect drift, and surface blockers that haven't yet been explicitly flagged by any human.</li>
+      <li><strong>Retrieval-Augmented Generation (RAG)</strong> over IBM's internal knowledge corpus ensures answers are grounded, cited, and enterprise-accurate — not hallucinated.</li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <span class="section-title">Expected Measurable Business Impact</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="value">30%</div><div class="label">Reduction in coordination overhead per employee</div></div>
+      <div class="stat"><div class="value">$2.4B</div><div class="label">Estimated annual value unlocked across IBM workforce</div></div>
+      <div class="stat"><div class="value">40%</div><div class="label">Faster project status reporting cycles</div></div>
+      <div class="stat"><div class="value">60%</div><div class="label">Reduction in missed action items from meetings</div></div>
+      <div class="stat"><div class="value">25%</div><div class="label">Decrease in approval cycle time (HR, procurement)</div></div>
+      <div class="stat"><div class="value">3×</div><div class="label">Faster enterprise knowledge retrieval with citations</div></div>
+    </div>
+    <p style="margin-top:14px;font-size:13px;color:#57606a"><em>Estimates based on McKinsey Global Institute data on knowledge worker productivity and IBM internal workforce metrics. Conservative scenario modelling assumes 280,000 employees × avg. 90 min/day savings × IBM fully-loaded cost rate.</em></p>
+  </div>
+
+  
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <span class="section-title">Estimated Hours Saved Per Employee Per Week</span>
+    </div>
+    <table>
+      <tbody><tr><th>Activity</th><th>Current Time</th><th>With Compass</th><th>Saved</th></tr>
+      <tr><td>Meeting prep &amp; post-meeting summaries</td><td>4.5 hrs</td><td>0.5 hrs</td><td><strong>4.0 hrs</strong></td></tr>
+      <tr><td>Writing status updates &amp; reports</td><td>3.0 hrs</td><td>0.5 hrs</td><td><strong>2.5 hrs</strong></td></tr>
+      <tr><td>Searching enterprise knowledge</td><td>2.5 hrs</td><td>0.5 hrs</td><td><strong>2.0 hrs</strong></td></tr>
+      <tr><td>Chasing approvals &amp; follow-ups</td><td>1.5 hrs</td><td>0.3 hrs</td><td><strong>1.2 hrs</strong></td></tr>
+      <tr><td>Drafting emails &amp; Slack messages</td><td>2.0 hrs</td><td>0.5 hrs</td><td><strong>1.5 hrs</strong></td></tr>
+      <tr><td>Jira / project tool updates</td><td>1.5 hrs</td><td>0.3 hrs</td><td><strong>1.2 hrs</strong></td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>15.0 hrs</strong></td><td><strong>2.6 hrs</strong></td><td><strong>12.4 hrs/week</strong></td></tr>
+    </tbody></table>
+    <p style="margin-top:10px;font-size:13px;color:#57606a">At scale: 100,000 employees × 12 hrs/week × 48 working weeks = <strong>57.6 million hours reclaimed annually</strong>.</p>
+  </div>
+
+  
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <span class="section-title">Features Ranked by Importance</span>
+    </div>
+    <ul class="feature-list">
+      <li>
+        <span class="rank rank-1">1</span>
+        <div><div class="feature-name">Proactive Daily Briefing</div><div class="feature-desc">Every morning, Compass delivers a personalised AI-generated briefing: priority tasks, at-risk items, upcoming meetings with pre-read summaries, and recommended actions — with zero prompting required.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-1">2</span>
+        <div><div class="feature-name">Meeting Intelligence Engine</div><div class="feature-desc">Real-time transcription, automatic action item extraction, owner assignment, Jira ticket creation, and follow-up email drafting. Integrates with Webex, Zoom, and Teams.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-1">3</span>
+        <div><div class="feature-name">Enterprise RAG Knowledge Assistant</div><div class="feature-desc">Ask any question; get answers grounded in IBM's internal Confluence, Box, SharePoint, and knowledge bases — with inline citations, document links, and confidence scores.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-2">4</span>
+        <div><div class="feature-name">Project Risk Radar</div><div class="feature-desc">Continuously monitors Jira, GitHub, and project timelines to detect velocity drops, overdue items, and resource conflicts. Surfaces risks 48–72 hrs before they become blockers.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-2">5</span>
+        <div><div class="feature-name">Automated Draft Generation</div><div class="feature-desc">One-click generation of status reports, client emails, executive summaries, Jira stories, and pull request descriptions — grounded in actual project context, not templates.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-2">6</span>
+        <div><div class="feature-name">Approval Workflow Orchestrator</div><div class="feature-desc">Tracks all in-flight approvals across HR, procurement, and legal systems. Auto-escalates stalled approvals, sends reminders, and provides one-click approval for low-risk items.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-3">7</span>
+        <div><div class="feature-name">Smart Calendar Optimiser</div><div class="feature-desc">Analyses meeting load, focus time, and work priorities. Recommends rescheduling, declines non-essential meetings, and blocks deep-work time automatically.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-3">8</span>
+        <div><div class="feature-name">Cross-Team Dependency Map</div><div class="feature-desc">Visualises blockers and dependencies across teams and projects. Identifies the critical path and flags where human intervention is needed most urgently.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-low">9</span>
+        <div><div class="feature-name">Personalised Learning Nudges</div><div class="feature-desc">Based on current project context, Compass surfaces relevant IBM learning resources, certifications, and expertise from colleagues who've solved similar problems.</div></div>
+      </li>
+      <li>
+        <span class="rank rank-low">10</span>
+        <div><div class="feature-name">Executive Portfolio View</div><div class="feature-desc">For VPs and above: a synthesised, AI-curated view of portfolio health, team sentiment, financial burn, and delivery confidence — updated in real time.</div></div>
+      </li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <span class="section-title">AI Opportunities</span>
+    </div>
+    <table>
+      <tbody><tr><th>Capability</th><th>IBM AI Technology</th><th>Application in Compass</th></tr>
+      <tr><td>Retrieval-Augmented Generation</td><td>watsonx.ai + Elasticsearch</td><td>Grounded Q&amp;A over internal enterprise knowledge with citations</td></tr>
+      <tr><td>Agentic Orchestration</td><td>watsonx Orchestrate</td><td>Multi-step workflow execution: read Jira → write email → post Slack update → log Confluence</td></tr>
+      <tr><td>Natural Language Understanding</td><td>Granite LLMs (fine-tuned)</td><td>Intent detection from meetings, emails, and project data</td></tr>
+      <tr><td>Time-Series Anomaly Detection</td><td>watsonx.data + ML pipelines</td><td>Detecting sprint velocity drops, budget overruns, and deadline drift</td></tr>
+      <tr><td>Summarisation &amp; Generation</td><td>Granite 13B / 34B</td><td>Meeting summaries, status reports, email drafts, executive briefings</td></tr>
+      <tr><td>Personalisation &amp; Context Memory</td><td>watsonx.ai user profiling</td><td>Adapts tone, priorities, and recommendations to individual work patterns</td></tr>
+      <tr><td>Classification &amp; Routing</td><td>watsonx NLP classifiers</td><td>Auto-classify approvals, escalations, and meeting types to appropriate workflows</td></tr>
+      <tr><td>Semantic Search</td><td>watsonx Discovery</td><td>Surface the most relevant document, Jira ticket, or colleague for any context</td></tr>
+    </tbody></table>
+  </div>
+
+  
+  <div class="section" id="s12">
+    <div class="section-header">
+      <span class="section-num">12</span>
+      <span class="section-title">Enterprise Integrations</span>
+    </div>
+    <div class="cards">
+      <div class="card"><h4>Communication</h4><p>IBM Notes / HCL Verse, Slack, Microsoft Teams, Webex, Outlook</p></div>
+      <div class="card"><h4>Project &amp; Dev</h4><p>Jira, GitHub Enterprise, Azure DevOps, IBM Engineering Lifecycle Management</p></div>
+      <div class="card"><h4>Knowledge &amp; Docs</h4><p>Confluence, Box, SharePoint, IBM Connections, Seismic</p></div>
+      <div class="card"><h4>HR &amp; Approvals</h4><p>Workday, ServiceNow, IBM Kyndryl ITSM, SAP SuccessFactors</p></div>
+      <div class="card"><h4>Calendar &amp; Identity</h4><p>Google Calendar, Outlook Calendar, IBM w3 SSO, Okta</p></div>
+      <div class="card"><h4>Data &amp; Analytics</h4><p>watsonx.data, IBM Cognos, Salesforce CRM, PowerBI</p></div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:#57606a">All integrations use IBM-standard secure API connectors with OAuth 2.0, role-based access controls, and data residency compliance aligned to IBM's enterprise security policies.</p>
+  </div>
+
+  
+  <div class="section" id="s13">
+    <div class="section-header">
+      <span class="section-num">13</span>
+      <span class="section-title">Risks &amp; Mitigations</span>
+    </div>
+    <table class="risk-table">
+      <tbody><tr><th>Risk</th><th>Severity</th><th>Mitigation</th></tr>
+      <tr><td>AI hallucination in enterprise context</td><td><span class="high">HIGH</span></td><td>Mandatory RAG grounding for all factual outputs; confidence thresholds; inline citations required; human-in-loop for all action-taking</td></tr>
+      <tr><td>Data privacy &amp; confidentiality</td><td><span class="high">HIGH</span></td><td>All data processed on-premises or IBM Cloud private instances; role-based access strictly enforced; no cross-user context leakage</td></tr>
+      <tr><td>Employee trust &amp; adoption resistance</td><td><span class="medium">MED</span></td><td>Transparent AI explanations; user controls over what Compass can act on; gradual opt-in rollout with internal champions</td></tr>
+      <tr><td>Integration complexity &amp; maintenance</td><td><span class="medium">MED</span></td><td>API gateway abstraction layer; dedicated integration team; versioned connector library with automated regression tests</td></tr>
+      <tr><td>Over-reliance on AI recommendations</td><td><span class="medium">MED</span></td><td>All recommendations show reasoning and data sources; one-click override; audit logs for all AI-initiated actions</td></tr>
+      <tr><td>Performance at enterprise scale</td><td><span class="low">LOW</span></td><td>Async processing pipelines; edge caching of user profiles; IBM Cloud auto-scaling infrastructure</td></tr>
+    </tbody></table>
+  </div>
+
+  
+  <div class="section" id="s14">
+    <div class="section-header">
+      <span class="section-num">14</span>
+      <span class="section-title">Future Roadmap</span>
+    </div>
+    <ul class="timeline">
+      <li>
+        <span class="tl-dot">Q1</span>
+        <div class="tl-body">
+          <div class="tl-label">Phase 1 — Foundation (Months 1–3)</div>
+          <h4>Core Intelligence Layer</h4>
+          <p>Deploy RAG knowledge assistant, daily briefing engine, and Jira/Confluence/Slack integrations. Pilot with 500 IBM Consulting employees.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-dot">Q2</span>
+        <div class="tl-body">
+          <div class="tl-label">Phase 2 — Orchestration (Months 4–6)</div>
+          <h4>Meeting Intelligence + Action Automation</h4>
+          <p>Launch meeting transcription, action item extraction, automated draft generation, and approval workflow orchestrator. Expand to 5,000 users.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-dot">Q3</span>
+        <div class="tl-body">
+          <div class="tl-label">Phase 3 — Prediction (Months 7–9)</div>
+          <h4>Project Risk Radar + Calendar Optimiser</h4>
+          <p>Enable predictive risk detection across project portfolios and smart calendar management. Rollout to 25,000 users across IBM Technology.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-dot">Q4</span>
+        <div class="tl-body">
+          <div class="tl-label">Phase 4 — Scale (Months 10–12)</div>
+          <h4>Enterprise-Wide Deployment + Executive Layer</h4>
+          <p>Full deployment to 100,000+ IBM employees. Launch executive portfolio view, personalised learning nudges, and cross-team dependency mapping.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-dot">Y2</span>
+        <div class="tl-body">
+          <div class="tl-label">Phase 5 — Productisation (Year 2)</div>
+          <h4>Commercialisation as IBM watsonx Compass</h4>
+          <p>Package Compass as a commercially available enterprise product for IBM clients. Target: Fortune 500 enterprises facing the same coordination crisis. Estimated ARR opportunity: $500M+.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  
+  <div class="section" id="s15">
+    <div class="section-header">
+      <span class="section-num">15</span>
+      <span class="section-title">Pitch for Judges</span>
+    </div>
+    <div class="pitch">
+      <p>Every IBM employee starts their day the same way. They open their laptop, and immediately face a wall: 73 unread emails, 12 Slack notifications, a Jira board with 40 open tickets, three meeting invites with no context, and an approval that's been sitting for four days. Before a single line of code is written, a single client is helped, or a single decision is made — <span class="highlight">the workday has already been consumed by coordination.</span></p>
+
+      <p>This is not a people problem. This is a <span class="highlight">systems problem</span>. Our enterprise tools were built to record work, not to think about it. They wait to be asked. They do not reason. They do not predict. They do not act.</p>
+
+      <p><span class="highlight">IBM Compass changes this.</span> Compass is a proactive AI work orchestrator built on watsonx — IBM's own AI platform — that understands your work across every system, anticipates what you need next, and takes action before you ask. It is not a chatbot. It is not a search engine. It is an intelligent colleague that never sleeps, never forgets, and always has context.</p>
+
+      <p>Compass reads your calendar, your Jira board, your emails, your Confluence pages, your Slack threads — and every morning it tells you exactly what matters, what is at risk, and what it has already done on your behalf. It drafts your status report. It captures your meeting action items. It flags the sprint that is three days from derailing. It finds the internal playbook you didn't know existed. And it does all of this grounded in IBM's own enterprise knowledge — with citations, with explanations, with full auditability.</p>
+
+      <p>The business case is not theoretical. At 100,000 employees saving 12 hours per week, that is <span class="highlight">57 million hours returned to IBM per year</span>. At a conservative fully-loaded rate, that is over <span class="highlight">$2.4 billion in unlocked capacity</span> — not through headcount reduction, but through letting our people do the work they were actually hired to do.</p>
+
+      <p>And this is only the internal story. Once deployed and proven inside IBM, Compass becomes a product — <span class="highlight">IBM watsonx Compass</span> — offered to every Fortune 500 enterprise facing the same crisis. Every bank, every manufacturer, every healthcare system drowning in coordination overhead becomes a customer.</p>
+
+      <p>We are not building a productivity feature. We are building <span class="highlight">the operating system for enterprise work</span>. And IBM — with watsonx, with Granite, with our enterprise relationships, with our 112-year history of running the world's most complex organisations — is the only company in the world positioned to build it credibly, securely, and at scale.</p>
+
+      <p class="close">IBM Compass: Stop reacting to your workday. Start leading it.</p>
+    </div>
+  </div>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+
+
+</body></html>

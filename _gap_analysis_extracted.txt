@@ -1,0 +1,1213 @@
+﻿
+Security Review - Gap Analysis Results
+Digital AppSec Champion
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+Generated: July 14, 2026
+Total Requirements: 23
+Job Details
+Job ID
+683ad38d-3cde-470b-94ed-407be72dc616
+Job Name
+Engagement Ready AI Security Gap
+Use Case
+Gap Analysis
+
+
+Requirements Summary
+1. SR-AC-1
+Description
+The system SHALL require a valid session credential before granting access to any application route or API endpoint, except for endpoints authenticated by an independent mechanism appropriate to their caller (e.g., a cryptographically signed inbound webhook).
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Identity and Access Management
+Cybersecurity Subdomain
+Authentication Security
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that the system implements a shared-secret passcode gate on every route via Next.js middleware. This ensures that a valid session credential is required before granting access to any application route or API endpoint, meeting the requirement fully.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+2. SR-AC-2
+Description
+A session credential SHALL NOT reveal the underlying shared secret if intercepted or exfiltrated.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Identity and Access Management
+Cybersecurity Subdomain
+Session Management
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that the session credential uses an HMAC derived from the passcode, not the passcode itself. This ensures that the underlying shared secret is not revealed if intercepted or exfiltrated.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+3. SR-AC-3
+Description
+Comparison of any authentication credential against its expected value SHALL be performed in constant time to prevent timing-based disclosure.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Identity and Access Management
+Cybersecurity Subdomain
+Authentication Security
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that constant-time string comparison is implemented for both login and middleware checks. This satisfies the requirement for constant-time comparison to prevent timing-based disclosure.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+4. SR-AC-4
+Description
+Destructive or irreversible operations (e.g., resetting engagement state) SHALL require an explicit confirmation signal distinct from, and in addition to, a valid session.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+Authorization and Access Control
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that destructive operations require an explicit confirmation signal. Specifically, the reset-workflow endpoint requires an explicit confirm flag in the request body, ensuring that destructive operations are not performed accidentally.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+5. SR-AC-5
+Description
+The system SHALL enforce role-based authorization so the four modeled roles (architect, consultant, partner, client) have independently scoped permissions once inside the session gate, rather than uniform access for any valid session.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Identity and Access Management
+Cybersecurity Subdomain
+Authorization and Access Control
+
+Work Items
+Activity 1: SR-AC-5-GAP-A1 - Implement Role-Based Access Control
+Define roles and permissions and enforce RBAC throughout the application
+Sub-Activities
+1. Define Roles and Permissions
+Sub-Activity ID
+SR-AC-5-GAP-A1.1
+Name
+Define Roles and Permissions
+Description
+Identify the specific permissions required for each role (architect, consultant, partner, client). Document these roles and permissions in a role-based access control policy.
+Lifecycle Phase
+Architecture & Design
+PPT Category
+Process
+Responsible Team
+Architecture
+ðŸ’» Code Example
+Define roles and permissions in a configuration file or database.
+
+
+{
+
+  "roles": 
+    {
+
+    "architect": ["permission1", "permission2"],
+    "consultant": ["permission3", "permission4"],
+    "partner": ["permission5", "permission6"],
+    "client": ["permission7", "permission8"]
+
+    }
+
+}
+
+2. Update Authentication Mechanism
+Sub-Activity ID
+SR-AC-5-GAP-A1.2
+Name
+Update Authentication Mechanism
+Description
+Modify the authentication service to include role verification. Ensure that the session gate checks the user's role and enforces the corresponding permissions.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+Update the authentication middleware to verify roles.
+
+function authenticateUser(user) 
+{
+
+  if (user.role === 'architect') 
+    {
+
+    // Grant architect permissions
+
+    } else if (user.role === 'consultant') 
+    {
+
+    // Grant consultant permissions
+
+    } else if (user.role === 'partner') 
+    {
+
+    // Grant partner permissions
+
+    } else if (user.role === 'client') 
+    {
+
+    // Grant client permissions
+
+    }
+
+}
+
+3. Enforce Access Controls
+Sub-Activity ID
+SR-AC-5-GAP-A1.3
+Name
+Enforce Access Controls
+Description
+Update all application routes and API endpoints to enforce the defined role-based permissions. Ensure that only authorized users can access specific resources and perform actions.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+Enforce role-based access controls in route handlers.
+
+function checkAccess(user, requiredPermission) 
+{
+
+  if (user.permissions.includes(requiredPermission)) 
+    {
+
+    return true;
+
+
+    } else 
+    {
+
+    return false;
+
+
+    }
+
+}
+
+function protectedRouteHandler(user) 
+{
+
+  if (checkAccess(user, 'permission1')) 
+    {
+
+    // Allow access
+
+    } else 
+    {
+
+    // Deny access
+
+    }
+
+}
+
+4. Test Role-Based Access Control
+Sub-Activity ID
+SR-AC-5-GAP-A1.4
+Name
+Test Role-Based Access Control
+Description
+Create unit and integration tests to verify that role-based access controls are enforced correctly. Test all roles and permissions to ensure that unauthorized access is denied.
+Lifecycle Phase
+Testing
+PPT Category
+Process
+Responsible Team
+QA
+ðŸ’» Code Example
+Write tests to verify role-based access controls.
+
+describe('Role-Based Access Control', () => 
+{
+
+  it('should allow architect access to specific route', () => 
+    {
+
+    const user = 
+        {
+             role: 'architect', permissions: ['permission1'] 
+        };
+
+    expect(checkAccess(user, 'permission1')).toBe(true);
+
+
+    });
+
+  it('should deny client access to specific route', () => 
+    {
+
+    const user = 
+        {
+             role: 'client', permissions: ['permission7'] 
+        };
+
+    expect(checkAccess(user, 'permission1')).toBe(false);
+
+
+    });
+
+
+});
+
+Gap Analysis
+Result
+Not Met
+Explanation
+The application scenario explicitly states that there is no per-role enforcement once past the shared passcode gate. The system uses a single shared passcode for all users, which does not differentiate between the roles of architect, consultant, partner, and client. This means that all users have uniform access once authenticated, failing to meet the requirement for role-based authorization.
+Required Solution
+Implement role-based access control (RBAC) to enforce independently scoped permissions for the four modeled roles (architect, consultant, partner, client). This involves defining roles and permissions, updating authentication mechanisms to include role verification, and ensuring that access controls are enforced throughout the application.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+6. SR-AC-6
+Description
+The system SHALL support more than one independently authenticated user identity if deployed for more than one concurrent operator.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Identity and Access Management
+Cybersecurity Subdomain
+Authentication Security
+
+Work Items
+Activity 1: SR-AC-6-GAP-A1 - Implement Multi-User Authentication
+Develop and integrate a multi-user authentication system
+Sub-Activities
+1. Design Authentication System
+Sub-Activity ID
+SR-AC-6-GAP-A1.1
+Name
+Design Authentication System
+Description
+Design the authentication system architecture, including user registration, login, password reset, and session management. Ensure the system supports multiple user identities.
+Lifecycle Phase
+Architecture & Design
+PPT Category
+Technology
+Responsible Team
+Architecture
+ðŸ’» Code Example
+Design the architecture for user registration and login flows.
+Define the data models for user credentials and sessions.
+Plan for secure password storage using bcrypt or similar hashing algorithms.
+
+2. Develop Authentication Endpoints
+Sub-Activity ID
+SR-AC-6-GAP-A1.2
+Name
+Develop Authentication Endpoints
+Description
+Implement the backend endpoints for user registration, login, and session management. Ensure endpoints are secure and follow best practices for authentication.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+Create API endpoints for user registration:
+POST /api/register
+
+{
+
+  \"username\": \"user123\",
+  \"password\": \"securepassword\"
+
+}
+Create API endpoints for user login:
+POST /api/login
+
+{
+
+  \"username\": \"user123\",
+  \"password\": \"securepassword\"
+
+}
+
+3. Implement Session Management
+Sub-Activity ID
+SR-AC-6-GAP-A1.3
+Name
+Implement Session Management
+Description
+Implement session management to handle user sessions securely. Use secure cookies and tokens to manage user sessions.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+Implement session management using JWT or secure cookies:
+Generate JWT tokens upon successful login:
+const token = jwt.sign(
+{
+     userId: user.id 
+}, 'secretKey', 
+{
+     expiresIn: '1h' 
+});
+
+Set secure cookies for session management:
+res.cookie('sessionId', sessionId, 
+{
+     httpOnly: true, secure: true 
+});
+
+4. Test Authentication System
+Sub-Activity ID
+SR-AC-6-GAP-A1.4
+Name
+Test Authentication System
+Description
+Conduct thorough testing of the authentication system to ensure it supports multiple user identities and handles authentication securely.
+Lifecycle Phase
+Testing
+PPT Category
+Process
+Responsible Team
+QA
+ðŸ’» Code Example
+Write unit tests for user registration and login:
+Test user registration with valid and invalid inputs:
+Test user login with valid and invalid credentials:
+Test session management and token expiration.
+
+Gap Analysis
+Result
+Not Met
+Explanation
+The application scenario explicitly states that the system is currently in the prototype stage and uses a single shared passcode for access. The scenario mentions that the target state is per-user accounts but this feature is not implemented. There is no evidence of support for multiple independently authenticated user identities.
+Required Solution
+Implement a robust authentication mechanism that supports multiple user identities. This includes user registration, login, and session management features.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+7. SR-AU-1
+Description
+Every human decision that gates an irreversible action SHALL be recorded with a timestamp and an attributed actor.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Secure SDLC & Governance
+Cybersecurity Domain
+Security Monitoring
+Cybersecurity Subdomain
+Security Logging & Audit
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that HITL and final-approval decisions are persisted with decidedAt/completedBy fields, which satisfies the requirement of recording human decisions with a timestamp and attributed actor.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+8. SR-AU-2
+Description
+The system SHOULD detect and alert on corruption or unexpected reset of its persisted state, rather than silently falling back to default values.
+Classification
+IT Domain
+Data & Analytics
+IT Subdomain
+Data Storage
+Cybersecurity Domain
+Data Security
+Cybersecurity Subdomain
+Data Integrity
+
+Work Items
+Activity 1: SR-AU-2-GAP-A1 - Implement Integrity Checks for Persisted State
+Add integrity checks to detect corruption or unexpected resets of persisted state
+Sub-Activities
+1. Add checksums to JSON files
+Sub-Activity ID
+SR-AU-2-GAP-A1.1
+Name
+Add checksums to JSON files
+Description
+Modify the JSON file storage logic to include checksums or hashes for each file. Use a cryptographic hash function like SHA-256 to generate a hash of the file contents and store this hash alongside the data.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+const crypto = require('crypto');
+
+const hash = crypto.createHash('sha256');
+
+hash.update(JSON.stringify(data));
+
+const checksum = hash.digest('hex');
+
+// Store checksum with data
+
+2. Implement integrity verification logic
+Sub-Activity ID
+SR-AU-2-GAP-A1.2
+Name
+Implement integrity verification logic
+Description
+Add logic to verify the integrity of the JSON files on read. Compare the stored checksum with the computed checksum of the file contents. If they do not match, log an error and alert the appropriate team.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+const storedChecksum = getStoredChecksum();
+
+const computedChecksum = computeChecksum(data);
+
+if (storedChecksum !== computedChecksum) 
+{
+
+  logError('Data corruption detected');
+
+  alertTeam('Data corruption detected');
+
+
+}
+
+3. Configure alerting mechanism
+Sub-Activity ID
+SR-AU-2-GAP-A1.3
+Name
+Configure alerting mechanism
+Description
+Set up an alerting mechanism to notify the operations team when data corruption is detected. This can include email alerts, Slack notifications, or integration with a monitoring system.
+Lifecycle Phase
+Operations / Monitoring
+PPT Category
+Technology
+Responsible Team
+Operations
+ðŸ’» Code Example
+function alertTeam(message) 
+{
+
+  const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
+
+  const payload = 
+    {
+         text: message 
+    };
+
+  fetch(slackWebhookUrl, 
+    {
+         method: 'POST', body: JSON.stringify(payload) 
+    });
+
+
+}
+
+Gap Analysis
+Result
+Not Met
+Explanation
+The application scenario explicitly states that the system does not have a mechanism to detect and alert on corruption or unexpected reset of its persisted state. The system uses a single unencrypted local JSON file with no integrity check, and state-read failures are currently silent with no diagnostic trace.
+Required Solution
+Implement integrity checks and alerting mechanisms for the persisted state. This includes adding checksums or hashes to the JSON files and configuring the system to log and alert on any detected corruption or unexpected resets.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+9. SR-AV-1
+Description
+Any endpoint that invokes a metered or cost-incurring third-party API SHALL itself enforce a rate limit per caller.
+Classification
+IT Domain
+Integration & APIs
+IT Subdomain
+REST APIs
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+API Security
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that per-IP in-memory rate limiting is implemented on all watsonx/ICA-calling routes. This satisfies the requirement for rate limiting on endpoints that invoke metered or cost-incurring third-party APIs.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+10. SR-AV-2
+Description
+A single caller SHALL NOT be able to trigger unbounded consumption of a paid third-party API through automated or repeated requests.
+Classification
+IT Domain
+Integration & APIs
+IT Subdomain
+REST APIs
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+API Security
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that the system enforces per-IP rate limiting on all metered-API-calling routes. This implementation ensures that a single caller cannot trigger unbounded consumption of a paid third-party API through automated or repeated requests. The requirement is fully met.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+11. SR-AV-3
+Description
+The system SHOULD degrade predictably (documented, tested failure mode) rather than crash when a third-party API it depends on is unreachable or rate-limits the application itself.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Infrastructure Security
+Cybersecurity Subdomain
+Secure Configuration
+
+Work Items
+Activity 1: SR-AV-3-GAP-A1 - Implement Predictable Degradation Policy
+Develop and document a predictable degradation policy for third-party API failures
+Sub-Activities
+1. Document Failure Modes
+Sub-Activity ID
+SR-AV-3-GAP-A1.1
+Name
+Document Failure Modes
+Description
+Create detailed documentation outlining all possible failure modes for third-party API integrations. Include scenarios where APIs are unreachable or rate-limited.
+Lifecycle Phase
+Architecture & Design
+PPT Category
+Process
+Responsible Team
+Architecture
+ðŸ’» Code Example
+### Failure Mode Documentation
+
+**Scenario 1: Watsonx.ai Unreachable**
+- **Description:** Watsonx.ai API is down or unreachable.
+- **Degradation Mode:** Fallback to cached data or notify users of temporary unavailability.
+- **Testing:** Simulate API downtime and verify fallback behavior.
+
+**Scenario 2: Rate Limiting on IBM Consulting Advantage**
+- **Description:** IBM Consulting Advantage API rate limits the application.
+- **Degradation Mode:** Queue requests and retry after a cooldown period.
+- **Testing:** Simulate rate limiting and verify request queuing and retry logic.
+
+2. Develop Testing Strategy
+Sub-Activity ID
+SR-AV-3-GAP-A1.2
+Name
+Develop Testing Strategy
+Description
+Create a comprehensive testing strategy to validate the degradation policy. Include unit tests, integration tests, and end-to-end tests.
+Lifecycle Phase
+Testing
+PPT Category
+Process
+Responsible Team
+QA
+ðŸ’» Code Example
+### Testing Strategy
+
+**Unit Tests:**
+- Verify individual components handle API failures gracefully.
+
+**Integration Tests:**
+- Simulate API downtime and rate limiting in a controlled environment.
+
+**End-to-End Tests:**
+- Test the entire workflow from user interaction to API failure and degradation.
+
+3. Implement Monitoring and Alerts
+Sub-Activity ID
+SR-AV-3-GAP-A1.3
+Name
+Implement Monitoring and Alerts
+Description
+Set up monitoring and alerting for third-party API failures. Ensure that the system can detect and respond to degradation events in real-time.
+Lifecycle Phase
+Operations / Monitoring
+PPT Category
+Technology
+Responsible Team
+Operations
+ðŸ’» Code Example
+### Monitoring and Alerts
+
+**Monitoring:**
+- Use tools like Prometheus and Grafana to monitor API health.
+
+**Alerts:**
+- Configure alerts for API downtime and rate limiting.
+- Notify the operations team via email or Slack.
+
+Gap Analysis
+Result
+Partial
+Explanation
+The application scenario mentions that partial graceful degradation exists per-integration but is not a formalized, tested policy. This indicates that some aspects of predictable degradation are implemented, but there is no comprehensive documentation or testing strategy in place.
+Required Solution
+Implement a formalized policy for predictable degradation. Document failure modes and test them to ensure the system degrades predictably when third-party APIs are unreachable or rate-limited.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+12. SR-DP-1
+Description
+All communication between the client browser and the application server, and between the application server and third-party IBM/SaaS services, SHALL occur over TLS.
+Classification
+IT Domain
+Integration & APIs
+IT Subdomain
+REST APIs
+Cybersecurity Domain
+Data Security
+Cybersecurity Subdomain
+Encryption in transit
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that all external API calls use HTTPS endpoints. This ensures that all communication between the client browser and the application server, and between the application server and third-party IBM/SaaS services, occurs over TLS.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+13. SR-DP-2
+Description
+Credentials for third-party services SHALL NOT be committed to version control.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Secure SDLC & Governance
+Cybersecurity Domain
+Data Security
+Cybersecurity Subdomain
+Secrets Management
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that secrets are excluded from version control via .gitignore on all secret-bearing files. This implementation meets the requirement fully.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+14. SR-DP-3
+Description
+Long-lived third-party credentials SHALL be stored in a managed secrets store rather than plaintext environment files, and SHALL be rotatable without a code change.
+Classification
+IT Domain
+Data & Analytics
+IT Subdomain
+Secrets Management
+Cybersecurity Domain
+Data Security
+Cybersecurity Subdomain
+Secrets Management
+
+Work Items
+Activity 1: SR-DP-3-GAP-A1 - Implement Managed Secrets Store
+Integrate a managed secrets store to handle long-lived third-party credentials
+Sub-Activities
+1. Select a managed secrets store
+Sub-Activity ID
+SR-DP-3-GAP-A1.1
+Name
+Select a managed secrets store
+Description
+Choose a managed secrets store solution such as AWS Secrets Manager, Azure Key Vault, or HashiCorp Vault. Evaluate the solution based on security features, ease of integration, and cost.
+Lifecycle Phase
+Architecture & Design
+PPT Category
+Technology
+Responsible Team
+Architecture
+ðŸ’» Code Example
+N/A
+
+2. Integrate the secrets store with the application
+Sub-Activity ID
+SR-DP-3-GAP-A1.2
+Name
+Integrate the secrets store with the application
+Description
+Update the application to retrieve credentials from the managed secrets store instead of plaintext environment variables. Ensure that the integration is secure and follows best practices for secret management.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+const AWS = require('aws-sdk');
+
+const secretsManager = new AWS.SecretsManager();
+
+const secretValue = await secretsManager.getSecretValue(
+{
+     SecretId: 'my-secret' 
+}).promise();
+
+const credentials = JSON.parse(secretValue.SecretString);
+
+3. Implement credential rotation
+Sub-Activity ID
+SR-DP-3-GAP-A1.3
+Name
+Implement credential rotation
+Description
+Configure the managed secrets store to support automatic credential rotation. Ensure that the application can handle credential rotation without requiring code changes. Update the application to handle credential rotation events and update the credentials in use.
+Lifecycle Phase
+Security Implementation
+PPT Category
+Technology
+Responsible Team
+Security
+ðŸ’» Code Example
+N/A
+
+4. Test the integration and rotation
+Sub-Activity ID
+SR-DP-3-GAP-A1.4
+Name
+Test the integration and rotation
+Description
+Create unit and integration tests to verify that the application correctly retrieves credentials from the managed secrets store and handles credential rotation. Achieve 100 percent test coverage for secret management functions.
+Lifecycle Phase
+Testing
+PPT Category
+Process
+Responsible Team
+QA
+ðŸ’» Code Example
+const credentials = await getCredentialsFromSecretsManager();
+
+expect(credentials).toHaveProperty('apiKey');
+
+expect(credentials).toHaveProperty('apiSecret');
+
+Gap Analysis
+Result
+Not Met
+Explanation
+The application scenario explicitly states that long-lived third-party credentials are stored in plaintext environment variables in a .env.local file. There is no mention of a managed secrets store or a mechanism for rotating these credentials without a code change.
+Required Solution
+Implement a managed secrets store to securely store long-lived third-party credentials. Ensure that the secrets store supports credential rotation without requiring code changes.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+15. SR-DP-4
+Description
+Persisted engagement state (client business content, stakeholder PII) SHALL be encrypted at rest and SHALL include integrity verification sufficient to detect tampering or corruption.
+Classification
+IT Domain
+Data & Analytics
+IT Subdomain
+Data Storage
+Cybersecurity Domain
+Data Security
+Cybersecurity Subdomain
+Data Encryption at rest
+
+Work Items
+Activity 1: SR-DP-4-GAP-A1 - Implement Encryption at Rest
+Encrypt persisted engagement state to protect client business content and stakeholder PII
+Sub-Activities
+1. Select encryption algorithm and key management
+Sub-Activity ID
+SR-DP-4-GAP-A1.1
+Name
+Select encryption algorithm and key management
+Description
+Choose a strong encryption algorithm such as AES-256 and implement a secure key management system. Ensure keys are stored securely and rotated regularly.
+Lifecycle Phase
+Architecture & Design
+PPT Category
+Technology
+Responsible Team
+Security
+ðŸ’» Code Example
+const crypto = require('crypto');
+
+const algorithm = 'aes-256-cbc';
+
+const key = crypto.randomBytes(32);
+
+const iv = crypto.randomBytes(16);
+
+2. Encrypt JSON files
+Sub-Activity ID
+SR-DP-4-GAP-A1.2
+Name
+Encrypt JSON files
+Description
+Modify the persistence layer to encrypt JSON files before writing to disk and decrypt them upon reading. Use the selected encryption algorithm and key management system.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+
+let encrypted = cipher.update(JSON.stringify(data), 'utf8', 'hex');
+
+encrypted += cipher.final('hex');
+
+3. Implement integrity verification
+Sub-Activity ID
+SR-DP-4-GAP-A1.3
+Name
+Implement integrity verification
+Description
+Add integrity verification using HMAC or a similar mechanism to detect tampering or corruption. Compute and store the HMAC of the encrypted data and verify it upon reading.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+ðŸ’» Code Example
+const hmac = crypto.createHmac('sha256', key);
+
+hmac.update(encrypted);
+
+const hmacDigest = hmac.digest('hex');
+
+4. Update documentation and policies
+Sub-Activity ID
+SR-DP-4-GAP-A1.4
+Name
+Update documentation and policies
+Description
+Document the encryption and integrity verification processes. Update security policies to include regular key rotation and audits of encryption practices.
+Lifecycle Phase
+Assurance / Audit
+PPT Category
+Process
+Responsible Team
+Compliance
+
+Gap Analysis
+Result
+Not Met
+Explanation
+The application scenario explicitly states that the system stores all server-side state in a single JSON file on local disk without encryption. There is no mention of encryption at rest or integrity verification mechanisms for the persisted engagement state, which includes client business content and stakeholder PII.
+Required Solution
+Implement encryption at rest for persisted engagement state and include integrity verification to detect tampering or corruption.
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+16. SR-DP-5
+Description
+Log output SHALL NOT include full client business content or recipient PII beyond what is required for operational debugging; counts and status SHALL be logged in preference to content.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Data Security
+Cybersecurity Subdomain
+Security Logging & Audit
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that verbose logs are redacted to counts/status and do not include full client business content or recipient PII. This meets the requirement fully.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+17. SR-IV-1
+Description
+Free-text input accepted from a consultant (discovery notes, comments) SHALL be size-bounded before being submitted to any downstream processing or third-party API.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Web Applications
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+Input Sanitization and Validation
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that there is a 60000-character server-side cap on pasted discovery notes. This implementation ensures that free-text input is size-bounded before being submitted to any downstream processing or third-party API.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+18. SR-IV-2
+Description
+Any large-language-model prompt that incorporates untrusted or consultant-supplied free text SHALL explicitly instruct the model to treat that text as data to analyze, not as instructions to follow.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Business Logic Security
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+Input Sanitization and Validation
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that the system includes a prompt-injection guard clause appended to all three agent system prompts. This ensures that the large-language-model prompts treat consultant-supplied free text as data to analyze, not as instructions to follow.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+19. SR-IV-3
+Description
+Output returned by a large language model SHALL be schema-validated before being persisted or acted upon; malformed or incomplete output SHALL trigger a defined fallback.
+Classification
+IT Domain
+Application Development
+IT Subdomain
+Backend Services
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+Input Validation and AI-Specific Controls
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that all three agents normalize and type-check parsed JSON before downstream use, with a sampling-decode retry on parse failure. This indicates that the output from the large language model is schema-validated before being persisted or acted upon, and there is a defined fallback mechanism in place.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+20. SR-TP-1
+Description
+Inbound webhook callbacks from a third-party service (e.g., Slack interactivity) SHALL be authenticated via a mechanism that verifies the request originated from that service, independent of the application's own session mechanism.
+Classification
+IT Domain
+Integration & APIs
+IT Subdomain
+REST APIs
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+API Security
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that inbound Slack callbacks are verified via HMAC-SHA256 signature with a 5-minute replay window. This mechanism ensures that the request originated from Slack, independent of the application's own session mechanism.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+21. SR-TP-2
+Description
+Server-to-server pull requests from a trusted external system SHALL be scoped to an unguessable identifier and SHALL NOT expose data beyond what that specific integration requires.
+Classification
+IT Domain
+Integration & APIs
+IT Subdomain
+REST APIs
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+API Security
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that the ICA package-pull endpoint is scoped to a per-engagement unguessable ID. This ensures that server-to-server pull requests are scoped to an unguessable identifier and do not expose data beyond what the specific integration requires.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+22. SR-TP-3
+Description
+Real-world, irreversible side effects triggered via a third-party integration SHALL only occur after an explicit human approval step recorded in the system, never as a fully automated response to AI output alone.
+Classification
+IT Domain
+Integration & APIs
+IT Subdomain
+REST APIs
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+Business Logic Validation
+
+Gap Analysis
+Result
+Met
+Explanation
+The application scenario explicitly states that email, Slack, and Jira delivery actions are gated behind human-in-the-loop (HITL) accept and final-approval decisions. This ensures that real-world, irreversible side effects triggered via third-party integrations only occur after explicit human approval.
+Required Solution
+None Required
+
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+23. SR-TP-4
+Description
+Claims of a completed third-party action reported by an external agent SHALL NOT be trusted as proof of delivery; the application SHALL independently verify or itself execute any action it needs to guarantee occurred.
+Classification
+IT Domain
+Integration & APIs
+IT Subdomain
+REST APIs
+Cybersecurity Domain
+Application Security
+Cybersecurity Subdomain
+API Security
+
+Work Items
+Activity 1: -GAP-A1 - Implement Comprehensive Third-Party Action Verification
+Ensure all third-party actions are independently verified or executed by the application.
+Sub-Activities
+1. Define Verification Policies
+Sub-Activity ID
+-GAP-A1.1
+Name
+Define Verification Policies
+Description
+Create and document policies for verifying third-party actions across all integration points. Ensure these policies are reviewed and approved by the security and compliance teams.
+Lifecycle Phase
+Architecture & Design
+PPT Category
+Process
+Responsible Team
+Security
+
+2. Implement Verification Logic
+Sub-Activity ID
+-GAP-A1.2
+Name
+Implement Verification Logic
+Description
+Develop and integrate verification logic for each third-party integration. This may involve API calls back to the third-party service to confirm actions or executing the actions directly within the application.
+Lifecycle Phase
+Development
+PPT Category
+Technology
+Responsible Team
+Engineering
+
+3. Test Verification Mechanisms
+Sub-Activity ID
+-GAP-A1.3
+Name
+Test Verification Mechanisms
+Description
+Conduct thorough testing of the verification mechanisms to ensure they accurately confirm third-party actions. Include edge cases and failure scenarios in the test plan.
+Lifecycle Phase
+Testing
+PPT Category
+Process
+Responsible Team
+QA
+
+4. Monitor and Audit Verification
+Sub-Activity ID
+-GAP-A1.4
+Name
+Monitor and Audit Verification
+Description
+Implement monitoring and auditing for the verification processes. Ensure that all verification attempts and results are logged and regularly reviewed for compliance and accuracy.
+Lifecycle Phase
+Operations / Monitoring
+PPT Category
+Technology
+Responsible Team
+Operations
+
+Gap Analysis
+Result
+Partial
+Explanation
+The scenario mentions that email delivery is specifically verified, but there is no formalized policy covering all integration paths. This indicates that while some verification is in place, it is not comprehensive across all third-party actions.
+Required Solution
+Implement a comprehensive verification mechanism for all third-party actions to ensure that claims of completed actions are independently verified or executed by the application.
+
+

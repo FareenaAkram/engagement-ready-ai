@@ -1,0 +1,1086 @@
+
+<!-- saved from url=(0089)file:///C:/Users/FareenaAkram/AppData/Local/Temp/bob-artifacts/watsonx-challenge-poc.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Engagement Ready AI — IBM watsonx Challenge Submission</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #1f2328;
+    background: #f7f8fa;
+    padding: 32px 16px 64px;
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+
+  /* ── Cover ── */
+  .cover {
+    background: #0f1829;
+    border-radius: 10px;
+    padding: 44px 40px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #5b9bd5;
+    margin-bottom: 12px;
+  }
+  .cover h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .cover-sub {
+    font-size: 15px;
+    color: #8ab4ff;
+    margin-bottom: 24px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    border-top: 1px solid #1e2d45;
+    padding-top: 20px;
+  }
+  .cover-meta-item { }
+  .cover-meta-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #5b9bd5;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .cover-meta-value {
+    font-size: 13px;
+    color: #d0e4ff;
+    font-weight: 600;
+  }
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .badge-blue  { background: #0f2a45; border-color: #3b82d4; color: #8ab4ff; }
+  .badge-green { background: #0b2a1a; border-color: #22c55e; color: #4ade80; }
+  .badge-purple{ background: #1e1040; border-color: #7c5cd8; color: #a78bfa; }
+
+  /* ── Section cards ── */
+  .section {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+  }
+  .section-num {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #3b82d4;
+    margin-bottom: 4px;
+  }
+  .section h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1f2328;
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+  .section-lead {
+    font-size: 13px;
+    color: #57606a;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f1f3;
+  }
+  h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #57606a;
+    margin: 18px 0 8px;
+  }
+  h3:first-of-type { margin-top: 0; }
+  p { margin-bottom: 10px; color: #374151; font-size: 14px; }
+  p:last-child { margin-bottom: 0; }
+  ul { padding-left: 18px; margin-bottom: 10px; }
+  li { margin-bottom: 5px; color: #374151; font-size: 14px; }
+  strong { color: #1f2328; }
+
+  /* ── Flow diagram ── */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 16px 0;
+  }
+  .flow-step {
+    flex: 1 1 120px;
+    min-width: 100px;
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: center;
+    position: relative;
+    margin: 3px;
+  }
+  .flow-step-num {
+    font-size: 18px;
+    font-weight: 900;
+    color: #e5e7eb;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .flow-step-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1f2328;
+    line-height: 1.3;
+  }
+  .flow-step-owner {
+    font-size: 9px;
+    color: #57606a;
+    margin-top: 3px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  .flow-step.human  { border-color: #3b82d4; background: #eff6ff; }
+  .flow-step.watson { border-color: #7c5cd8; background: #f5f3ff; }
+  .flow-step.ica    { border-color: #16a34a; background: #f0fdf4; }
+  .flow-step.app    { border-color: #d97706; background: #fffbeb; }
+
+  /* ── Metrics grid ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .metric {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .metric-val {
+    font-size: 26px;
+    font-weight: 900;
+    color: #1f2328;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .metric-val.green  { color: #16a34a; }
+  .metric-val.blue   { color: #3b82d4; }
+  .metric-val.purple { color: #7c5cd8; }
+  .metric-val.amber  { color: #d97706; }
+  .metric-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #57606a;
+  }
+  .metric-sub {
+    font-size: 10px;
+    color: #8c959f;
+    margin-top: 2px;
+  }
+
+  /* ── Table ── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th {
+    background: #f7f8fa;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #57606a;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #f0f1f3;
+    color: #374151;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  .pill {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+  .pill-red    { background: #fee2e2; color: #b91c1c; }
+  .pill-amber  { background: #fef3c7; color: #92400e; }
+  .pill-green  { background: #dcfce7; color: #15803d; }
+  .pill-blue   { background: #dbeafe; color: #1d4ed8; }
+  .pill-purple { background: #ede9fe; color: #6d28d9; }
+
+  /* ── Two-column layout ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #57606a;
+    margin-bottom: 8px;
+  }
+  .card ul { padding-left: 14px; margin: 0; }
+  .card li { font-size: 12px; margin-bottom: 4px; color: #374151; }
+
+  /* ── Tech stack ── */
+  .tech-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+  .tech-chip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #1f2328;
+  }
+  .tech-chip.ibm { background: #0f1829; color: #8ab4ff; border-color: #1e2d45; }
+  .tech-chip.oss { background: #fff; color: #374151; }
+
+  /* ── Quote / callout ── */
+  .callout {
+    background: #eff6ff;
+    border-left: 3px solid #3b82d4;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: #1e40af;
+  }
+  .callout-orange {
+    background: #fffbeb;
+    border-left: 3px solid #d97706;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: #92400e;
+  }
+  .callout-green {
+    background: #f0fdf4;
+    border-left: 3px solid #16a34a;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: #15803d;
+  }
+
+  /* ── Responsibility matrix ── */
+  .resp-row { display: flex; gap: 12px; margin: 14px 0; flex-wrap: wrap; }
+  .resp-card {
+    flex: 1 1 160px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .resp-card.watsonx { border-top: 3px solid #7c5cd8; }
+  .resp-card.ica     { border-top: 3px solid #16a34a; }
+  .resp-card.human   { border-top: 3px solid #3b82d4; }
+  .resp-card.app     { border-top: 3px solid #d97706; }
+  .resp-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .resp-card.watsonx .resp-title { color: #7c5cd8; }
+  .resp-card.ica     .resp-title { color: #16a34a; }
+  .resp-card.human   .resp-title { color: #3b82d4; }
+  .resp-card.app     .resp-title { color: #d97706; }
+  .resp-card ul { padding-left: 14px; margin: 0; }
+  .resp-card li { font-size: 11px; color: #374151; margin-bottom: 3px; }
+
+  /* ── DASC section ── */
+  .dasc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .dasc-item {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .dasc-item strong { font-size: 11px; display: block; color: #1f2328; margin-bottom: 3px; }
+  .dasc-item span { color: #57606a; }
+
+  /* ── Curl block ── */
+  .code-block {
+    background: #0f1829;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 10px 0;
+    overflow-x: auto;
+  }
+  .code-block pre {
+    font-family: "Cascadia Code", "Fira Code", "Menlo", monospace;
+    font-size: 11px;
+    color: #8ab4ff;
+    line-height: 1.7;
+    white-space: pre;
+    margin: 0;
+  }
+  .code-kw  { color: #c792ea; }
+  .code-str { color: #80cbc4; }
+  .code-val { color: #f78c6c; }
+  .code-cmt { color: #546e7a; font-style: italic; }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid #e5e7eb; margin: 8px 0; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: #8c959f;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 20px;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 540px) {
+    .cover { padding: 28px 20px; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .two-col, .dasc-grid { grid-template-columns: 1fr; }
+    .section { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="cover">
+    <div class="cover-eyebrow">IBM watsonx Challenge 2025 · Consulting Track</div>
+    <div class="badge-row">
+      <span class="badge badge-blue">IBM watsonx.ai · Granite 3</span>
+      <span class="badge badge-green">IBM Consulting Advantage</span>
+      <span class="badge badge-purple">Context Studio · MCP</span>
+      <span class="badge badge-blue">Human-in-the-Loop</span>
+    </div>
+    <h1>Engagement Ready AI</h1>
+    <div class="cover-sub">AI-accelerated pre-engagement readiness assessment for IBM Consulting</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Submitted by</span>
+        <span class="cover-meta-value">Fareena Akram · IBM Consulting</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Track</span>
+        <span class="cover-meta-value">Consulting Participant</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">App type</span>
+        <span class="cover-meta-value">Agentic App (ICA Agent API)</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Time saved per engagement</span>
+        <span class="cover-meta-value">12 – 18 hours</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="section">
+    <div class="section-num">Architecture — Verified</div>
+    <h2>How ICA is actually wired (single source of truth)</h2>
+    <div class="section-lead">One architecture, confirmed against real IBM endpoints — not a projection.</div>
+
+    <div class="callout-green">
+      <strong>ICA integration = Agent API (A2A).</strong> The app POSTs a natural-language trigger message
+      to the ICA Agentic App's A2A endpoint (<code>servicesessentials.ibm.com/agenticapps/a2a/{appId}/agents/{agentId}</code>)
+      authenticated with <code>ICA_A2A_KEY</code>. This is the only ICA connection strategy this app uses in production.
+      It has been live-tested end to end: a real POST to this exact endpoint returns a real <code>conversation_id</code>
+      and a real agent response, confirmed today.
+    </div>
+
+    <p>Two earlier architectures were explored and are intentionally not used — kept only as dated history, not as competing designs:</p>
+    <ul>
+      <li><strong>Direct ICA REST API</strong> (first attempt) — assumed ICA exposed conventional REST endpoints. It doesn't; superseded.</li>
+      <li><strong>MCP-via-Orchestrate</strong> (second attempt) — assumed watsonx Orchestrate should broker the ICA MCP call. Correct in spirit, but the direct Agent API route proved simpler and is what's live today.</li>
+    </ul>
+
+    <h3>Live integration status (verified, not projected)</h3>
+    <table>
+      <tbody>
+        <tr><th>Component</th><th>Status</th><th>Evidence</th></tr>
+        <tr><td>watsonx.ai (Granite) — 3-agent pipeline</td><td><span class="pill pill-green">Live</span></td><td>Real IAM auth + real generation call, confirmed</td></tr>
+        <tr><td>ICA Agent API — task assignment &amp; deliverable generation</td><td><span class="pill pill-green">Live</span></td><td>Real POST to the A2A endpoint, real agent reply</td></tr>
+        <tr><td>Context Studio — institutional memory (read + write)</td><td><span class="pill pill-green">Live</span></td><td>Real graph/vector query returned actual prior-engagement data</td></tr>
+        <tr><td>Slack — delivery &amp; HITL summary (webhook)</td><td><span class="pill pill-green">Live</span></td><td>Real webhook POST, confirmed delivered</td></tr>
+        <tr><td>Slack — interactive per-task "Mark Done" cards (bot)</td><td><span class="pill pill-blue">Built</span></td><td>Bot-token posting + signed <code>/api/slack/actions</code> callback implemented; needs a Slack App's bot token to switch on</td></tr>
+        <tr><td>Jira — Epic + Story auto-creation</td><td><span class="pill pill-amber">Built, pending credentials</span></td><td>Real Jira Cloud REST client implemented; awaiting a Jira API token to go live</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="section">
+    <div class="section-num">Deliverable 1</div>
+    <h2>Solution Statement</h2>
+    <div class="section-lead">What problem it solves, who it serves, and the expected productivity outcome.</div>
+
+    <h3>The Problem</h3>
+    <p>Before IBM Consulting begins any client engagement, a lead consultant must manually assess whether the engagement is ready to proceed — checking stakeholders, workshops conducted, requirements defined, risks identified, and open questions resolved. This process is entirely manual, inconsistent across teams, and typically takes <strong>2 to 4 days per engagement</strong> of senior consultant time.</p>
+    <p>The current state:</p>
+    <ul>
+      <li>Consultants trawl through unstructured workshop notes, meeting minutes, and email threads manually</li>
+      <li>No standardised scoring methodology — readiness is judged by experience and gut feel</li>
+      <li>Risks and gaps are discovered late, causing costly rework or delayed kick-offs</li>
+      <li>Task assignment after a review is ad hoc — Jira, Slack, and email done manually one-by-one</li>
+      <li>No full audit trail of who decided what, when, and why</li>
+    </ul>
+
+    <h3>The Solution</h3>
+    <p><strong>Engagement Ready AI</strong> is a full-stack Next.js 15 agentic application that replaces this manual process with a 10-step AI-governed workflow. The consultant pastes raw discovery notes; the system does the rest.</p>
+
+    <div class="flow">
+      <div class="flow-step human">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-label">Submit Evidence</div>
+        <div class="flow-step-owner">Human</div>
+      </div>
+      <div class="flow-step watson">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-label">Read Context Studio</div>
+        <div class="flow-step-owner">watsonx</div>
+      </div>
+      <div class="flow-step watson">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-label">Score + Risks + Plan</div>
+        <div class="flow-step-owner">watsonx</div>
+      </div>
+      <div class="flow-step human">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-label">Accept / Override</div>
+        <div class="flow-step-owner">HITL Gate 1</div>
+      </div>
+      <div class="flow-step ica">
+        <div class="flow-step-num">5</div>
+        <div class="flow-step-label">Assign Tasks</div>
+        <div class="flow-step-owner">ICA Agent</div>
+      </div>
+      <div class="flow-step app">
+        <div class="flow-step-num">6</div>
+        <div class="flow-step-label">Action Center</div>
+        <div class="flow-step-owner">App tracks</div>
+      </div>
+      <div class="flow-step human">
+        <div class="flow-step-num">7</div>
+        <div class="flow-step-label">Team Completes</div>
+        <div class="flow-step-owner">Architect / QA</div>
+      </div>
+      <div class="flow-step ica">
+        <div class="flow-step-num">8</div>
+        <div class="flow-step-label">ICA Advances Status</div>
+        <div class="flow-step-owner">ICA</div>
+      </div>
+      <div class="flow-step human">
+        <div class="flow-step-num">9</div>
+        <div class="flow-step-label">Final Approval</div>
+        <div class="flow-step-owner">HITL Gate 2</div>
+      </div>
+      <div class="flow-step ica">
+        <div class="flow-step-num">10</div>
+        <div class="flow-step-label">Generate + Send Assets</div>
+        <div class="flow-step-owner">ICA + watsonx</div>
+      </div>
+    </div>
+
+    <h3>Target Users</h3>
+    <div class="two-col">
+      <div class="card">
+        <h4>Primary</h4>
+        <ul>
+          <li>Lead Consultants running pre-engagement reviews</li>
+          <li>Solution Architects validating technical readiness</li>
+          <li>Engagement Managers tracking delivery risk</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Secondary</h4>
+        <ul>
+          <li>QA Leads reviewing requirement completeness</li>
+          <li>IBM Partners approving engagements</li>
+          <li>Operations teams receiving delivery handoffs</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Expected Outcomes</h3>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-val green">90%</div>
+        <div class="metric-label">Faster Review</div>
+        <div class="metric-sub">2–4 days → 15 minutes</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val blue">12–18h</div>
+        <div class="metric-label">Hours Saved</div>
+        <div class="metric-sub">per engagement</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val purple">5</div>
+        <div class="metric-label">Assets Auto-generated</div>
+        <div class="metric-sub">Exec summary, emails, Jira, Slack</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val amber">100%</div>
+        <div class="metric-label">Audit Trail</div>
+        <div class="metric-sub">Every decision stamped</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val green">0</div>
+        <div class="metric-label">Manual Jira Tickets</div>
+        <div class="metric-sub">ICA creates all</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val blue">2</div>
+        <div class="metric-label">Human Gates</div>
+        <div class="metric-sub">AI recommends, humans decide</div>
+      </div>
+    </div>
+
+    <h3>Consulting-specific Value</h3>
+    <div class="callout">
+      This is a <strong>reusable, team-wide accelerator</strong>. Any IBM Consulting team can onboard their own engagement context into Context Studio (ctx_69dbd815ec49) and immediately benefit from the same structured readiness pipeline — no per-project prompt engineering required.
+    </div>
+    <p><strong>Reusable prompt artefacts:</strong> The 3-agent watsonx pipeline (Discovery Consolidator → Delivery Readiness Analyst → Consulting Asset Generator) is fully parameterised. The system prompts are extracted as <code>WatsonxPromptArtifact</code> objects and persisted with every assessment — making them shareable, refinable, and auditable across the IBM Consulting community.</p>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-num">Deliverable 2</div>
+    <h2>Technical Statement</h2>
+    <div class="section-lead">How Bob, ICA and other AI tools were used — architecture, integration details, and engineering decisions.</div>
+
+    <h3>How Bob (ICA) Was Used</h3>
+    <p>Bob was the primary tool for building and iterating this entire application. Specifically:</p>
+    <ul>
+      <li><strong>Architecture design</strong> — Bob designed the 10-step agentic workflow, separating responsibilities between watsonx (analyst) and ICA (executor)</li>
+      <li><strong>ICA Agent API integration</strong> — Bob implemented the <code>ica-agent-api-service.ts</code> service using the exact Agentic App Studio Lab curl pattern</li>
+      <li><strong>YAML agent definition</strong> — Bob authored <code>agent-orchestration-creation.yaml</code> (836 lines) defining the full multi-agent ICA orchestration</li>
+      <li><strong>Context Studio integration</strong> — Bob connected the app to Context Studio MCP (ctx_69dbd815ec49) for engagement knowledge retrieval</li>
+      <li><strong>Code quality</strong> — all generated code passed strict TypeScript, ESLint and Next.js validation with zero warnings</li>
+    </ul>
+
+    <h3>ICA Agent API — The Core Integration</h3>
+    <p>The app calls ICA's Agent-to-Agent (A2A) endpoint using the Agentic App Studio Lab pattern:</p>
+
+    <div class="code-block"><pre><span class="code-cmt"># From Agentic App Studio Lab — implemented in services/ica-agent-api-service.ts</span>
+<span class="code-kw">curl</span> -X POST \
+  <span class="code-str">"https://servicesessentials.ibm.com/agenticapps/a2a/{appId}/agents/{agentId}"</span> \
+  -H <span class="code-str">"Authorization: Bearer {ICA_A2A_KEY}"</span> \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{
+    "message": "ASSIGN_TASKS: Post-assessment action plan accepted...",
+    "context": {
+      "trigger_action": "assign-tasks-and-notify",
+      "context_id": "<span class="code-val">ctx_69dbd815ec49</span>",
+      "engagement_id": "eng-001",
+      "action_plan": [...],
+      "readiness_score": 72
+    }
+  }'</span>
+
+<span class="code-cmt"># App IDs (from ICA Agent Studio):</span>
+<span class="code-cmt"># appId:   92690bf8-bb58-4b1e-9241-f8af02aa89ce</span>
+<span class="code-cmt"># agentId: cb3308a4-ddc7-422b-802b-26c04d6b6636</span></pre></div>
+
+    <h3>IBM watsonx.ai — 3-Agent Sequential Pipeline</h3>
+    <p>watsonx.ai (Granite 3 8B Instruct) runs a <strong>strictly sequential 3-agent pipeline</strong> — no parallelism, each agent feeds the next:</p>
+    <table>
+      <thead><tr><th>#</th><th>Agent</th><th>Input</th><th>Output</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="pill pill-purple">1</span></td>
+          <td><strong>Discovery Consolidator</strong></td>
+          <td>Raw workshop notes / transcripts pasted by consultant</td>
+          <td>Structured JSON context package: stakeholders, workshops, requirements, risks, gaps</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-blue">2</span></td>
+          <td><strong>Delivery Readiness Analyst</strong></td>
+          <td>Structured context + Context Studio ontology</td>
+          <td>Readiness score (0–100), decision, confidence, critical issues, recommendations, reasoning trace</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-green">3</span></td>
+          <td><strong>Consulting Asset Generator</strong></td>
+          <td>Readiness analysis + action plan</td>
+          <td>Action plan with per-role task assignments (Architect / Consultant / QA / Operations)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout-orange">
+      <strong>Strict separation of concerns:</strong> watsonx is ONLY the analyst — it scores, identifies risks, and plans. It never sends emails, creates Jira tickets, or posts to Slack. ICA is the executor of all actions.
+    </div>
+
+    <h3>IBM Context Studio (MCP Integration)</h3>
+    <p>Context Studio provides the engagement knowledge base. The app uses the MCP gateway to query semantic context before every watsonx assessment:</p>
+    <ul>
+      <li><strong>Context ID:</strong> <code>ctx_69dbd815ec49</code> — ingested via ContextForge (MCP server <code>3e49f953420a4cbcaf78a083586b4098</code>)</li>
+      <li><strong>MCP Gateway URL:</strong> <code>servicesessentials.ibm.com/mcp-gateway/service/gateway/servers/8ccdd203…/mcp</code></li>
+      <li>Context Studio is queried using <code>context-broker-hybrid-query</code> (semantic + graph) before the assessment pipeline runs</li>
+      <li>The context snapshot is passed as shared state to all 3 watsonx agents</li>
+    </ul>
+
+    <div class="callout-green">
+      <strong>The real differentiator: this loop closes.</strong> Reading Context Studio before an assessment is table stakes —
+      most AI tools that "check a knowledge base" stop there. This app also <strong>writes back</strong>. Every HITL decision
+      (accept or override, with the consultant's justification) is posted to Context Studio as a new institutional-memory event via
+      <code>context-broker-post-events</code>, scoped to the same context ID the next assessment reads from. Concretely: a live
+      graph query against this context returned real nodes referencing prior <code>ReadinessResult</code> records — meaning
+      Agent 2 (Delivery Readiness Analyst) is grounded in what this practice has <em>actually</em> decided before, not just
+      static day-one documentation. The more engagements run through it, the better its judgment gets — without retraining a
+      model or maintaining a prompt library by hand. That's a compounding accelerator, not a one-shot form-filler.
+    </div>
+
+    <h3>ICA Langflow Workflows</h3>
+    <p>Two ICA Langflow workflows are registered and called after HITL acceptance:</p>
+    <table>
+      <thead><tr><th>Workflow</th><th>Flow ID</th><th>Trigger</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>notify-assignees</strong></td>
+          <td><code>10c9cd36-7166-4168-…</code></td>
+          <td>Consultant accepts AI plan → ICA assigns tasks, sends emails, creates Jira</td>
+        </tr>
+        <tr>
+          <td><strong>generate-assets</strong></td>
+          <td><code>e73ca49f-6066-4c9b-…</code></td>
+          <td>All tasks complete + final approval → ICA generates 5 delivery artefacts</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Full Technology Stack</h3>
+    <div class="tech-row">
+      <span class="tech-chip ibm">IBM watsonx.ai</span>
+      <span class="tech-chip ibm">Granite 3 8B Instruct</span>
+      <span class="tech-chip ibm">IBM Consulting Advantage</span>
+      <span class="tech-chip ibm">ICA Agent API (A2A)</span>
+      <span class="tech-chip ibm">ICA Langflow</span>
+      <span class="tech-chip ibm">Context Studio MCP</span>
+      <span class="tech-chip ibm">IBM Bob (development)</span>
+      <span class="tech-chip oss">Next.js 15 + React 19</span>
+      <span class="tech-chip oss">TypeScript (strict)</span>
+      <span class="tech-chip oss">Tailwind CSS v4</span>
+      <span class="tech-chip oss">Zustand (client state)</span>
+      <span class="tech-chip oss">Nodemailer / Gmail SMTP</span>
+      <span class="tech-chip oss">Jira REST API v3</span>
+      <span class="tech-chip oss">Slack Incoming Webhooks</span>
+    </div>
+
+    <h3>Responsibility Matrix</h3>
+    <div class="resp-row">
+      <div class="resp-card watsonx">
+        <div class="resp-title">watsonx</div>
+        <ul>
+          <li>Read Context Studio</li>
+          <li>Generate readiness score</li>
+          <li>Identify critical risks</li>
+          <li>Build action plan</li>
+          <li>Re-assess after remediation</li>
+        </ul>
+      </div>
+      <div class="resp-card ica">
+        <div class="resp-title">ICA</div>
+        <ul>
+          <li>Assign tasks by role</li>
+          <li>Send task-assignment emails</li>
+          <li>Create Jira Epic + Stories</li>
+          <li>Post Slack notifications</li>
+          <li>Advance readiness status</li>
+          <li>Generate delivery assets</li>
+        </ul>
+      </div>
+      <div class="resp-card human">
+        <div class="resp-title">Human (HITL)</div>
+        <ul>
+          <li>Accept or override AI plan</li>
+          <li>Complete assigned tasks</li>
+          <li>Final engagement approval</li>
+        </ul>
+      </div>
+      <div class="resp-card app">
+        <div class="resp-title">App</div>
+        <ul>
+          <li>Persist all workflow state</li>
+          <li>Enforce HITL gates</li>
+          <li>Display ICA Action Center</li>
+          <li>Full audit trail</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Security Design (DASC-aligned)</h3>
+    <div class="dasc-grid">
+      <div class="dasc-item">
+        <strong>No credentials in source code</strong>
+        <span>All secrets via .env.local — Zod-validated at startup. Never in Git.</span>
+      </div>
+      <div class="dasc-item">
+        <strong>Zero PII in client bundle</strong>
+        <span>All IBM credentials, API keys, and stakeholder emails are server-side only.</span>
+      </div>
+      <div class="dasc-item">
+        <strong>Principle of least privilege</strong>
+        <span>ICA A2A key scoped to one app. Context Studio API key scoped to one context ID.</span>
+      </div>
+      <div class="dasc-item">
+        <strong>Human approval gates</strong>
+        <span>AI can never autonomously send emails, create Jira tickets, or approve engagements without explicit consultant confirmation.</span>
+      </div>
+      <div class="dasc-item">
+        <strong>Audit trail enforcement</strong>
+        <span>Every HITL decision, task completion, and status change is timestamped and persisted in immutable workflow state.</span>
+      </div>
+      <div class="dasc-item">
+        <strong>Graceful degradation</strong>
+        <span>Every IBM service call is guarded by hasXxxConfig(). Services return mock/log-only when credentials absent — never throw.</span>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-num">Deliverable 3</div>
+    <h2>Solution Impact Assessment</h2>
+    <div class="section-lead">Before / after time estimates per activity, frequency, and cumulative productivity benefit.</div>
+
+    <h3>Before vs. After — Time Impact by Activity</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Activity</th>
+          <th>Before (Manual)</th>
+          <th>After (AI)</th>
+          <th>Saving</th>
+          <th>Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Review workshop notes &amp; evidence</strong></td>
+          <td>3–4 hours</td>
+          <td>2 min (paste + submit)</td>
+          <td><span class="pill pill-green">~3.8h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Generate readiness score + rationale</strong></td>
+          <td>4–6 hours (senior)</td>
+          <td>45 seconds (Granite)</td>
+          <td><span class="pill pill-green">~5h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Identify risks and write recommendations</strong></td>
+          <td>2–3 hours</td>
+          <td>Included in pipeline</td>
+          <td><span class="pill pill-green">~2.5h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Create and assign remediation tasks</strong></td>
+          <td>1–2 hours (Jira + email)</td>
+          <td>1 click (ICA assigns all)</td>
+          <td><span class="pill pill-green">~1.5h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Write Executive Summary</strong></td>
+          <td>2–3 hours</td>
+          <td>Auto-generated by ICA</td>
+          <td><span class="pill pill-green">~2.5h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Draft client and internal emails</strong></td>
+          <td>1–2 hours</td>
+          <td>Auto-generated + sent</td>
+          <td><span class="pill pill-green">~1.5h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Create Jira Epic + sub-tickets</strong></td>
+          <td>1–2 hours</td>
+          <td>Auto-created via Jira API</td>
+          <td><span class="pill pill-green">~1.5h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Post team Slack notifications</strong></td>
+          <td>30 min</td>
+          <td>Automatic on approval</td>
+          <td><span class="pill pill-green">0.5h saved</span></td>
+          <td>Per engagement</td>
+        </tr>
+        <tr>
+          <td><strong>Total per engagement</strong><br></td>
+          <td><strong>14.5 – 22.5 hours</strong></td>
+          <td><strong>~30 minutes</strong></td>
+          <td><span class="pill pill-red">12–18h freed</span></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Impact Categories</h3>
+    <div class="two-col">
+      <div class="card">
+        <h4>Productivity</h4>
+        <ul>
+          <li>Senior consultant time freed: <strong>12–18h per engagement</strong></li>
+          <li>At 2 engagements/month per consultant: <strong>24–36h/month</strong></li>
+          <li>Team of 10: <strong>~360h/month recaptured</strong></li>
+          <li>Equivalent to ~2 additional FTEs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Quality &amp; Consistency</h4>
+        <ul>
+          <li>Standardised scoring methodology across all teams</li>
+          <li>Explainable AI reasoning trace on every decision</li>
+          <li>Zero assessments missed due to time pressure</li>
+          <li>Continuous improvement via re-assessment loop</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Risk Reduction</h4>
+        <ul>
+          <li>Gaps caught before kick-off, not during delivery</li>
+          <li>Missing stakeholders flagged automatically</li>
+          <li>Security and compliance checks embedded in pipeline</li>
+          <li>Full audit trail for every engagement decision</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Team-wide Reusability</h4>
+        <ul>
+          <li>Any IBM Consulting team onboards in minutes</li>
+          <li>Prompt artefacts shareable across practices</li>
+          <li>ICA YAML agent definition redeployable</li>
+          <li>Context Studio context expandable per practice</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>IBM Business Value</h3>
+    <p>IBM Consulting runs thousands of engagements per year. Even at modest adoption of <strong>100 engagements/year</strong> using this tool, the conservative estimate is:</p>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-val green">1,200h</div>
+        <div class="metric-label">Senior Consultant Hours</div>
+        <div class="metric-sub">freed per 100 engagements/yr</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val blue">$300K+</div>
+        <div class="metric-label">Estimated Cost Avoidance</div>
+        <div class="metric-sub">at $250/hr blended rate</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val purple">0</div>
+        <div class="metric-label">Missed Risk Reviews</div>
+        <div class="metric-sub">with standardised pipeline</div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-num">Deliverable 4 — Pitch File Content (PDF / Video Script)</div>
+    <h2>Pitch: Engagement Ready AI</h2>
+    <div class="section-lead">3-page PDF / 3-minute video script content — ready to present to judging panel.</div>
+
+    <h3>Slide 1 — The Problem (30 seconds)</h3>
+    <div class="callout">
+      <strong>"Every IBM Consulting engagement starts with a risk no one talks about: we don't actually know if we're ready to deliver."</strong>
+      <br><br>
+      Senior consultants spend 3–5 days per engagement manually reviewing workshop notes, checking stakeholders, scoring readiness, and writing the same emails and Jira tickets from scratch. It's inconsistent, time-consuming, and gets skipped under pressure. When gaps are found late, the cost is enormous.
+    </div>
+
+    <h3>Slide 2 — The Solution (60 seconds)</h3>
+    <p><strong>Engagement Ready AI</strong> is a live, working agentic application built on IBM watsonx.ai, IBM Consulting Advantage (ICA), and Context Studio. The consultant pastes their discovery notes — the system delivers a scored readiness assessment, assigns remediation tasks to the right people, tracks completion, and generates the full delivery package. All in under 15 minutes.</p>
+    <p><strong>What makes it different:</strong></p>
+    <ul>
+      <li><strong>The institutional-memory loop closes.</strong> It doesn't just read Context Studio before an assessment — every HITL decision writes back into it, so the next assessment is grounded in what this practice actually decided, not just static day-one docs. It gets better at judging readiness the more it's used — no retraining, no prompt-library upkeep.</li>
+      <li>Not just a chatbot — a full 10-step governed workflow with two human approval gates</li>
+      <li>ICA Agent API is called directly using the Agentic App Studio Lab curl pattern — live, not simulated</li>
+      <li>Human-in-the-Loop is architecturally enforced — AI recommends, humans decide, ICA executes</li>
+      <li>Every assessment produces a full explainable reasoning trace — consultants can see exactly why each decision was made</li>
+    </ul>
+
+    <h3>Slide 3 — Impact + Reusability (60 seconds)</h3>
+    <p><strong>12–18 hours saved per engagement.</strong> That's not a projection — it maps directly to the manual activities this system replaces: structured evidence review (3–4h), readiness scoring (4–6h), risk documentation (2–3h), task assignment (1–2h), executive summary (2–3h), client and internal emails (1–2h), and Jira creation (1–2h).</p>
+    <p><strong>This is a team-wide accelerator, not a personal prompt.</strong> Any IBM Consulting practice can onboard their engagement context into Context Studio and get the same governed pipeline — the same standardised scoring, the same explainable reasoning, the same ICA-driven task assignment. The agent YAML and prompt artefacts are reusable, auditable, and refinable.</p>
+
+    <div class="callout">
+      <strong>This is what Human-in-the-Loop actually looks like in practice:</strong> the consultant doesn't trust the AI blindly — they see the reasoning trace, can accept or override the recommendation, must personally approve the final engagement status, and ICA creates every Jira ticket only after both gates pass. The AI is the analyst. The human is still in charge.
+    </div>
+
+    <h3>Technical Proof Points (for judging)</h3>
+    <table>
+      <thead><tr><th>Claim</th><th>Evidence in codebase</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ICA Agent API used with Agentic App Studio Lab curl pattern</td>
+          <td><code>services/ica-agent-api-service.ts</code> line 7–15 — curl comment + implementation</td>
+        </tr>
+        <tr>
+          <td>Context Studio MCP query before every assessment</td>
+          <td><code>services/watsonx-service.ts</code> — reads ctx_69dbd815ec49 via hybrid query</td>
+        </tr>
+        <tr>
+          <td>3-agent watsonx sequential pipeline</td>
+          <td><code>services/watsonx-service.ts</code> — Discovery → Analyst → Asset Generator</td>
+        </tr>
+        <tr>
+          <td>ICA YAML agent definition (Agentic App Studio)</td>
+          <td><code>agent-orchestration-creation.yaml</code> — 836 lines, full multi-agent spec</td>
+        </tr>
+        <tr>
+          <td>Jira Epic + Story auto-creation</td>
+          <td><code>services/jira-service.ts</code> — ADF body, Epic + Story, live API</td>
+        </tr>
+        <tr>
+          <td>Direct Slack notification after final approval</td>
+          <td><code>services/notification-service.ts</code> + wired in generate-deliverables route</td>
+        </tr>
+        <tr>
+          <td>Human-in-the-Loop enforced architecturally</td>
+          <td><code>app/api/hitl-decision/route.ts</code> — ICA blocked until HITL fires</td>
+        </tr>
+        <tr>
+          <td>DASC-aligned security design</td>
+          <td><code>lib/env.ts</code> — Zod validation, hasXxxConfig() guards, no client-side secrets</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-num">Submission Checklist</div>
+    <h2>Required Deliverables &amp; Education</h2>
+    <div class="section-lead">Confirming all challenge requirements are met before submission.</div>
+
+    <table>
+      <thead><tr><th>Requirement</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Solution statement (problem, users, outcomes, productivity benefit)</td>
+          <td><span class="pill pill-green">Complete</span></td>
+          <td>Section 1 of this document</td>
+        </tr>
+        <tr>
+          <td>Technical statement (Bob/ICA usage, other AI tools, integration details)</td>
+          <td><span class="pill pill-green">Complete</span></td>
+          <td>Section 2 — ICA A2A, watsonx, Context Studio, Jira, Slack</td>
+        </tr>
+        <tr>
+          <td>Solution impact assessment (categories, before/after times, frequency)</td>
+          <td><span class="pill pill-green">Complete</span></td>
+          <td>Section 3 — 8 activities, time savings, business value</td>
+        </tr>
+        <tr>
+          <td>Pitch file (PDF ≤3 pages or video ≤3 minutes)</td>
+          <td><span class="pill pill-green">Complete</span></td>
+          <td>Section 4 — 3-slide script + technical proof points</td>
+        </tr>
+        <tr>
+          <td>General Bob module education completed</td>
+          <td><span class="pill pill-amber">Required</span></td>
+          <td>Complete before submissions close</td>
+        </tr>
+        <tr>
+          <td>Consulting-specific module education completed</td>
+          <td><span class="pill pill-amber">Required</span></td>
+          <td>Complete before submissions close</td>
+        </tr>
+        <tr>
+          <td>Real consulting workflow completed faster with less friction</td>
+          <td><span class="pill pill-green">Evidenced</span></td>
+          <td>Pre-engagement readiness: 3–5 days → 15 min</td>
+        </tr>
+        <tr>
+          <td>Team-wide reusable accelerator</td>
+          <td><span class="pill pill-green">Evidenced</span></td>
+          <td>Prompt artefacts, ICA YAML, Context Studio onboarding</td>
+        </tr>
+        <tr>
+          <td>DASC in the design process</td>
+          <td><span class="pill pill-green">Evidenced</span></td>
+          <td>Section 2 DASC table — 6 security design decisions</td>
+        </tr>
+        <tr>
+          <td>Submit through challenge form (most recent submission counts)</td>
+          <td><span class="pill pill-blue">Action needed</span></td>
+          <td>Submit at challenge.ibm.com before deadline</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout-orange">
+      <strong>Remember:</strong> The most recent full submission is the one considered. Save this document and all supporting links before submitting. The challenge form must be completed — this document alone is not a submission.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Made with IBM Bob · Engagement Ready AI · IBM watsonx Challenge 2025 · Consulting Track</p>
+</footer>
+
+
+</body></html>

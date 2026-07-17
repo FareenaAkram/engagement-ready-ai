@@ -1,0 +1,428 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>ERA — Integration How-To</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 16px;
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px; line-height: 1.6; color: #1f2328; background: #f7f8fa;
+  }
+  .page { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 700; margin: 0 0 4px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 10px; color: #1f2328; padding-bottom: 6px; border-bottom: 2px solid #e5e7eb; }
+  h3 { font-size: 13px; font-weight: 700; margin: 18px 0 6px; color: #374151; }
+  p  { margin: 0 0 10px; font-size: 13px; }
+  .subtitle { font-size: 12px; color: #57606a; margin-bottom: 24px; }
+  ul, ol { margin: 6px 0 10px; padding-left: 20px; font-size: 13px; }
+  li { margin-bottom: 5px; }
+
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; vertical-align: middle; margin-left: 6px; }
+  .t10m  { background: #dcfce7; color: #15803d; }
+  .t2d   { background: #fef9c3; color: #92400e; }
+  .t3d   { background: #fee2e2; color: #b91c1c; }
+
+  .step-box { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 18px; margin: 10px 0; }
+  .step-row { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f3f4f6; }
+  .step-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 1px; }
+  .s1 .step-num { background: #1d4ed8; }
+  .s2 .step-num { background: #7c3aed; }
+  .s3 .step-num { background: #0f766e; }
+  .step-content { flex: 1; }
+  .step-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .step-desc  { font-size: 12px; color: #374151; }
+  .step-desc code { background: #f3f4f6; padding: 1px 4px; border-radius: 3px; font-family: monospace; font-size: 11px; }
+
+  pre { background: #1e2533; color: #e2e8f0; font-size: 11.5px; padding: 14px 16px; border-radius: 6px; overflow-x: auto; margin: 10px 0; font-family: "Consolas","SF Mono",monospace; line-height: 1.55; }
+  code { font-family: "Consolas","SF Mono",monospace; }
+
+  .flow-impact { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+  .flow-impact-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #15803d; margin-bottom: 8px; }
+  .flow-impact ul { margin: 0; }
+
+  .warn-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 12px; }
+  .info-box  { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 12px; }
+
+  .diff-add { color: #16a34a; }
+  .diff-rem { color: #dc2626; }
+  .diff-ctx { color: #8c959f; }
+
+  .scope-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 8px 0; }
+  .scope-table th { background: #f0f2f5; padding: 6px 10px; text-align: left; font-weight: 700; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #57606a; }
+  .scope-table td { padding: 6px 10px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+  .scope-table tr:last-child td { border-bottom: none; }
+
+  .file-chip { display: inline-block; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 4px; padding: 1px 6px; font-family: monospace; font-size: 11px; color: #374151; margin: 1px 2px; }
+
+  footer { text-align: center; font-size: 11px; color: #8c959f; border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="subtitle">Engagement Ready AI · Integration How-To · Grounded in your actual .env.local</p>
+  <h1>3 Integrations — Exact Steps &amp; Flow Impact</h1>
+
+  
+  <h2>Integration 1 — Outlook via Office 365 SMTP <span class="badge t10m">10 minutes</span></h2>
+
+  <p>Your app currently sends from Gmail (<code>smtp.gmail.com</code>, user <code>fareenaakram18@gmail.com</code>). Switching to Office 365 makes every task email land in Outlook with <code>Fareena.Akram@ibm.com</code> as the true sender — no more "sent from Gmail" header. This is a pure config change. Zero code changes needed.</p>
+
+  <div class="warn-box">
+    <strong>IBM email restriction:</strong> IBM enforces MFA and modern auth on ibm.com mailboxes. Before trying this, check with your IT admin whether SMTP AUTH is allowed on your account. If not, use Option B (App Password) or stay on Gmail for the challenge.
+  </div>
+
+  <h3>Option A — IBM/Office 365 SMTP direct (requires SMTP Auth enabled)</h3>
+  <p>Open <span class="file-chip">.env.local</span> and change these 4 lines:</p>
+  <pre><span class="diff-rem">- EMAIL_SMTP_HOST=smtp.gmail.com</span>
+<span class="diff-rem">- EMAIL_SMTP_PORT=587</span>
+<span class="diff-rem">- EMAIL_USER=fareenaakram18@gmail.com</span>
+<span class="diff-rem">- EMAIL_PASS=eoyn ivdq hrds ujwp</span>
+<span class="diff-add">+ EMAIL_SMTP_HOST=smtp.office365.com</span>
+<span class="diff-add">+ EMAIL_SMTP_PORT=587</span>
+<span class="diff-add">+ EMAIL_USER=Fareena.Akram@ibm.com</span>
+<span class="diff-add">+ EMAIL_PASS=your-ibm-password-or-app-password</span>
+<span class="diff-add">+ EMAIL_FROM=Engagement Ready AI &lt;Fareena.Akram@ibm.com&gt;</span></pre>
+
+  <p>That's it. Restart with <code>npm run dev</code>. All existing email code in <span class="file-chip">services/task-email-service.ts</span> and <span class="file-chip">services/notification-service.ts</span> uses the <code>appEnv.emailSmtpHost</code> variable — nothing else changes.</p>
+
+  <h3>Option B — Microsoft App Password (safer for IBM accounts)</h3>
+  <ol>
+    <li>Go to <a href="https://myaccount.microsoft.com/security-info">myaccount.microsoft.com/security-info</a></li>
+    <li>Add sign-in method → App password → give it a name like "ERA Local Dev"</li>
+    <li>Copy the 16-character password it shows you (only shown once)</li>
+    <li>Use that as <code>EMAIL_PASS</code> above — your main IBM password does not work with SMTP</li>
+  </ol>
+
+  <div class="flow-impact">
+    <div class="flow-impact-title">Flow impact — what changes in the app</div>
+    <ul>
+      <li>All task assignment emails (sent at HITL accept) arrive from <code>Fareena.Akram@ibm.com</code> instead of Gmail</li>
+      <li>The delivery package emails (Executive Summary, Client Email) after final approval arrive from your IBM address</li>
+      <li>Recipients see a legitimate IBM sender — no spam filter risk</li>
+      <li>No UI change. No code change. Just restart the dev server after editing <code>.env.local</code></li>
+    </ul>
+  </div>
+
+  
+  <h2>Integration 2 — GitHub MCP → Auto-create Issues from Action Plan <span class="badge t2d">2 days</span></h2>
+
+  <p>Right now, when the consultant clicks "Accept AI Plan", the app creates Jira tickets (if Jira credentials are set) and sends task emails. GitHub Issues would be a parallel channel — better for teams who track everything in GitHub rather than Jira.</p>
+
+  <h3>What you need first — your side</h3>
+
+  <div class="step-box">
+    <div class="step-row s2">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Create a GitHub Personal Access Token (PAT)</div>
+        <div class="step-desc">
+          Go to <code>github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens</code><br />
+          Permissions needed: <strong>Issues: Read &amp; write</strong>, <strong>Contents: Read</strong> (just for the repo)<br />
+          Set expiry to 90 days. Copy the token — it starts with <code>github_pat_</code>
+        </div>
+      </div>
+    </div>
+    <div class="step-row s2">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Create a GitHub repository for the engagement</div>
+        <div class="step-desc">
+          Could be private. Example: <code>ibm-consulting/engagement-era-2025</code><br />
+          Note the <code>owner/repo</code> string — you'll use it below
+        </div>
+      </div>
+    </div>
+    <div class="step-row s2">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Add to <code>.env.local</code></div>
+        <div class="step-desc">
+          <pre>GITHUB_TOKEN=github_pat_xxxx...
+GITHUB_REPO=your-org/engagement-era-2025</pre>
+        </div>
+      </div>
+    </div>
+    <div class="step-row s2">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Add env vars to <code>lib/env.ts</code></div>
+        <div class="step-desc">
+          Add to the Zod schema (same pattern as Jira): <code>GITHUB_TOKEN</code>, <code>GITHUB_REPO</code><br />
+          Add <code>hasGitHubConfig()</code> guard that returns <code>Boolean(githubToken &amp;&amp; githubRepo)</code>
+        </div>
+      </div>
+    </div>
+    <div class="step-row s2">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <div class="step-title">Create <code>services/github-service.ts</code></div>
+        <div class="step-desc">
+          Single function: <code>createGitHubIssue(title, body, labels, assignee)</code><br />
+          Calls <code>POST https://api.github.com/repos/{owner}/{repo}/issues</code><br />
+          Headers: <code>Authorization: Bearer {GITHUB_TOKEN}</code>, <code>Accept: application/vnd.github+json</code>
+        </div>
+      </div>
+    </div>
+    <div class="step-row s2">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <div class="step-title">Call it from <code>app/api/hitl-decision/route.ts</code></div>
+        <div class="step-desc">
+          After <code>setTaskAssignments(assignments)</code>, loop through each assignment and call <code>createGitHubIssue()</code><br />
+          Issue body = task instructions. Labels = priority (<code>critical</code>, <code>high</code>) + role (<code>architect</code>)<br />
+          Store the returned issue URL in the task assignment record
+        </div>
+      </div>
+    </div>
+    <div class="step-row s2">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        <div class="step-title">Webhook: GitHub Issue closed → mark task done (optional but powerful)</div>
+        <div class="step-desc">
+          In your GitHub repo: Settings → Webhooks → Add webhook<br />
+          Payload URL: <code>https://your-ngrok-url/api/github/webhook</code><br />
+          Content type: <code>application/json</code><br />
+          Events: <strong>Issues</strong> only<br />
+          Create <code>app/api/github/webhook/route.ts</code> that reads <code>action === 'closed'</code> and calls <code>/api/task/update</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>The actual GitHub API call — what the service looks like</h3>
+  <pre>// POST https://api.github.com/repos/{owner}/{repo}/issues
+{
+  "title": "[ERA] Fix authentication requirements — Security Lead missing",
+  "body": "**Role:** Architect\n**Priority:** Critical\n**Due:** Week 1\n\n**Instructions:**\nSchedule a security architecture session...\n\n---\n_Created by Engagement Ready AI after readiness assessment_",
+  "labels": ["critical", "architect", "era-remediation"],
+  "assignees": []   // GitHub username if you have it
+}</pre>
+
+  <div class="flow-impact">
+    <div class="flow-impact-title">Flow impact — what changes in the app</div>
+    <ul>
+      <li><strong>After HITL accept:</strong> alongside Jira tickets and emails, GitHub Issues are created — one per action plan item</li>
+      <li><strong>Action Center:</strong> each task card gains a "GitHub Issue" link badge (you'd add this to the UI)</li>
+      <li><strong>When engineer closes the GitHub Issue:</strong> webhook fires → <code>POST /api/task/update</code> → Action Center updates automatically, no app visit required</li>
+      <li><strong>All-done detection</strong> still works as-is — <code>/api/task/update</code> already checks if all tasks complete and advances to <code>ready-for-review</code></li>
+      <li><strong>Existing flow is unaffected</strong> — GitHub is additive alongside Jira, not a replacement</li>
+    </ul>
+  </div>
+
+  <div class="info-box">
+    <strong>Bob GitHub MCP note:</strong> Bob's GitHub MCP server is for Bob to read/write your code repo during development. It is NOT the right tool for this integration. The production GitHub Issues creation is a direct REST API call from your Next.js service — it doesn't go through Bob at all. Use Bob's MCP during development to help you write and test the <code>github-service.ts</code> code.
+  </div>
+
+  
+  <h2>Integration 3 — MS Graph Calendar → Auto-book Missing Workshops <span class="badge t3d">3 days</span></h2>
+
+  <p>This is the most impressive integration for a demo. watsonx already identifies <code>missingWorkshops</code> with a title and reason (e.g. "Security &amp; Compliance Workshop", "Data Migration Workshop"). MS Graph lets you turn that list directly into Outlook calendar invites — the AI finds the gap AND schedules the fix.</p>
+
+  <h3>What "missing workshops" look like in your data right now</h3>
+  <pre>// From AIAnalysisResult.missingWorkshops (already produced by Granite):
+[
+  {
+    title: "Security &amp; Compliance Workshop",
+    reason: "Define authentication approach, security architecture, and GDPR obligations",
+    priority: "critical"
+  },
+  {
+    title: "Data Migration Workshop",
+    reason: "Inventory legacy AS/400 schema, estimate data volume, define migration strategy",
+    priority: "critical"
+  },
+  {
+    title: "Architecture Decision Workshop",
+    reason: "Confirm cloud provider, integration patterns, and technical approach",
+    priority: "high"
+  }
+]</pre>
+  <p>This data is already in your state file after every assessment. You just need the calendar booking step.</p>
+
+  <h3>Step 1 — Register a Microsoft Entra (Azure AD) app</h3>
+  <div class="step-box">
+    <div class="step-row s3">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Go to portal.azure.com → Microsoft Entra ID → App registrations → New registration</div>
+        <div class="step-desc">Name: "ERA Calendar Agent". Account type: Accounts in this org only. No redirect URI needed (server-side).</div>
+      </div>
+    </div>
+    <div class="step-row s3">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Add API permissions</div>
+        <div class="step-desc">
+          API permissions → Add → Microsoft Graph → Application permissions (NOT delegated):<br />
+          <code>Calendars.ReadWrite</code> — to create calendar events<br />
+          <code>Mail.Send</code> — to send the invite email (optional if you just create the event)<br />
+          Click <strong>Grant admin consent</strong> (requires your IT admin for ibm.com tenant)
+        </div>
+      </div>
+    </div>
+    <div class="step-row s3">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Create a client secret</div>
+        <div class="step-desc">Certificates &amp; secrets → New client secret → 12 months → copy the Value (not the ID)</div>
+      </div>
+    </div>
+    <div class="step-row s3">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Copy 3 values from the app overview page</div>
+        <div class="step-desc">Application (client) ID, Directory (tenant) ID, and the client secret you just created</div>
+      </div>
+    </div>
+    <div class="step-row s3">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <div class="step-title">Add to <code>.env.local</code></div>
+        <div class="step-desc">
+          <pre>MS_TENANT_ID=your-directory-tenant-id
+MS_CLIENT_ID=your-application-client-id
+MS_CLIENT_SECRET=your-client-secret-value
+MS_CALENDAR_SENDER=Fareena.Akram@ibm.com</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Step 2 — How the Graph token works (server-side, no user login)</h3>
+  <pre># 1. Get an access token (client credentials flow — no user needed)
+POST https://login.microsoftonline.com/{MS_TENANT_ID}/oauth2/v2.0/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+&amp;client_id={MS_CLIENT_ID}
+&amp;client_secret={MS_CLIENT_SECRET}
+&amp;scope=https://graph.microsoft.com/.default
+
+# Response: { access_token: "eyJ0..." }
+
+# 2. Create a calendar event on behalf of MS_CALENDAR_SENDER
+POST https://graph.microsoft.com/v1.0/users/{MS_CALENDAR_SENDER}/events
+Authorization: Bearer {access_token}
+Content-Type: application/json</pre>
+
+  <h3>Step 3 — The event payload for a missing workshop</h3>
+  <pre>{
+  "subject": "[ERA Remediation] Security &amp; Compliance Workshop",
+  "body": {
+    "contentType": "HTML",
+    "content": "&lt;b&gt;Purpose:&lt;/b&gt; Define authentication approach, security architecture, and GDPR obligations&lt;br&gt;&lt;br&gt;Auto-scheduled by Engagement Ready AI after readiness assessment identified this as a critical gap."
+  },
+  "start": {
+    "dateTime": "2025-07-14T10:00:00",   // you set this — e.g. today + 7 days
+    "timeZone": "UTC"
+  },
+  "end": {
+    "dateTime": "2025-07-14T11:30:00",
+    "timeZone": "UTC"
+  },
+  "attendees": [
+    {
+      "emailAddress": { "address": "Fareena.Akram@ibm.com", "name": "Fareena Akram" },
+      "type": "required"
+    }
+  ],
+  "isReminderOn": true,
+  "reminderMinutesBeforeStart": 1440
+}</pre>
+
+  <h3>Step 4 — Where in your app to trigger this</h3>
+  <p>The trigger point is in <span class="file-chip">app/api/hitl-decision/route.ts</span>, right after <code>setTaskAssignments(assignments)</code>. You have access to <code>review.missingWorkshops</code> at that point. Create a new <span class="file-chip">services/calendar-service.ts</span> with a <code>bookWorkshopInvites(workshops, organiser)</code> function, then call it fire-and-forget (same pattern as the Slack call — don't await it, don't block the response).</p>
+
+  <pre>// In app/api/hitl-decision/route.ts — add after setTaskAssignments():
+
+if (hasMSGraphConfig() &amp;&amp; review.missingWorkshops.length &gt; 0) {
+  bookWorkshopInvites(
+    review.missingWorkshops,
+    stakeholders.consultant.email,
+    stakeholders.client.email,
+  ).then((r) =&gt; console.log(`[hitl-decision] Calendar: ${r.created} invites booked`))
+   .catch((e) =&gt; console.warn('[hitl-decision] Calendar booking failed:', e));
+}</pre>
+
+  <h3>Step 5 — Add the env guard to <code>lib/env.ts</code></h3>
+  <pre>// Add to Zod schema:
+MS_TENANT_ID: z.string().optional(),
+MS_CLIENT_ID: z.string().optional(),
+MS_CLIENT_SECRET: z.string().optional(),
+MS_CALENDAR_SENDER: z.string().optional(),
+
+// Add guard function:
+export function hasMSGraphConfig() {
+  return Boolean(
+    appEnv.msTenantId &amp;&amp;
+    appEnv.msClientId &amp;&amp;
+    appEnv.msClientSecret
+  );
+}</pre>
+
+  <div class="flow-impact">
+    <div class="flow-impact-title">Flow impact — what changes in the app</div>
+    <ul>
+      <li><strong>No change to the HITL flow itself</strong> — calendar booking fires after the accept response is already sent (fire-and-forget, like Slack)</li>
+      <li><strong>After "Accept AI Plan":</strong> for each workshop in <code>missingWorkshops</code>, a calendar invite is created in the lead consultant's Outlook, with the client contact as an attendee</li>
+      <li><strong>Demo effect:</strong> watsonx says "Security Workshop is missing" → consultant clicks Accept → 30 seconds later, calendar invite lands in Outlook. The AI found the gap AND booked the fix</li>
+      <li><strong>Workshop count can be shown in the AI Findings panel</strong> — you already have the <code>missingWorkshops</code> array rendered there; you'd just add a "Booking workshops…" indicator</li>
+      <li><strong>Token is cached module-scope</strong> (same pattern as your watsonx + ICA IAM tokens) — no per-request token fetches</li>
+    </ul>
+  </div>
+
+  <div class="warn-box">
+    <strong>IBM tenant admin consent required:</strong> Application-level <code>Calendars.ReadWrite</code> permission needs an admin to click "Grant admin consent" in the Azure portal. If you can't get that for the IBM tenant, use <em>delegated permissions</em> instead — this requires the user to sign in once via OAuth, but then the app can act on their behalf without needing admin consent. For a challenge demo, the delegated flow is easier to set up quickly.
+  </div>
+
+  
+  <h2>Summary — Your Side Checklist</h2>
+
+  <table class="scope-table">
+    <thead>
+      <tr><th>Integration</th><th>Accounts / Portals you need</th><th>Credentials to copy</th><th>Code files to create/edit</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Outlook SMTP</strong></td>
+        <td>myaccount.microsoft.com → App password</td>
+        <td>App password (16 chars)</td>
+        <td><span class="file-chip">.env.local</span> only — no code</td>
+      </tr>
+      <tr>
+        <td><strong>GitHub Issues</strong></td>
+        <td>github.com → Settings → PAT<br />Your repo → Settings → Webhooks</td>
+        <td>PAT token (<code>github_pat_…</code>)</td>
+        <td>
+          <span class="file-chip">lib/env.ts</span> (add vars + guard)<br />
+          <span class="file-chip">services/github-service.ts</span> (new)<br />
+          <span class="file-chip">app/api/hitl-decision/route.ts</span> (call it)<br />
+          <span class="file-chip">app/api/github/webhook/route.ts</span> (new)
+        </td>
+      </tr>
+      <tr>
+        <td><strong>MS Graph Calendar</strong></td>
+        <td>portal.azure.com → Entra ID → App registrations<br />(IT admin needed for consent)</td>
+        <td>Tenant ID, Client ID, Client Secret</td>
+        <td>
+          <span class="file-chip">lib/env.ts</span> (add vars + guard)<br />
+          <span class="file-chip">services/calendar-service.ts</span> (new)<br />
+          <span class="file-chip">app/api/hitl-decision/route.ts</span> (call it)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box" style="margin-top:16px">
+    <strong>Order of operations recommendation:</strong><br />
+    Do Outlook SMTP first (10 min, zero risk — just verify a test email arrives from your IBM address). Then GitHub Issues (the webhook loop is the most reusable pattern for any future tool). Then MS Graph Calendar only if you can get admin consent — without it the demo still works, you just show the calendar invite creation as a "would fire here" annotation.
+  </div>
+
+</div>
+<footer>Made with IBM Bob</footer>
+</body>
+</html>
