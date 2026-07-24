@@ -3,6 +3,7 @@
 .env.local
 .env.*.local
 .bob/mcp.json
+context keys.txt
 
 # Local tool settings — machine-specific, not project config
 .claude/
